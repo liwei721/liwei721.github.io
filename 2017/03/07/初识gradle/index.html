@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,7 +68,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="gradle简介，gradle," />
@@ -80,7 +80,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
 
 
 
@@ -112,8 +112,8 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -124,8 +124,8 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      hits: "",
+      labels: ""
     }
   };
 </script>
@@ -209,6 +209,16 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -225,6 +235,26 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
           </a>
         </li>
       
@@ -262,7 +292,7 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -287,44 +317,12 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-07T18:20:18+08:00">
-                2017-03-07
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/gradle/" itemprop="url" rel="index">
-                    <span itemprop="name">gradle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -593,7 +591,7 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
+               src="/avatar.jpg"
                alt="Liwei" />
           <p class="site-author-name" itemprop="name">Liwei</p>
            
@@ -662,7 +660,7 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gradle的功能特点"><span class="nav-number">1.1.</span> <span class="nav-text">gradle的功能特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Gradle"><span class="nav-number">2.</span> <span class="nav-text">安装Gradle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">2.1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载与安装"><span class="nav-number">2.2.</span> <span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM选项"><span class="nav-number">2.3.</span> <span class="nav-text">JVM选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gradle概念"><span class="nav-number">3.</span> <span class="nav-text">gradle概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Project-amp-amp-tasks"><span class="nav-number">3.1.</span> <span class="nav-text">Project && tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建的生命周期"><span class="nav-number">3.2.</span> <span class="nav-text">构建的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build-gradle的配置文件"><span class="nav-number">3.3.</span> <span class="nav-text">build.gradle的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradle-Wrapper"><span class="nav-number">3.4.</span> <span class="nav-text">Gradle Wrapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用基本的构建命令"><span class="nav-number">3.5.</span> <span class="nav-text">使用基本的构建命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gradle的功能特点"><span class="nav-text">gradle的功能特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Gradle"><span class="nav-text">安装Gradle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载与安装"><span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM选项"><span class="nav-text">JVM选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gradle概念"><span class="nav-text">gradle概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Project-amp-amp-tasks"><span class="nav-text">Project && tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建的生命周期"><span class="nav-text">构建的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build-gradle的配置文件"><span class="nav-text">build.gradle的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradle-Wrapper"><span class="nav-text">Gradle Wrapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用基本的构建命令"><span class="nav-text">使用基本的构建命令</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -687,22 +685,11 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
   &copy; 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Liwei</span>
 </div>
 
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
 
 
         
@@ -765,25 +752,25 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
 
 
 
   
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
 
 
 

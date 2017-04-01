@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,7 +68,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="adb通信原理 adbserver," />
@@ -80,7 +80,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
 
 
 
@@ -115,8 +115,8 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -127,8 +127,8 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      hits: "",
+      labels: ""
     }
   };
 </script>
@@ -212,6 +212,16 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -228,6 +238,26 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
           </a>
         </li>
       
@@ -265,7 +295,7 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -290,44 +320,12 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-08T19:32:09+08:00">
-                2017-02-08
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android技术/" itemprop="url" rel="index">
-                    <span itemprop="name">Android技术</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -566,7 +564,7 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
+               src="/avatar.jpg"
                alt="Liwei" />
           <p class="site-author-name" itemprop="name">Liwei</p>
            
@@ -635,7 +633,7 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念介绍"><span class="nav-number">2.</span> <span class="nav-text">概念介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Adb-是C-S架构，要了解其工作原理，其实就是要搞清楚下面三个概念："><span class="nav-number">2.1.</span> <span class="nav-text">Adb 是C/S架构，要了解其工作原理，其实就是要搞清楚下面三个概念：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#adb-server"><span class="nav-number">2.1.1.</span> <span class="nav-text">adb server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#adb-client"><span class="nav-number">2.1.2.</span> <span class="nav-text">adb client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#adb-deamon-adbd"><span class="nav-number">2.1.3.</span> <span class="nav-text">adb deamon(adbd)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通信原理"><span class="nav-number">3.</span> <span class="nav-text">通信原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#清楚了上面的三个概念，相信对他们的通信原理应该已经有了比较清楚的认识。对熟悉他们通信原理就比较容易了。"><span class="nav-number">3.1.</span> <span class="nav-text">清楚了上面的三个概念，相信对他们的通信原理应该已经有了比较清楚的认识。对熟悉他们通信原理就比较容易了。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程图"><span class="nav-number">3.1.1.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程用文字描述"><span class="nav-number">3.1.2.</span> <span class="nav-text">流程用文字描述</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">4.</span> <span class="nav-text">常见问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念介绍"><span class="nav-text">概念介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Adb-是C-S架构，要了解其工作原理，其实就是要搞清楚下面三个概念："><span class="nav-text">Adb 是C/S架构，要了解其工作原理，其实就是要搞清楚下面三个概念：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#adb-server"><span class="nav-text">adb server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#adb-client"><span class="nav-text">adb client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#adb-deamon-adbd"><span class="nav-text">adb deamon(adbd)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通信原理"><span class="nav-text">通信原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#清楚了上面的三个概念，相信对他们的通信原理应该已经有了比较清楚的认识。对熟悉他们通信原理就比较容易了。"><span class="nav-text">清楚了上面的三个概念，相信对他们的通信原理应该已经有了比较清楚的认识。对熟悉他们通信原理就比较容易了。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程图"><span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程用文字描述"><span class="nav-text">流程用文字描述</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-text">常见问题</span></a></li></ol></div>
             
 
           </div>
@@ -660,22 +658,11 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
   &copy; 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Liwei</span>
 </div>
 
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
 
 
         
@@ -738,25 +725,25 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
 
 
 
   
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
 
 
 

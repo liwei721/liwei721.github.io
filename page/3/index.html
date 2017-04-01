@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,19 +68,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
+  <meta name="keywords" content="利伟,技术博客" />
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
 
 
 
@@ -103,8 +103,8 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -115,8 +115,8 @@
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      hits: "",
+      labels: ""
     }
   };
 </script>
@@ -202,6 +202,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -218,6 +228,26 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
           </a>
         </li>
       
@@ -255,7 +285,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -283,44 +313,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-03T14:49:23+08:00">
-                2016-12-03
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android开源库/" itemprop="url" rel="index">
-                    <span itemprop="name">Android开源库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -359,103 +357,18 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>Retrofit是Square公司开发的一款针对Android网络请求的框架，Retrofit2底层基于OkHttp实现的。</li>
-<li>官方对它的解释是：A type-safe HTTP client for Android and Java ，就是一个安全的可用于Android和java的网络库。</li>
-<li>它可以简化我们操作网络的成本，其实所有第三方库的功能，我们用原生的api都是可以实现的，只不过需要花费时间和精力，且在某些场景下可能出现bug和性能不太好，而第三方开源库已经有很多产品使用，得到了验证和完善，所以我们推荐使用第三方库，不过我们需要对开源库的实现原理了解，这样在出现问题的时候能方便的排查问题。</li>
-</ul>
-<h3 id="Rest-API"><a href="#Rest-API" class="headerlink" title="Rest API"></a>Rest API</h3><ul>
-<li>这里简单说下什么是Rest API。 REST是一种架构风格，用于创建Web服务，几乎总是工作在HTTP上。它的工作原理几乎以同样的方式得到的网页，但你也有标准的方法来创建，更新和删除。</li>
-</ul>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
-<li><p>首先可以定义一个interface，代码如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">APIService</span> </span>&#123;</div><div class="line">  <span class="meta">@GET</span>(<span class="string">"News"</span>)</div><div class="line">  <span class="function">Call&lt;ResponseBody&gt; <span class="title">getNews</span><span class="params">(</span></span></div><div class="line">          @Query(<span class="string">"limit"</span>) String limit);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>可以定义一个ServiceManager，里面用来初始化Retrofit，代码如下：</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Retrofit retrofit =<span class="keyword">new</span> Retrofit.Builder()</div><div class="line">              .baseUrl(<span class="string">"http://hcy.com/api/"</span>)     <span class="comment">// 这里baseUrl是所有api的基础url，必须配置</span></div><div class="line">              .addConverterFactory(GsonConverterFactory.create())   <span class="comment">//这里是将返回的json转成一个定义好的java对象。</span></div><div class="line">              .build();</div></pre></td></tr></table></figure>
-<ul>
-<li>接下来定义一个NewsInfo实体类，实体类的字段是和json对应的，代码如下：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsInfo</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> String title;</div><div class="line">    <span class="keyword">public</span> String detailInfo;</div><div class="line">    <span class="comment">// 我这里就是举个例子，重点是分析Retrofit源码。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>最后就是使用，非常简洁，代码如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">APIService service = retrofit.create(APIService.class);</div><div class="line">Call&lt;NewsInfo&gt; call = service.getNews(<span class="string">"10"</span>);</div><div class="line">call.enqueue(<span class="keyword">new</span> Callback&lt;NewsInfo&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call&lt;NewsInfo&gt; call,</span></span></div><div class="line">                           Response&lt;NewsInfo&gt; response) &#123;</div><div class="line">        Log.i(TAG, <span class="string">"onResponse"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call&lt;NewsInfo&gt; call, Throwable t)</span> </span>&#123;</div><div class="line">        Log.i(TAG, <span class="string">"onFailure"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><ul>
-<li>Retrofit的一大优点是解耦，其中牵扯到很多设计模式，下面会提到。<h3 id="首先构造Retrofit对象："><a href="#首先构造Retrofit对象：" class="headerlink" title="首先构造Retrofit对象："></a>首先构造Retrofit对象：</h3></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Retrofit retrofit =<span class="keyword">new</span> Retrofit.Builder()</div><div class="line">              .baseUrl(<span class="string">"http://hcy.com/api/"</span>)     <span class="comment">// 这里baseUrl是所有api的基础url，必须配置</span></div><div class="line">              .addConverterFactory(GsonConverterFactory.create())   <span class="comment">//这里是将返回的json转成一个定义好的java对象。</span></div><div class="line">              .build();</div></pre></td></tr></table></figure>
-<ul>
-<li>这使用到了常见的构造者模式，我们来看builder()做了什么：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>(Platform.get());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**接下来看Platform主要做了什么，其实就是findPlatform,用来查找当前的平台是啥：android？java？ios？</span></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Platform PLATFORM = findPlatform();</div><div class="line"><span class="function"><span class="keyword">static</span> Platform <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> PLATFORM;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Platform <span class="title">findPlatform</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">      Class.forName(<span class="string">"android.os.Build"</span>);</div><div class="line">      <span class="keyword">if</span> (Build.VERSION.SDK_INT != <span class="number">0</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Android();</div><div class="line">    &#125;</div><div class="line">    &#125; <span class="keyword">catch</span> (ClassNotFoundException ignored) &#123;</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">      Class.forName(<span class="string">"java.util.Optional"</span>);</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Java8();</div><div class="line">    &#125; <span class="keyword">catch</span> (ClassNotFoundException ignored) &#123;</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">      Class.forName(<span class="string">"org.robovm.apple.foundation.NSObject"</span>);</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> IOS();</div><div class="line">    &#125; <span class="keyword">catch</span> (ClassNotFoundException ignored) &#123;</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Platform();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**接下来是Android类， 它继承了Platform重写了defaultCallbackExecutor和defaultCallAdapterFactory方法。</span></div><div class="line">//defaultCallbackExecutor：返回的是用于执行 Callback 的 线程池。可以看到MainThreadExecutor 获取了主线程的 Looper 并构造了一个主线程的 Handler，调用 Callback 时会将该请求 post 到主线程上去执行。这就解释了为什么请求后完成的回调都是在主线中。</div><div class="line">// defaultCallAdapterFactory：将返回的适配类型默认为Call类型（如果使用RxJava的话，就可以通过配置.addCallAdapterFactory(RxJavaCallAdapterFactory.create())将配置类型改成Observable。）</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Android</span> <span class="keyword">extends</span> <span class="title">Platform</span> </span>&#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Executor <span class="title">defaultCallbackExecutor</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MainThreadExecutor();</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span> CallAdapter.<span class="function">Factory <span class="title">defaultCallAdapterFactory</span><span class="params">(Executor callbackExecutor)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ExecutorCallAdapterFactory(callbackExecutor);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MainThreadExecutor</span> <span class="keyword">implements</span> <span class="title">Executor</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Handler handler = <span class="keyword">new</span> Handler(Looper.getMainLooper());</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable r)</span> </span>&#123;</div><div class="line">      handler.post(r);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li><p>再看baseUrl()的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 通过下面的代码，可以看出其实它拿到baseUrl主要创建了okhttp的HttpUrl。</span></div><div class="line"><span class="function"><span class="keyword">public</span> Builder <span class="title">baseUrl</span><span class="params">(String baseUrl)</span> </span>&#123;</div><div class="line">checkNotNull(baseUrl, <span class="string">"baseUrl == null"</span>);</div><div class="line">HttpUrl httpUrl = HttpUrl.parse(baseUrl);</div><div class="line"><span class="keyword">if</span> (httpUrl == <span class="keyword">null</span>) &#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal URL: "</span> + baseUrl);</div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span> baseUrl(httpUrl);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> Builder <span class="title">baseUrl</span><span class="params">(HttpUrl baseUrl)</span> </span>&#123;</div><div class="line">checkNotNull(baseUrl, <span class="string">"baseUrl == null"</span>);</div><div class="line">List&lt;String&gt; pathSegments = baseUrl.pathSegments();</div><div class="line"><span class="keyword">if</span> (!<span class="string">""</span>.equals(pathSegments.get(pathSegments.size() - <span class="number">1</span>))) &#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"baseUrl must end in /: "</span> + baseUrl);</div><div class="line">&#125;</div><div class="line"><span class="keyword">this</span>.baseUrl = baseUrl;</div><div class="line"><span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>再看addConverterFactory(GsonConverterFactory.create())：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 往转换工厂集合中添加了我们指定的转换工厂.在我们的例子里面 GsonConverterFactory 将选用 GsonConverter 来转换。</span></div><div class="line"><span class="function"><span class="keyword">public</span> Builder <span class="title">addConverterFactory</span><span class="params">(Converter.Factory factory)</span> </span>&#123;</div><div class="line">  converterFactories.add(checkNotNull(factory, <span class="string">"factory == null"</span>));</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>接下来是build的过程：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Retrofit <span class="title">build</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (baseUrl == <span class="keyword">null</span>) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Base URL required."</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  okhttp3.Call.Factory callFactory = <span class="keyword">this</span>.callFactory;</div><div class="line">  <span class="keyword">if</span> (callFactory == <span class="keyword">null</span>) &#123;</div><div class="line">    callFactory = <span class="keyword">new</span> OkHttpClient();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  Executor callbackExecutor = <span class="keyword">this</span>.callbackExecutor;</div><div class="line">  <span class="keyword">if</span> (callbackExecutor == <span class="keyword">null</span>) &#123;</div><div class="line">    callbackExecutor = platform.defaultCallbackExecutor();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// Make a defensive copy of the adapters and add the default Call adapter.</span></div><div class="line">  List&lt;CallAdapter.Factory&gt; adapterFactories = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="keyword">this</span>.adapterFactories);</div><div class="line">  adapterFactories.add(platform.defaultCallAdapterFactory(callbackExecutor));</div><div class="line"></div><div class="line">  <span class="comment">// Make a defensive copy of the converters.</span></div><div class="line">  List&lt;Converter.Factory&gt; converterFactories = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="keyword">this</span>.converterFactories);</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Retrofit(callFactory, baseUrl, converterFactories, adapterFactories,</div><div class="line">      callbackExecutor, validateEagerly);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 这就是创建Retorfit对象的地方，将前面几步配置的参数都设置到Retrofit中，这里可以很明确的看到默认callFactory用的是OKHttpClient</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="创建接口实例并调用"><a href="#创建接口实例并调用" class="headerlink" title="创建接口实例并调用"></a>创建接口实例并调用</h3><ul>
-<li><p>对应上面的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">APIService service = retrofit.create(APIService.class);</div><div class="line">Call&lt;NewsInfo&gt; call = service.getNews(<span class="string">"10"</span>);</div></pre></td></tr></table></figure>
-</li>
-<li><p>我们先看一下create的代码,它主要做了什么我都写到注释中：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">create</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; service)</span> </span>&#123;</div><div class="line">    <span class="comment">// 检查service是否是个接口</span></div><div class="line">    Utils.validateServiceInterface(service);</div><div class="line">    <span class="comment">// 检查是否要提前创建serviceMethod</span></div><div class="line">    <span class="keyword">if</span> (validateEagerly) &#123;</div><div class="line">      eagerlyValidateMethods(service);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 这里就是设计非常巧妙的地方了，用到了java动态代理，我会在另外一篇文章中讲动态代理</span></div><div class="line">    <span class="comment">// 这里返回的是一个动态代理，然后又转成了对应的接口类型</span></div><div class="line">    <span class="keyword">return</span> (T) Proxy.newProxyInstance(service.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[] &#123; service &#125;,</div><div class="line">        <span class="keyword">new</span> InvocationHandler() &#123;</div><div class="line">          <span class="keyword">private</span> <span class="keyword">final</span> Platform platform = Platform.get();</div><div class="line"></div><div class="line">          <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span></span></div><div class="line">              <span class="keyword">throws</span> Throwable &#123;</div><div class="line">            <span class="comment">// If the method is a method from Object then defer to normal invocation.</span></div><div class="line">            <span class="comment">// 判断是会否为object方法，是的话就直接调用</span></div><div class="line">            <span class="keyword">if</span> (method.getDeclaringClass() == Object.class) &#123;</div><div class="line">              <span class="keyword">return</span> method.invoke(<span class="keyword">this</span>, args);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 这里现在默认是直接返回false的。</span></div><div class="line">            <span class="keyword">if</span> (platform.isDefaultMethod(method)) &#123;</div><div class="line">              <span class="keyword">return</span> platform.invokeDefaultMethod(method, service, proxy, args);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 接下来主要做了以下事情：</span></div><div class="line">            <span class="comment">// 1. 去serviceMethodCache，查是否有对应serviceMethod的缓存。执行完一遍会缓存下来。</span></div><div class="line">            <span class="comment">// 2. 如果不存在缓存就去创建一个。</span></div><div class="line">            <span class="comment">//</span></div><div class="line">            ServiceMethod&lt;Object, Object&gt; serviceMethod =</div><div class="line">                (ServiceMethod&lt;Object, Object&gt;) loadServiceMethod(method);</div><div class="line">            OkHttpCall&lt;Object&gt; okHttpCall = <span class="keyword">new</span> OkHttpCall&lt;&gt;(serviceMethod, args);</div><div class="line">            <span class="keyword">return</span> serviceMethod.callAdapter.adapt(okHttpCall);</div><div class="line">          &#125;</div><div class="line">        &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>接下来我们看下ServiceMethod的build过程：</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ServiceMethod <span class="title">build</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="comment">// callAdapter 是从CallAdapterFactory中选择合适的callAdapter</span></div><div class="line">      callAdapter = createCallAdapter();</div><div class="line">      <span class="comment">// 获取返回类型</span></div><div class="line">      responseType = callAdapter.responseType();</div><div class="line">      <span class="keyword">if</span> (responseType == Response.class || responseType == okhttp3.Response.class) &#123;</div><div class="line">        <span class="keyword">throw</span> methodError(<span class="string">"'"</span></div><div class="line">            + Utils.getRawType(responseType).getName()</div><div class="line">            + <span class="string">"' is not a valid response body type. Did you mean ResponseBody?"</span>);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="comment">// 去获取一个合适的responseConverter，我们例子中用到的是GsonConverter</span></div><div class="line">      responseConverter = createResponseConverter();</div><div class="line"></div><div class="line">      <span class="comment">// 解析各种注解。比如GET POST、PATCH、DELETE等等</span></div><div class="line">      <span class="keyword">for</span> (Annotation annotation : methodAnnotations) &#123;</div><div class="line">        parseMethodAnnotation(annotation);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (httpMethod == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> methodError(<span class="string">"HTTP method annotation is required (e.g., @GET, @POST, etc.)."</span>);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (!hasBody) &#123;</div><div class="line">        <span class="keyword">if</span> (isMultipart) &#123;</div><div class="line">          <span class="keyword">throw</span> methodError(</div><div class="line">              <span class="string">"Multipart can only be specified on HTTP methods with request body (e.g., @POST)."</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (isFormEncoded) &#123;</div><div class="line">          <span class="keyword">throw</span> methodError(<span class="string">"FormUrlEncoded can only be specified on HTTP methods with "</span></div><div class="line">              + <span class="string">"request body (e.g., @POST)."</span>);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="comment">// parameterAnnotationsArray是method.getParameterAnnotations() 获取的是方法的参数和参数的注解</span></div><div class="line">      <span class="comment">// 比如本例中@Query("limit") String limit</span></div><div class="line">      <span class="keyword">int</span> parameterCount = parameterAnnotationsArray.length;</div><div class="line">      parameterHandlers = <span class="keyword">new</span> ParameterHandler&lt;?&gt;[parameterCount];</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> p = <span class="number">0</span>; p &lt; parameterCount; p++) &#123;</div><div class="line">        Type parameterType = parameterTypes[p];</div><div class="line">        <span class="keyword">if</span> (Utils.hasUnresolvableType(parameterType)) &#123;</div><div class="line">          <span class="keyword">throw</span> parameterError(p, <span class="string">"Parameter type must not include a type variable or wildcard: %s"</span>,</div><div class="line">              parameterType);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Annotation[] parameterAnnotations = parameterAnnotationsArray[p];</div><div class="line">        <span class="keyword">if</span> (parameterAnnotations == <span class="keyword">null</span>) &#123;</div><div class="line">          <span class="keyword">throw</span> parameterError(p, <span class="string">"No Retrofit annotation found."</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 将处理过后的parameterHandler放到parameterHandlers中</span></div><div class="line">        parameterHandlers[p] = parseParameter(p, parameterType, parameterAnnotations);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (relativeUrl == <span class="keyword">null</span> &amp;&amp; !gotUrl) &#123;</div><div class="line">        <span class="keyword">throw</span> methodError(<span class="string">"Missing either @%s URL or @Url parameter."</span>, httpMethod);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (!isFormEncoded &amp;&amp; !isMultipart &amp;&amp; !hasBody &amp;&amp; gotBody) &#123;</div><div class="line">        <span class="keyword">throw</span> methodError(<span class="string">"Non-body HTTP method cannot contain @Body."</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (isFormEncoded &amp;&amp; !gotField) &#123;</div><div class="line">        <span class="keyword">throw</span> methodError(<span class="string">"Form-encoded method must contain at least one @Field."</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (isMultipart &amp;&amp; !gotPart) &#123;</div><div class="line">        <span class="keyword">throw</span> methodError(<span class="string">"Multipart method must contain at least one @Part."</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="comment">// 创建一个ServiceMethod对象，里面包含了所有的网络请求及返回结果处理相关的数据：</span></div><div class="line">      <span class="comment">/**</span></div><div class="line">    this.callFactory = builder.retrofit.callFactory();</div><div class="line">    this.callAdapter = builder.callAdapter;</div><div class="line">    this.baseUrl = builder.retrofit.baseUrl();</div><div class="line">    this.responseConverter = builder.responseConverter;</div><div class="line">    this.httpMethod = builder.httpMethod;</div><div class="line">    this.relativeUrl = builder.relativeUrl;</div><div class="line">    this.headers = builder.headers;</div><div class="line">    this.contentType = builder.contentType;</div><div class="line">    this.hasBody = builder.hasBody;</div><div class="line">    this.isFormEncoded = builder.isFormEncoded;</div><div class="line">    this.isMultipart = builder.isMultipart;</div><div class="line">    this.parameterHandlers = builder.parameterHandlers;</div><div class="line">    */</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> ServiceMethod&lt;&gt;(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 由上可知，ServiceMethod其实就是一个控制器一样的东西，处理网络请求。</span></div></pre></td></tr></table></figure>
-<ul>
-<li>接下来就是创建一个OKHttpCall</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">OkHttpCall&lt;Object&gt; okHttpCall = <span class="keyword">new</span> OkHttpCall&lt;&gt;(serviceMethod, args);</div><div class="line"><span class="comment">// 我们看下OKHttpCall是个什么鬼东西</span></div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">OkHttpCall</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Call</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">final</span> ServiceMethod&lt;T, ?&gt; serviceMethod;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Object[] args;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> canceled;</div><div class="line"></div><div class="line">  <span class="comment">// All guarded by this.</span></div><div class="line">  <span class="comment">// 我们看到底层用到了okhttp3</span></div><div class="line">  <span class="keyword">private</span> okhttp3.Call rawCall;</div><div class="line">  <span class="keyword">private</span> Throwable creationFailure; <span class="comment">// Either a RuntimeException or IOException.</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">boolean</span> executed;</div><div class="line"></div><div class="line">  OkHttpCall(ServiceMethod&lt;T, ?&gt; serviceMethod, Object[] args) &#123;</div><div class="line">    <span class="keyword">this</span>.serviceMethod = serviceMethod;</div><div class="line">    <span class="keyword">this</span>.args = args;</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> Request <span class="title">request</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enqueue</span><span class="params">(<span class="keyword">final</span> Callback&lt;T&gt; callback)</span> </span>&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>接下来就是返回处理</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">serviceMethod.callAdapter.adapt(okHttpCall);</div><div class="line"></div><div class="line"><span class="comment">// 这里的逻辑，要跟踪到创建retrofit对象的代码中</span></div><div class="line"><span class="comment">// Make a defensive copy of the adapters and add the default Call adapter.  Retrofit.java</span></div><div class="line">Executor callbackExecutor = <span class="keyword">this</span>.callbackExecutor;</div><div class="line"><span class="keyword">if</span> (callbackExecutor == <span class="keyword">null</span>) &#123;</div><div class="line">  callbackExecutor = platform.defaultCallbackExecutor();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Make a defensive copy of the adapters and add the default Call adapter.</span></div><div class="line">List&lt;CallAdapter.Factory&gt; adapterFactories = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="keyword">this</span>.adapterFactories);</div><div class="line">adapterFactories.add(platform.defaultCallAdapterFactory(callbackExecutor));</div><div class="line"><span class="comment">// 继续跟踪代码，最后会进入到ExecutorCallAdapterFactory中，这是库默认的一个CallAdapter。</span></div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ExecutorCallAdapterFactory</span> <span class="keyword">extends</span> <span class="title">CallAdapter</span>.<span class="title">Factory</span> </span>&#123;</div><div class="line">  <span class="keyword">final</span> Executor callbackExecutor;</div><div class="line"></div><div class="line">  ExecutorCallAdapterFactory(Executor callbackExecutor) &#123;</div><div class="line">    <span class="keyword">this</span>.callbackExecutor = callbackExecutor;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="keyword">public</span> CallAdapter&lt;?, ?&gt; get(Type returnType, Annotation[] annotations, Retrofit retrofit) &#123;</div><div class="line">    <span class="keyword">if</span> (getRawType(returnType) != Call.class) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">final</span> Type responseType = Utils.getCallResponseType(returnType);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CallAdapter&lt;Object, Call&lt;?&gt;&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Type <span class="title">responseType</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> responseType;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="comment">// 因此serviceMethod.callAdapter.adapt(okHttpCall)最后返回的是一个ExecutorCallbackCall，这里用到了适配器模式</span></div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Call&lt;Object&gt; <span class="title">adapt</span><span class="params">(Call&lt;Object&gt; call)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ExecutorCallbackCall&lt;&gt;(callbackExecutor, call);</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<h3 id="发起请求"><a href="#发起请求" class="headerlink" title="发起请求"></a>发起请求</h3><ul>
-<li><p>上一步提到，当执行定义的service方法，本例中是getNews，会返回一个ExecutorCallbackCall，我们接下来看下这个类的结构：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ExecutorCallbackCall</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Call</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">final</span> Executor callbackExecutor;</div><div class="line">    <span class="keyword">final</span> Call&lt;T&gt; delegate;</div><div class="line"></div><div class="line">    ExecutorCallbackCall(Executor callbackExecutor, Call&lt;T&gt; delegate) &#123;</div><div class="line">      <span class="keyword">this</span>.callbackExecutor = callbackExecutor;</div><div class="line">      <span class="keyword">this</span>.delegate = delegate;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enqueue</span><span class="params">(<span class="keyword">final</span> Callback&lt;T&gt; callback)</span> </span>&#123;</div><div class="line">      <span class="keyword">if</span> (callback == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"callback == null"</span>);</div><div class="line"></div><div class="line">      delegate.enqueue(<span class="keyword">new</span> Callback&lt;T&gt;() &#123;</div><div class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call&lt;T&gt; call, <span class="keyword">final</span> Response&lt;T&gt; response)</span> </span>&#123;</div><div class="line">          callbackExecutor.execute(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">              <span class="keyword">if</span> (delegate.isCanceled()) &#123;</div><div class="line">                <span class="comment">// Emulate OkHttp's behavior of throwing/delivering an IOException on cancellation.</span></div><div class="line">                callback.onFailure(ExecutorCallbackCall.<span class="keyword">this</span>, <span class="keyword">new</span> IOException(<span class="string">"Canceled"</span>));</div><div class="line">              &#125; <span class="keyword">else</span> &#123;</div><div class="line">                callback.onResponse(ExecutorCallbackCall.<span class="keyword">this</span>, response);</div><div class="line">              &#125;</div><div class="line">            &#125;</div><div class="line">          &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call&lt;T&gt; call, <span class="keyword">final</span> Throwable t)</span> </span>&#123;</div><div class="line">          callbackExecutor.execute(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">              callback.onFailure(ExecutorCallbackCall.<span class="keyword">this</span>, t);</div><div class="line">            &#125;</div><div class="line">          &#125;);</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isExecuted</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="keyword">return</span> delegate.isExecuted();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Response&lt;T&gt; <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">      <span class="keyword">return</span> delegate.execute();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancel</span><span class="params">()</span> </span>&#123;</div><div class="line">      delegate.cancel();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isCanceled</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="keyword">return</span> delegate.isCanceled();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"CloneDoesntCallSuperClone"</span>) <span class="comment">// Performing deep clone.</span></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Call&lt;T&gt; <span class="title">clone</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> ExecutorCallbackCall&lt;&gt;(callbackExecutor, delegate.clone());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Request <span class="title">request</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="keyword">return</span> delegate.request();</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>类里面有两个关键方法：enqueue（用于异步执行网络请求）、request（用于同步执行网络请求）。</p>
-</li>
-<li>enqueue方法，是callbackExecutor.execute(Runnable),这又得联想到刚才构建Android platform时创建了一个defaultCallbackExecutor，将runnable post到主线程。</li>
-<li>再结合上面写的例子，相信你已经大致了解执行过程了。</li>
-</ul>
-<h3 id="将返回结果转成我们需要的类型"><a href="#将返回结果转成我们需要的类型" class="headerlink" title="将返回结果转成我们需要的类型"></a>将返回结果转成我们需要的类型</h3><ul>
-<li>最后补上一个点，怎么转换类型，例子中我们用的是Gson，所以我就结合着代码说一下它是怎么转换的。首先我们在构造Retrofit时传入了一个 GsonConverterFactory.create()。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * Create an instance using &#123;<span class="doctag">@code</span> gson&#125; for conversion. Encoding to JSON and</div><div class="line">  * decoding from JSON (when no charset is specified by a header) will use UTF-8.</div><div class="line">  */</div><div class="line">  <span class="comment">//  它最终会创建一个GsonConverterFactory</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> GsonConverterFactory <span class="title">create</span><span class="params">(Gson gson)</span> </span>&#123;</div><div class="line">   <span class="keyword">return</span> <span class="keyword">new</span> GsonConverterFactory(gson);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>在GsonConvertFactory中有两个非常重要的方法：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">*  创建一个返回结果的Converter</div><div class="line">*/</div><div class="line"><span class="meta">@Override</span></div><div class="line">  <span class="keyword">public</span> Converter&lt;ResponseBody, ?&gt; responseBodyConverter(Type type, Annotation[] annotations,</div><div class="line">      Retrofit retrofit) &#123;</div><div class="line">    TypeAdapter&lt;?&gt; adapter = gson.getAdapter(TypeToken.get(type));</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> GsonResponseBodyConverter&lt;&gt;(gson, adapter);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="keyword">public</span> Converter&lt;?, RequestBody&gt; requestBodyConverter(Type type,</div><div class="line">      Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) &#123;</div><div class="line">    TypeAdapter&lt;?&gt; adapter = gson.getAdapter(TypeToken.get(type));</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> GsonRequestBodyConverter&lt;&gt;(gson, adapter);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>上面提到的网络请求，最终会由okhttp执行，最后拿到回调结果后，会执行到ServiceMethod中：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** Builds a method return value from an HTTP response body. */</span></div><div class="line"><span class="comment">/**</span></div><div class="line">  这里的responseConverter就是上面创建的GsonRequestBodyConverter</div><div class="line">*/</div><div class="line"> <span class="function">R <span class="title">toResponse</span><span class="params">(ResponseBody body)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">   <span class="keyword">return</span> responseConverter.convert(body);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>我们来看看GsonRequestBodyConverter的convert方法都做了什么</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  它主要就是调用Gson的接口，将json转成了对应的对象。</div><div class="line">  这里的adapter 是这么得来的  TypeAdapter&lt;?&gt; adapter = gson.getAdapter(TypeToken.get(type)); 也就是得到返回类的adapter</div><div class="line">*/</div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> T <span class="title">convert</span><span class="params">(ResponseBody value)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    JsonReader jsonReader = gson.newJsonReader(value.charStream());</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      <span class="keyword">return</span> adapter.read(jsonReader);</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">      value.close();</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>最后回调给Callback的onSuccess或者onFailure。</li>
-<li>中间略去一些过程，我觉得结合代码是比较容易理解的，我这里就列出一个大致的流程思路。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>Retrofit的设计非常巧妙，将各个模块都解耦，可以根据自己的需要来组装。因此不得不对大牛的设计感到惊叹。</li>
-<li>第一次看可能会看的有点迷糊，建议结合源码多次看。相信每次的收获都会不同吧。</li>
-</ul>
-
-          
+          背景
+Retrofit是Square公司开发的一款针对Android网络请求的框架，Retrofit2底层基于OkHttp实现的。
+官方对它的解释是：A type-safe HTTP client for Android and Java ，就是一个安全的可用于Android和java的网络库。
+它
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/03/retrofit源码分析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -502,7 +415,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -530,44 +443,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-16T13:33:20+08:00">
-                2016-11-16
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android技术/" itemprop="url" rel="index">
-                    <span itemprop="name">Android技术</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -606,51 +487,17 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h4 id="为啥需要进程保活"><a href="#为啥需要进程保活" class="headerlink" title="为啥需要进程保活"></a>为啥需要进程保活</h4><ul>
-<li>其实Android系统的机制，在系统内存吃紧的时候，会回收那些不经常使用的进程，重而来保证系统的正常运转。这样对耗电量及内存等资源消耗都是有好处的。</li>
-<li>但是，在某些场景下，我们需要让我们的进程一直是活着的，比如：我们想让用户时刻接收到我们的push消息、像微信那样想实时的能接收到消息等。这时候就得用一些手段来做到进程保活了。</li>
-</ul>
-<h4 id="进程保活包括两方面"><a href="#进程保活包括两方面" class="headerlink" title="进程保活包括两方面"></a>进程保活包括两方面</h4><ol>
-<li>提高进程的优先级，降低系统被杀死的概率。</li>
-<li>一旦进程被杀死后，用各种手段进行拉活。</li>
-</ol>
-<h4 id="进程的优先级及进程的回收策略"><a href="#进程的优先级及进程的回收策略" class="headerlink" title="进程的优先级及进程的回收策略"></a>进程的优先级及进程的回收策略</h4><ul>
-<li>这里我就不展开再去写了，网上有挺多介绍这些知识点的文章。</li>
-<li>可以参考<a href="http://dev.qq.com/topic/57ac4a0ea374c75371c08ce8" target="_blank" rel="external">Android进程保活招式大全</a>,这里基本上讲了所有可用的进程保活知识点。</li>
-</ul>
-<h2 id="进程保活方案"><a href="#进程保活方案" class="headerlink" title="进程保活方案"></a>进程保活方案</h2><ul>
-<li>这里我也不展开写了，可以参考<a href="http://dev.qq.com/topic/57ac4a0ea374c75371c08ce8" target="_blank" rel="external">Android进程保活招式大全</a>,因为我感觉这篇文章讲解的已经很详细了。</li>
-<li>native进程保活，可以参考<a href="http://blog.csdn.net/marswin89/article/details/50899838" target="_blank" rel="external">native保活</a>,这篇文章针对native保活讲解的更细。</li>
-</ul>
-<h2 id="测试过程中注意的点"><a href="#测试过程中注意的点" class="headerlink" title="测试过程中注意的点"></a>测试过程中注意的点</h2><h4 id="测试场景"><a href="#测试场景" class="headerlink" title="测试场景"></a>测试场景</h4><h6 id="正常情况被杀死，比如系统内存不足时进程被杀。"><a href="#正常情况被杀死，比如系统内存不足时进程被杀。" class="headerlink" title="正常情况被杀死，比如系统内存不足时进程被杀。"></a>正常情况被杀死，比如系统内存不足时进程被杀。</h6><ul>
-<li>这种场景不太好模拟，可以在手机上多开几款app（可以多装几个安全应用），然后明显感觉到系统卡顿，这时候系统比较容易回收进程。</li>
-<li>在Android6.0上可以通过 adb shell am send-trim-memory com.example.app MODERATE  命令触发低内存。</li>
-<li>还可以将app长时间置于后台，不过不太好操作。</li>
-</ul>
-<h6 id="系统一键清理，杀进程"><a href="#系统一键清理，杀进程" class="headerlink" title="系统一键清理，杀进程"></a>系统一键清理，杀进程</h6><ul>
-<li>不同设备不太一样，有的是长按home键，有的是长按菜单键。</li>
-<li>现在的设备，一键清理，调用的是force-stop或者kill，进程被杀的比较彻底，比如小米，被杀之后，很难再被拉起。</li>
-</ul>
-<h6 id="用户主动的杀进程"><a href="#用户主动的杀进程" class="headerlink" title="用户主动的杀进程"></a>用户主动的杀进程</h6><ul>
-<li>在设置-应用中强制停止应用。</li>
-</ul>
-<h6 id="第三方应用杀进程"><a href="#第三方应用杀进程" class="headerlink" title="第三方应用杀进程"></a>第三方应用杀进程</h6><ul>
-<li>第三方应用杀进程分为root和非root两种情况。</li>
-<li>现在的第三方引用做的无比流氓和难用。测试很难受。</li>
-</ul>
-<h4 id="测试过程中的细节"><a href="#测试过程中的细节" class="headerlink" title="测试过程中的细节"></a>测试过程中的细节</h4><ul>
-<li>进程被杀死后，间隔多久可以被拉起来。</li>
-<li>进程保活过程中的定时器，5.0以下是AlarmManager。5.0以上是JobScheduler。时间间隔，一般最少要5分钟。间隔太短会不停的唤醒cpu，造成耗电量增多。</li>
-<li>定时器被执行时，是否每次都会重启service，正常的逻辑是：当服务还活着时就不必再去start service。只有当服务被杀死之后，再去start service。</li>
-<li>测试下，手机打开很多APP，然后放一晚上，看保活进程是否还存活。</li>
-<li>JobScheduler的产生是Android为了省电而提出来的，它会将一批任务在某些场景下（比如连上网络或者充电）一起执行。测试起来比较恶心的是，它的执行时间是不固定的。 我测试的时候发现，它执行的时间间隔会越来越大，这可能是Android从省电层面做的优化。（待看源码验证）</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>进程保活在APP里用的很多，基本是个app，都想搞个保活的服务进程。所以理解进程保活的原理对测试帮助很大。</li>
-<li>不过需要说明的一点，因为Android系统的多样性，所以理论上不存在绝对保活的方式，再好的方式，在某些设备上也可能会失效。测试时，只要能覆盖到主流的机型就是可以接受的。</li>
-</ul>
-
-          
+          背景为啥需要进程保活
+其实Android系统的机制，在系统内存吃紧的时候，会回收那些不经常使用的进程，重而来保证系统的正常运转。这样对耗电量及内存等资源消耗都是有好处的。
+但是，在某些场景下，我们需要让我们的进程一直是活着的，比如：我们想让用户时刻接收到我们的push消息、像微信那样想实时的能接收到
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/16/Android进程保活/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -697,7 +544,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -725,44 +572,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-11T15:37:14+08:00">
-                2016-11-11
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具使用/" itemprop="url" rel="index">
-                    <span itemprop="name">工具使用</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -801,35 +616,17 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>测试过程中会碰到有些安装包无法安装的情况，错误一般是：[INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES],代表的意思是这个应用已经是内置应用了且他们签名不一样，所以会安装失败。</li>
-<li>这种情况比较抓狂，自己的测试包装不上去。我们可以用360手机助手或者豌豆荚，他们都能够管理内置应用，不过前提是需要手机已经root。</li>
-<li>但是装360太流氓，会不经过你同意装好多恶心的东西，所以我们尝试自己动手来搞吧。</li>
-</ul>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ul>
-<li><p>首先执行命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ adb remount</div><div class="line">这命令的作用是重新挂载文件系统，因为android的文件系统是Read-only的，挂载之后我们就能有读写的权限。</div></pre></td></tr></table></figure>
-</li>
-<li><p>如果上一步提示错误：remount of system failed: Permission denied,就执行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ adb root</div><div class="line">  restarting adbd as root</div><div class="line">  不过执行这个命令需要root权限</div></pre></td></tr></table></figure>
-</li>
-<li><p>然后可以执行将/system/app/xxx/xxx.apk删除</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ adb shell rm -r /system/app/xxx</div><div class="line">  xxx是你要删除的内置应用apk存放目录。</div></pre></td></tr></table></figure>
-</li>
-<li><p>这里需要注意下，删除完了之后，再点击app会提示应用未安装或直接报错，需要重新启动手机，应用图标才会被清除（没研究出怎么删除应用图标）。</p>
-</li>
-<li>最后记得将/system 变成只读的，为了安全考虑。使用命令：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ adb shell  mount -o ro,remount /system</div></pre></td></tr></table></figure>
-<ul>
-<li>接下来就可以安装你自己的apk了。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>删除之前最好备份一下，方便测试之后的恢复。因为删除系统应用可能会造成系统异常。</li>
-<li>碰到其他问题，可以自己Google下,不过我在ACE上已经实践是可行的。</li>
-</ul>
-
-          
+          背景
+测试过程中会碰到有些安装包无法安装的情况，错误一般是：[INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES],代表的意思是这个应用已经是内置应用了且他们签名不一样，所以会安装失败。
+这种情况比较抓狂，自己的测试包装不上去。我们可以用360手机助手或者豌
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/11/root权限下删除系统应用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -876,7 +673,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -904,44 +701,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-03T14:17:22+08:00">
-                2016-11-03
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试技术/" itemprop="url" rel="index">
-                    <span itemprop="name">测试技术</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -980,117 +745,18 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>感觉我们公司的App，比较严重的是内存问题，而内存问题比较严重的是泄漏问题，所以搞清楚常见的内存泄漏问题，有助于我们平时去排查内存泄漏问题。</li>
-<li>这篇文章是参考<a href="http://www.jianshu.com/p/ac00e370f83d" target="_blank" rel="external">Android内存泄漏的八种可能</a>，然后准备结合着具体的小例子来分析。</li>
-<li>Android开发中，最容易引起内存泄漏问题的是Context，比如之前测安全邮件的时候，退出APP之后进程没有被杀死，所以它引用的大量的view、工具类对象都不能被释放，一泄漏就是一大片的对象。</li>
-</ul>
-<h4 id="java-内存分配策略"><a href="#java-内存分配策略" class="headerlink" title="java 内存分配策略"></a>java 内存分配策略</h4><ul>
-<li>这个话题网上应该挺多总结的，我大概的提一下，方便大家对java内存管理有个印象。</li>
-<li>静态存储区（方法区）：主要存放静态数据、全局static数据和常量。这块数据在编译时就已经分配好，并且在程序运行期间都存在，这也是静态变量会引起内存泄漏的原因，下面会多次提到。</li>
-<li>栈区：当方法被执行时，方法体内的局部变量都在栈上创建，并在方法执行结束时这些局部变量所持有的内存将会自动被释放。因为栈内存分配运算内置于处理器的指令集中，效率很高，但是分配的内存容量有限，栈区的大小可以通过-xss配置。</li>
-<li>堆区：又称动态内存分配，通常就是指在程序运行时直接 new 出来的内存。这部分内存在不使用时将会由 Java 垃圾回收器来负责回收。</li>
-</ul>
-<h4 id="下面就分析下常见的内存泄漏问题："><a href="#下面就分析下常见的内存泄漏问题：" class="headerlink" title="下面就分析下常见的内存泄漏问题："></a>下面就分析下常见的内存泄漏问题：</h4><h2 id="static-Activities"><a href="#static-Activities" class="headerlink" title="static Activities"></a>static Activities</h2><h4 id="问题出现原因"><a href="#问题出现原因" class="headerlink" title="问题出现原因"></a>问题出现原因</h4><ul>
-<li>在某个类中定义了静态的Activity变量，把当前运行的Activity实例赋值于这个静态变量（比较常见的是某些单例xxxxHelper在Activity中使用时将Activity设置进去）。静态变量的生命周期比较长，因为垃圾回收并不回收静态变量，除非我们手动的将静态变量释放掉。因此使用静态变量要特别小心，很容易导致泄漏。</li>
-<li><p>我这里写了个例子，有两个Activity，其中一个Activity中静态变量引用另一个Activity，然后多次启动Activity。下面是FirstActivity的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">       <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">       setContentView(R.layout.activity_first);</div><div class="line"></div><div class="line">       Button button = (Button) findViewById(R.id.jump_btn);</div><div class="line">       button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">           <span class="meta">@Override</span></div><div class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">               SecondActivity.setContext(FirstActivity.<span class="keyword">this</span>);</div><div class="line">               Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">               intent.setClass(FirstActivity.<span class="keyword">this</span>, SecondActivity.class);</div><div class="line">               FirstActivity.<span class="keyword">this</span>.startActivity(intent);</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>两个Activity跳转几次后，GC两次，然后用AndroidStudio memory Monitor抓取hprof（抓取内存快照的方法参考<a href="/2016/10/19/MAT工具的使用/" title="MAT工具的使用">MAT工具的使用</a>），我这里用MAT进行分析（也可以用AndroidStudio分析，更方便），结果如下图所示：<img src="/upload/image/zlw/staticActivity.PNG" alt="staticActivity.PNG"></p>
-</li>
-<li>从图中可以看出来，SecondActivity通过mContext持有了FirstActivity对象的引用，造成FirstActivity不能被释放。</li>
-</ul>
-<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
-<li><p>上面提到对于静态变量，需要我们自己处理，虽然静态变量不可控，但是Activity的生命周期是已知的，所以我们只需要在有静态变量的类销毁时，将静态变量置为null就可以了。在这个例子中我们是在SecondActivity销毁时，将静态变量置空</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDestroy();</div><div class="line">    mContext = <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>当然有时候可能这个静态变量是不能被立即释放掉的，这个时候我们可以用WeakReference，关于java中的引用类型，有不明白的可以Google下不难理解。<br>用WeakReference不会阻止对象的释放，即当GC扫描到WeakReference对象时，会立即将它回收掉。</p>
-</li>
-<li><p>修改之后再抓取Hprof，会发现FirstActivity不会被泄漏了。</p>
-</li>
-</ul>
-<h2 id="static-Views"><a href="#static-Views" class="headerlink" title="static Views"></a>static Views</h2><ul>
-<li><p>静态变量持有View，有时候开发同学基于自己逻辑的某些需要（比如另一个类中需要用到当前类的某些View，或者想用来缓存当前View）会将View写成静态的。我们先直接看个例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> Button staticBtn;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">      <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">      setContentView(R.layout.activity_first);</div><div class="line"></div><div class="line">      staticBtn = (Button) findViewById(R.id.jump_btn);</div><div class="line">      staticBtn.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">          <span class="meta">@Override</span></div><div class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line"><span class="comment">//                SecondActivity.setContext(FirstActivity.this);</span></div><div class="line">              Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">              intent.setClass(FirstActivity.<span class="keyword">this</span>, SecondActivity.class);</div><div class="line">              FirstActivity.<span class="keyword">this</span>.startActivity(intent);</div><div class="line">          &#125;</div><div class="line">      &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>用MAT分析抓到的hprof，搜索发现FirstActivity泄漏，如下图：<br><img src="/upload/image/zlw/static_view.PNG.PNG" alt="staticActivity.PNG"></p>
-</li>
-<li><p>从图中可以看出，FirstActivity通过staticBtn引用了AppCompatButton，最后又通过mContext引用了FirstActivity，又绕回来了。这是因为Activity中的View会持有对Activity的引用。所以最终还是造成Activity内存泄漏。</p>
-</li>
-</ul>
-<h4 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
-<li>参考 static Activity的解决方法，是相似的。</li>
-</ul>
-<h2 id="Inner-Class"><a href="#Inner-Class" class="headerlink" title="Inner Class"></a>Inner Class</h2><ul>
-<li>内部类我觉得在平时开发中用到的非常多，主要是因为感觉没必要重新写一个新的类，同时还能有一定的封装性。</li>
-<li>内部类显著的一个特点是它持有外部类的一个引用。所以使用不当，非常容易造成内存泄漏。</li>
-<li><p>再改造下之前的例子，让内部类持有一个静态变量的引用，主要代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">staticBtn.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line"><span class="comment">//                SecondActivity.setContext(FirstActivity.this);</span></div><div class="line">        createInnerClass();</div><div class="line">        Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">        intent.setClass(FirstActivity.<span class="keyword">this</span>, SecondActivity.class);</div><div class="line">        FirstActivity.<span class="keyword">this</span>.startActivity(intent);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> InnerClass mInnerClass;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">createInnerClass</span><span class="params">()</span></span>&#123;</div><div class="line">mInnerClass = <span class="keyword">new</span> InnerClass();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>用MAT分析抓到的hprof文件，如下图所示：<br><img src="/upload/image/zlw/innerclass.PNG" alt="innerclass.PNG"></p>
-</li>
-<li>从上图可以看出因为内部类因为静态变量mInnerClass,造成FirstActivity内存泄漏。正是因为内部类InnerClass会持有外部类FirstActivity的实例，而InnerClass因为静态变量无法释放造成的泄漏。</li>
-</ul>
-<h4 id="解决方法-2"><a href="#解决方法-2" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
-<li>可以考虑使用静态内部类，静态内部类不会持有外部类的引用。</li>
-<li>慎用静态变量，比如上面的例子中将mInnerClass改成非静态的是可以避免这一类的内存泄漏的。</li>
-</ul>
-<h2 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h2><ul>
-<li>匿名内部类在Android开发中用的非常广，因为方便，比如我们设置监听事件、开启一个AsyncTask都可以用匿名内部类方便的实现。</li>
-<li><p>匿名内部类同样会持有外部类的一个引用，这也是容易泄露的原因。这里的例子是用AsyncTask开启一个永远完不成的任务，代码如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    *  开启AsyncTask</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">void</span> <span class="title">startAsyncTask</span><span class="params">()</span></span>&#123;</div><div class="line">       <span class="keyword">new</span> AsyncTask&lt;Void, Void, Void&gt;()&#123;</div><div class="line"></div><div class="line">           <span class="meta">@Override</span></div><div class="line">           <span class="function"><span class="keyword">protected</span> Void <span class="title">doInBackground</span><span class="params">(Void... params)</span> </span>&#123;</div><div class="line">               <span class="keyword">while</span> (<span class="keyword">true</span>);</div><div class="line">           &#125;</div><div class="line">       &#125;.execute();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>用MAT分析hprof，经过分析，得到如下结果：<br><img src="/upload/image/zlw/anonymous.PNG" alt="anonymous.PNG"></p>
-</li>
-<li>因为AsyncTask内部是线程在工作，而匿名内部类会持有外部的引用，所以当AsyncTask任务没完成时，会造成外部类引用释放不了，重而内存泄漏。所以当见到GCRoot[GCroot的概念参考<a href="/2016/10/19/MAT工具的使用/" title="MAT工具的使用">MAT工具的使用</a>]是Thread时，就可以怀疑是不是Thread的任务没完成，造成的内存泄漏。</li>
-</ul>
-<h4 id="解决方法-3"><a href="#解决方法-3" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
-<li>使用静态内部类，静态内部类没有外部类的引用。</li>
-<li>在页面退出时，终止线程的任务，比如本例中的AsyncTask，在退出页面时可以cancel任务。这样也能避免内存泄漏。</li>
-</ul>
-<h2 id="Handler"><a href="#Handler" class="headerlink" title="Handler"></a>Handler</h2><ul>
-<li>开发中也经常定义一个匿名Runnable对象并交给Handler去处理，比如做延时操作等。这种写法也是非常容易造成内存泄漏的。因为Runnable对象间接引用了外部类Activity对象，然后Runnable会被提交到Handler的MessageQueue中，所以如果Activity 销毁时Runnable还没有被执行，那么activity就会被泄漏掉。</li>
-<li><p>我们写个例子，用来执行一个延时任务，代码如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * 创建一个Handler</div><div class="line">  */</div><div class="line"> <span class="function"><span class="keyword">void</span> <span class="title">createHandler</span><span class="params">()</span></span>&#123;</div><div class="line">     <span class="keyword">new</span> Handler()&#123;</div><div class="line">         <span class="meta">@Override</span></div><div class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">             <span class="keyword">super</span>.handleMessage(msg);</div><div class="line">         &#125;</div><div class="line">     &#125;.postDelayed(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">         <span class="meta">@Override</span></div><div class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">             <span class="keyword">while</span> (<span class="keyword">true</span>);</div><div class="line">         &#125;</div><div class="line">     &#125;, Long.MAX_VALUE &gt;&gt; <span class="number">1</span>);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>页面切换几次后，用AndroidStudio抓取hprof数据，用MAT分析结果如下图所示：<br><img src="/upload/image/zlw/handler.PNG" alt="handler.PNG"></p>
-</li>
-<li>这个内存泄漏结果是比较常见的，GCroot  是Thread，它以java Local的形式被Message持有，表示MessageQueue中还有message在处理，造成了内存泄漏。</li>
-</ul>
-<h4 id="解决方法-4"><a href="#解决方法-4" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
-<li>参考上面匿名内部类的处理方法</li>
-</ul>
-<h2 id="service-Manager"><a href="#service-Manager" class="headerlink" title="service Manager"></a>service Manager</h2><ul>
-<li>通过Context.getSystemService(int name)可以获取服务，这些服务工作在各自的进程中，帮助应用处理后台任务，处理硬件交互。如果需要使用这些服务，可以注册监听器，这会导致服务持有了Context的引用，如果在Activity销毁的时候没有注销这些监听器，会导致内存泄漏。</li>
-<li><p>我们就用SensorManager来写个例子，验证下，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    *  注册Listener</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">void</span> <span class="title">registerListener</span><span class="params">()</span></span>&#123;</div><div class="line">       SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);</div><div class="line">       Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ALL);</div><div class="line">       sensorManager.registerListener(<span class="keyword">this</span>, sensor, SensorManager.SENSOR_DELAY_FASTEST);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>用MAT分析hprof数据，如下图所示：<br><img src="/upload/image/zlw/service.PNG" alt="service.PNG"></p>
-</li>
-<li>可以看到，注册Listener的时候，sensor会持有外部类的一个实例。造成内存泄漏。</li>
-</ul>
-<h4 id="解决方法-5"><a href="#解决方法-5" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
-<li>在页面退出时，能够unregisteListener，这样就能够释放外部类引用，避免内存泄漏。</li>
-<li>在开发的过程中，非常容易忘记去UNregisterListener，所以好的习惯是，写一个register之后立马写一个Unregister，这样可以避免忘记反注册。</li>
-</ul>
-<h2 id="集合类的泄漏"><a href="#集合类的泄漏" class="headerlink" title="集合类的泄漏"></a>集合类的泄漏</h2><ul>
-<li>集合在平时开发中也是被大量使用的，如果这个集合类是由静态变量引用，并且只添加了元素，但是在不用的时候并没有释放元素，那么就有可能造成内存泄漏。不过由于如果元素不清理的话可能会影响程序的逻辑，所以一般可以避免这种情况，但是稍有不留意，也是非常容易出现内存泄漏的。</li>
-<li>这里就不举例子说明了，这种场景相对简单。</li>
-</ul>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ul>
-<li>在页面退出时，要清空不用的数据集合。</li>
-</ul>
-<h2 id="其他常见泄漏场景"><a href="#其他常见泄漏场景" class="headerlink" title="其他常见泄漏场景"></a>其他常见泄漏场景</h2><ul>
-<li>资源未关闭造成的内存泄漏， 比如：File、Cursor、Stream、Bitmap等资源，他们在不使用的时候一定要及时销毁回收。特别是Bitmap，会占用非常大的内存空间。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们从上面的例子中可以总结出，造成内存泄漏的原因有下面两种：</p>
-<ul>
-<li>过多的使用static变量，并且没有正确释放不用的对象。</li>
-<li>对象的生命周期（比如Thread）比Activity的生命周期长，造成内存泄漏。</li>
-</ul>
-<p>这里就先总结了常见的内存泄漏场景，后面碰见比较经典的问题再总结。</p>
-
-          
+          背景
+感觉我们公司的App，比较严重的是内存问题，而内存问题比较严重的是泄漏问题，所以搞清楚常见的内存泄漏问题，有助于我们平时去排查内存泄漏问题。
+这篇文章是参考Android内存泄漏的八种可能，然后准备结合着具体的小例子来分析。
+Android开发中，最容易引起内存泄漏问题的是Context，比如
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/03/Android内存泄漏Tips/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1137,7 +803,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1165,44 +831,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-31T14:49:52+08:00">
-                2016-10-31
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">Android性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1241,94 +875,17 @@
       
         
           
-            <h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><h6 id="先了解几个和Linux时间有关的名词：HZ、tick"><a href="#先了解几个和Linux时间有关的名词：HZ、tick" class="headerlink" title="先了解几个和Linux时间有关的名词：HZ、tick"></a>先了解几个和Linux时间有关的名词：HZ、tick</h6><ul>
-<li>HZ:Linux内核每隔固定周期会发出时间中断（timer interrupt），HZ是用来定义每一秒有几次timer interrupts，比如：HZ为1000，就代表每秒有1000次timer interrupts。</li>
-<li>Tick：Tick是HZ的倒数，Tick = 1/HZ。即timer interrupt每发生一次中断的时间，比如：HZ为250，tick=4ms</li>
-<li>Android基于Linux，而Linux是一个典型的分时系统，CPU时间被分成多个时间片，这是多任务实现的基础，Linux内核依赖tick，即时钟中断来进行分时。</li>
-</ul>
-<h6 id="jiffies"><a href="#jiffies" class="headerlink" title="jiffies"></a>jiffies</h6><ul>
-<li>有了以上预热知识，我们就能解释jiffies是什么了。jiffies是用来记录从开机开始，已经经过了多少个tick，每一次发生timer interrupt，jiffies就会增加1。</li>
-<li>我们可以计算出来，其实内核每秒钟将jiffies变量增加HZ次。</li>
-</ul>
-<h6 id="proc-stat"><a href="#proc-stat" class="headerlink" title="/proc/stat"></a>/proc/stat</h6><ul>
-<li>文件中存放的就是所有cpu的jiffies信息，如下图所示：<br><img src="/upload/image/zlw/battery_stat.png" alt="battery_stat.png"></li>
-<li>从上图可以看出我的手机是8核的，第一行代表总的cpu jiffies情况，后面cpu0到cpu1代表的是各个cpu的jiffies情况。</li>
-<li>user：从系统启动开始累计到当前时刻，用户态的jiffies，不包含nice值为负的进程。</li>
-<li>nice：从系统启动开始累计到当前时刻，nice值为负的进程所占用的jiffies。（nice值是Linux中用来设置线程进程优先级的，取值范围是-20到19，nice值越小，进程优先级越高，获得cpu调用的机会越多，在Android中一般用不到nice值，不过我们可以控制线程的优先级）</li>
-<li>system：从系统启动开始累计到当前时刻，系统态的jiffies。</li>
-<li>idle：从系统启动开始累计到当前时刻，除硬盘IO等待时间以外其它等待的jiffies。</li>
-<li>iowait ： 从系统启动开始累计到当前时刻，硬盘IO等待的jiffies。</li>
-<li>irq ： 从系统启动开始累计到当前时刻，硬中断的jiffies</li>
-<li>softirq ：从系统启动开始累计到当前时刻，软中断的jiffies。</li>
-<li>上面这几项相加=一段时间内总的cpu时间片。<h6 id="proc-uid-stat"><a href="#proc-uid-stat" class="headerlink" title="/proc/uid/stat"></a>/proc/uid/stat</h6></li>
-<li>这个文件中存放的是uid进程的cpu 运行情况。如下图所示：<br><img src="/upload/image/zlw/uidstat.PNG" alt="uidstat.PNG"></li>
-<li>这里值比较多，我就不一一介绍了，都是关于进程的信息，有兴趣的同学可以参考：<a href="http://blog.sina.com.cn/s/blog_aed19c1f0102wcuo.html" target="_blank" rel="external">/proc/[pid]/stat文件分析</a>。<br>我们重点关注第14、15、16、17列的信息：</li>
-<li>第14行是utime= 26，表示该任务在用户态运行的时间，单位为jiffies</li>
-<li>第15行是stime = 15，表示该任务在核心态运行的时间，单位为jiffies</li>
-<li>第16行是cutime = 0 ，累计的该任务的所有的waited-for进程（已死进程）曾经在用户态运行的时间，单位为jiffies</li>
-<li>第17行是cstime = 0，累计的该任务的所有的waited-for进程（已死进程）曾经在核心态运行的时间，单位为jiffies</li>
-<li>所以该进程占用cpu的总时间就是上面四个值相加：utime+stime+cutime+cstime。</li>
-</ul>
-<h2 id="计算CPU占有率"><a href="#计算CPU占有率" class="headerlink" title="计算CPU占有率"></a>计算CPU占有率</h2><h6 id="计算Android整机的CPU占有率"><a href="#计算Android整机的CPU占有率" class="headerlink" title="计算Android整机的CPU占有率"></a>计算Android整机的CPU占有率</h6><ul>
-<li>读取/proc/stat文件的数据可以拿到总的cpu时间片。</li>
-<li>数据采集时间间隔要足够短（考虑到数据精确性），我一般采用1s或者小于1s的时间。</li>
-<li>假设前后取了两次总的cpu时间片分别为total1，total2。则这个时间段内总的cpu时间片 total= total2 - total1</li>
-<li>假设前后取了两次空闲时间idle时间片（上面有提到，/proc/stat 第四列），分别为i1, i2。则这个时间段内idle的时间片 idle= i2 - i1。</li>
-<li>总的cpu占用率 = 100*(total - idle） / total</li>
-</ul>
-<h6 id="计算单个进程的cpu占用率"><a href="#计算单个进程的cpu占用率" class="headerlink" title="计算单个进程的cpu占用率"></a>计算单个进程的cpu占用率</h6><ul>
-<li>读取/proc/uid/stat 可以得到某一进程占用的cpu时间片。</li>
-<li>数据采集时间间隔要足够短（考虑到数据精确性），我一般采用1s或者小于1s的时间。</li>
-<li>假设前后取了两次进程占用cpu时间片的值，分别为：proc1， proc2 。 则这个时间段内进程占用的时间片为proc = proc2 - proc1</li>
-<li>假设前后取了两次总的cpu时间片分别为total1，total2。则这个时间段内总的cpu时间片 total= total2 - total1</li>
-<li>单个进程的cpu占有率  = 100*(total - proc) / total</li>
-</ul>
-<h6 id="top-和-dumpsys-cpuinfo区别"><a href="#top-和-dumpsys-cpuinfo区别" class="headerlink" title="top 和 dumpsys cpuinfo区别"></a>top 和 dumpsys cpuinfo区别</h6><ul>
-<li>网上有很多的帖子来介绍如何计算cpu使用率，其中介绍了必然会提到两种方式：top命令和dumpsys cpuinfo。我一直比较好奇他们之间有什么区别，并且他们的结果有些不同。</li>
-<li>主要是因为他们的计算方法是不同的，top命令方式和dumpsys cpuinfo两者计算分子是相同的，不同的是分母：top命令的分母是上面提到的时间片jiffies，而dumpsys cpuinfo的分母是通过SystemClock.uptimeMillis()计算时间差。</li>
-<li>不过通过top命令得到的cpu占有率是整数的。所以之前经常看到0%的，以为真的是0。其实有可能是0.x%。</li>
-<li>网上有个哥们讲了这个问题，可以参考<a href="http://blog.csdn.net/oujunli/article/details/51463707" target="_blank" rel="external">top和dumpsys cpuinfo</a>，也可以自己查看下源码验证下这哥们讲的是否是正确的。</li>
-</ul>
-<h6 id="AndroidStudio-cpu-monitor测App-cpu占用率不为0"><a href="#AndroidStudio-cpu-monitor测App-cpu占用率不为0" class="headerlink" title="AndroidStudio cpu monitor测App cpu占用率不为0"></a>AndroidStudio cpu monitor测App cpu占用率不为0</h6><ul>
-<li>在之前的公司，要求App静默时的cpu占有率达到0，但是用AndroidStudio 测试总是不为0，会维持在0.22%到0.44%。</li>
-<li>做了个实验，用Python脚本采用上面的方法计算app的cpu占有率。得到的结果和AndroidStudio monitor的结果对比比较接近，都是0.22%-0.44%。</li>
-<li>第一次尝试：怀疑是不是和采集数据时间短，所以我每隔2s采集一次数据，发现和原来的结果一样，所以这种情况排除。</li>
-<li>第二次尝试：我发现用AndroidStudio monitor trace的结果中，只有jdwp一个线程在工作，于是我猜测是不是AndroidStudio在不断通过jdwp在干着什么工作。所以我关掉了AndroidStudio，然后再运行Python脚本，果然cpu占有率变成0。然后我又再次打开AndroidStudio，不选择调试【安全邮件】进程，用Python脚本采集cpu占有率数据，果然cpu占有率还是0。然后选择调试【安全邮件】进程，再用Python脚本采集数据，cpu占有率变成了0.22%-0.44%。</li>
-<li>通过上面的实验也就验证了AndroidStudio cpu monitor 测试App cpu占有率不为0的原因：JDWP线程，它是在每个进程启动的时候都会开启的一个用于和DDMS进行通信的线程。</li>
-<li><strong> 结论是建议用脚本<a href="http://gitlab.idc.safecenter.cn/zhouliwei/AutoScriptForAndroid/blob/master/commonoperation/cpu_inspect_thread.py" target="_blank" rel="external">测试cpu占有率</a>，或者用AndroidStudio测试时当cpu占有率大于0.44%时可能是有问题的。</strong></li>
-</ul>
-<h2 id="分析CPU相关问题"><a href="#分析CPU相关问题" class="headerlink" title="分析CPU相关问题"></a>分析CPU相关问题</h2><h6 id="测试场景"><a href="#测试场景" class="headerlink" title="测试场景"></a>测试场景</h6><ul>
-<li>静默状态：静默状态cpu占有率应该为0。</li>
-<li>操作之后停止操作：这种情况下，cpu占有率会在一定时间后变为0。</li>
-<li>操作过程中：cpu占有率不应该非常高，超过50%（没有数据支撑，只是拍脑袋感觉）。</li>
-<li>之前用AndroidStudio monitor测试，cpu静默时不能为0，维持在0.22%-0.44%，通过抓取MethodTracing，发现只有一个JDWP线程。</li>
-</ul>
-<h6 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h6><ul>
-<li>分析问题的手段有很多：TraceView、DDMS的Threads（查看哪些线程还活着）、AndroidStudio monitor抓trace。</li>
-<li>我们结合着AndroidStudio monitor的trace来分析下，因为容易操作且采集的数据比较丰富。</li>
-<li>因为我手边没有cpu问题的例子，所以我用一个操作过程中cpu变化的场景来分析下：打开【安全邮件】，然后在AndroidStudio cpu monitor点击【start Method Tracing】如下图所示：<img src="/upload/image/zlw/method_tracing.PNG" alt="method_tracing.PNG"></li>
-<li>然后多次滑动邮件列表，持续大概10几秒，可以观察到cpu占有率在6%左右。</li>
-<li>再次点击【start tracing method】（这个时候是stop tracing method），AndroidStudio会自动打开一份trace文件，我们主要分析这份trace文件，它包括了每个方法的耗时，对我们分析问题非常有帮助。</li>
-<li>我们先来看下它长什么样子，如下图所示：<img src="/upload/image/zlw/cpu_method_trace.PNG" alt="cpu_method_trace.PNG"></li>
-<li>Thread 表示当前进程里面还有什么线程在工作，一般我们关心的是main（主线程）、xx_thread_pool、自己命名的线程等，对于Binder、JDWP这些是系统干活的线程，一般我们不需要关心。</li>
-<li>x-axis 表示的是下面这个柱状图横坐标以什么为基准排序，有两个选项：thread time是线程执行时间不包括线程 sleep时间；Wall Clock Time 是系统运行时间，包括线程sleep等时间。</li>
-<li>搜索按钮  可以用来搜索我们感兴趣的内容，比如我们应用的包名。搜索结果在柱状图中会有体现。</li>
-<li>Invocation Count 表示方法执行了多少次。</li>
-<li>Inclusive Time 表示方法执行了多长时间（单位是微秒），包括执行其他方法的时间。</li>
-<li><p>Exclusive Time 表示方法本身执行了多长时间，不包括执行其他方法的时间。</p>
-</li>
-<li><p>回到上面的例子，我们在搜索框中搜索：xdja 如下图所示：<img src="/upload/image/zlw/tracing_method.PNG" alt="tracing_method.PNG"></p>
-</li>
-<li>可以看到有相关的方法在工作，如果是静默状态，理论上是不应该有任何方法在执行的（排除心跳包的场景），所以这个可能就是存在问题的。</li>
-<li>如果通过上面的方法不能确定问题，我们可以进一步的通过TraceView来分析方法的调用栈，从而排查问题。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>测App 的CPU占有率，用脚本测要关掉AndroidStudio对App的调试，排除其对采集数据的影响。如果用AndroidStudio cpu monitor测，静默时CPU占有率稳定在0.22%-0.44%，并不为0。</li>
-<li>首先用AndroidStudio cpu monitor的【start Method Tracing】来采集方法执行时间分析问题。分析思路是查找和自己应用相关的操作。</li>
-<li>更进一步的分析问题可以使用TraceView抓取方法调用栈。</li>
-</ul>
-
-          
+          背景知识先了解几个和Linux时间有关的名词：HZ、tick
+HZ:Linux内核每隔固定周期会发出时间中断（timer interrupt），HZ是用来定义每一秒有几次timer interrupts，比如：HZ为1000，就代表每秒有1000次timer interrupts。
+Tick：Tic
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/31/Android对cpu测试/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1375,7 +932,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1403,44 +960,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-24T09:48:58+08:00">
-                2016-10-24
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">Android性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1479,93 +1004,20 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>这一周都在花时间在做电量方面的分析工作，主要是为了验证通过软件的方式测电量是否可以替代功耗仪测电量。</li>
-</ul>
-<h4 id="功耗仪-or-软件方式"><a href="#功耗仪-or-软件方式" class="headerlink" title="功耗仪 or 软件方式"></a>功耗仪 or 软件方式</h4><p>  至于为啥想用软件方式替代功耗仪，我个人的观点是：</p>
-<h6 id="功耗仪"><a href="#功耗仪" class="headerlink" title="功耗仪"></a>功耗仪</h6><ul>
-<li>功耗仪虽然比较精确，但是测的是整机的电量情况，对测App的电量会造成一定的影响，且不知道具体进行了什么操作。</li>
-<li>功耗仪操作比较麻烦，需要拆机，且不好进行兼容性操作。</li>
-<li>但功耗仪的优点是精确，任何操作或者变化都会引起电量的变化。</li>
-</ul>
-<h6 id="软件方式"><a href="#软件方式" class="headerlink" title="软件方式"></a>软件方式</h6><ul>
-<li>android从最开始都有统计电量的api，只是一直没有开放（可能是考虑到这个模块还不稳定），从android2.3到android7.0，api获取电流的粒度更细致，接口也发生了一些变化，不过整体思想是没有变化的。</li>
-<li>api测电量的思想：Android中各个部件的耗电量 = W * t (W表示单位时间耗电量，这个值每个设备不一样，通过power_profile.xml文件记录，这个文件放在 /system/framework/framework-res.apk中。 t 表示这个部件运行了多长时间)。  APP的耗电量就是App在运行过程中，涉及到的各个部件消耗电量的总和。</li>
-<li>在Android4.4之前可以通过反射或者通过<a href="https://github.com/liwei721/android-hidden-api" target="_blank" rel="external">某些手段</a>访问隐藏API及internal的方式来获取电量数据.</li>
-<li>不过从android4.4开始，Android强制加了权限限制，如下图所示：<br><img src="/upload/image/batterystats.png" alt="batterystats"></li>
-<li>所以从Android4.4开始，想通过api来获取电量也不是那么容易，好在从Android5.0开始，google 又开放了一个利器【batteryStats】（其实它就是执行的api代码），通过这个命令可以收集 从上次充电开始一段时间内的电量数据（换句话说就是不充电状态下的电量数据）。</li>
-</ul>
-<h2 id="软件方式实现原理"><a href="#软件方式实现原理" class="headerlink" title="软件方式实现原理"></a>软件方式实现原理</h2><h4 id="API方式"><a href="#API方式" class="headerlink" title="API方式"></a>API方式</h4><ul>
-<li>主要涉及到三个类和一个方法，分别是：BatteryStatsHelper、BatteryStatsImpl、PowerProfile，分别介绍下它们：</li>
-</ul>
-<h6 id="BatteryStatsImpl"><a href="#BatteryStatsImpl" class="headerlink" title="BatteryStatsImpl"></a>BatteryStatsImpl</h6><ul>
-<li>BatteryStatsImpl 其实是记录了Android各个部件的耗时及操作。Android对它的注释就是：All information we are collecting about things that can happen that impact battery life</li>
-<li><p>它是通过BatteryStatsService获取的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> BatteryStatsImpl <span class="title">getStats</span><span class="params">(IBatteryStats service)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            ParcelFileDescriptor pfd = service.getStatisticsStream();</div><div class="line">            <span class="keyword">if</span> (pfd != <span class="keyword">null</span>) &#123;</div><div class="line">                FileInputStream fis = <span class="keyword">new</span> ParcelFileDescriptor.AutoCloseInputStream(pfd);</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="keyword">byte</span>[] data = readFully(fis, MemoryFile.getSize(pfd.getFileDescriptor()));</div><div class="line">                    Parcel parcel = Parcel.obtain();</div><div class="line">                    parcel.unmarshall(data, <span class="number">0</span>, data.length);</div><div class="line">                    parcel.setDataPosition(<span class="number">0</span>);</div><div class="line">                    BatteryStatsImpl stats = com.android.internal.os.BatteryStatsImpl.CREATOR</div><div class="line">                            .createFromParcel(parcel);</div><div class="line">                    stats.distributeWorkLocked(BatteryStats.STATS_SINCE_CHARGED);</div><div class="line">                    <span class="keyword">return</span> stats;</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                    Log.w(TAG, <span class="string">"Unable to read statistics stream"</span>, e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">            Log.w(TAG, <span class="string">"RemoteException:"</span>, e);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BatteryStatsImpl();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>如上所示，通过service.getStatisticsStream来获取 batterstats的数据（可以进一步查看BatteryStatsService源码）。</p>
-</li>
-</ul>
-<h6 id="PowerProfile"><a href="#PowerProfile" class="headerlink" title="PowerProfile"></a>PowerProfile</h6><ul>
-<li>它其实就干了一件事情，将上面提到的power_profile.xml加载解析到内存中，然后封装了一些比较常用的方法，比如获取cpu的频率级别个数等。</li>
-<li><p>这里说下这个power_profile.xml中记录的数据，我们可以通过apktool工具反编译framework-res.apk，然后在/res/xml/目录下就能找到power_profile.xml。我们看下它里面内容大致是什么：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"none"</span>&gt;</span>0<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"screen.on"</span>&gt;</span>170<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"screen.full"</span>&gt;</span>440<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"bluetooth.active"</span>&gt;</span>30<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"bluetooth.on"</span>&gt;</span>3<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"wifi.on"</span>&gt;</span>10<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"wifi.active"</span>&gt;</span>50<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"wifi.scan"</span>&gt;</span>100<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"dsp.audio"</span>&gt;</span>25<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"dsp.video"</span>&gt;</span>180<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"gps.on"</span>&gt;</span>70<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"radio.active"</span>&gt;</span>350<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"radio.scanning"</span>&gt;</span>10<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>其实这里面记录的正是各个Android部件的单位时间耗电量（类似于买东西时的价格表）。</p>
-</li>
-</ul>
-<h6 id="BatteryStatsHelper-中processAppusage方法"><a href="#BatteryStatsHelper-中processAppusage方法" class="headerlink" title="BatteryStatsHelper 中processAppusage方法"></a>BatteryStatsHelper 中processAppusage方法</h6><ul>
-<li>BatteryStatsHelper 主要作用是用来计算耗电量的，通过refreshStats方法来开始计算。</li>
-<li>其中processAPPUsage是用来计算App耗电的（比如：wakelock、cpu），processMiscUsage是用来计算硬件耗电的（比如：wifi、屏幕）。</li>
-<li>我们测App的耗电量，其实关注processAPPUsage就够了，这里就不贴代码了，可以自行去查看源码，逻辑还是挺简单的，只不过需要熟悉计算的方法，网上有很多介绍这段源码的，也可以Google了解。</li>
-</ul>
-<h6 id="尝试的过程"><a href="#尝试的过程" class="headerlink" title="尝试的过程"></a>尝试的过程</h6><ul>
-<li>第一次尝试 想通过反射去实现processAPPUsage的逻辑，从而能分别拿到每个部件的耗电是多少。但是尝试了一段时间，发现对于实现方法内部的逻辑，反射过于麻烦了，要反射的方法及对象太多。</li>
-<li>第二次尝试用android-hidden-api去实现，这个方法其实就是替代反射，对于hiden的类、方法以及internal包下的类，Android在编译成sdk时，是过滤掉的，所以我们没办法直接使用他们，而android-hidden-api的思路是用设备中的android.jar替换本地sdk中的android.jar，然后就可以访问隐藏及internal包下的类。</li>
-<li>尝试了很长时间后，发现我没办法拿到BatteryStatsImpl的对象，前面提到过，它是在BatteryStatsService中被初始化的，我们是没办法直接操作BatterStatsService的。因此这里得出个结论 <strong>以后做任何尝试之前，需要搞清楚代码的原理，否则会多走很多弯路，必然会花费很多时间</strong></li>
-<li>第三次尝试是从Android setting源码入手，参考它初始化BatteryStatsHelper及获取BatteryStatsImpl的方式。然后感觉快要出结果时，又碰到了一个crash，提示我没有BatteryStats的权限。上面也有提到过从android 4.4开始，强制增加了权限校验，非得是System才能有权限（App放到/system/app/中）。</li>
-<li><p>第四次尝试是准备用hook的方式绕开权限控制，因为我发现他们都调用了一个统一的方法，且可以hook BatteryStatsService这个系统服务：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enforceCallingPermission</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (Binder.getCallingPid() == Process.myPid()) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        mContext.enforcePermission(android.Manifest.permission.UPDATE_DEVICE_STATS,</div><div class="line">                Binder.getCallingPid(), Binder.getCallingUid(), <span class="keyword">null</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>想Hook掉这方法，让他啥也不干。这样就能绕过权限限制，完成之后运行发现还是报权限问题，于是查看源码，发现真是悲剧，发现有的方法调用的是：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mContext.enforceCallingPermission(</div><div class="line">                android.Manifest.permission.BATTERY_STATS, <span class="keyword">null</span>);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这样hook这个方法就达不到目的了，只能另想办法。</p>
-<ul>
-<li>第五个方案没有尝试，因为感觉前面投入时间太多了，其实我想绕过Android api，用它的思路自己计算或许可行，具体操作是：先读取power_profie.xml的信息，然后通过dumpsys 各个服务，得出各个部件运行的时间，然后计算部件的耗电量。</li>
-</ul>
-<h4 id="adb-shell-dumpsys-batterystats"><a href="#adb-shell-dumpsys-batterystats" class="headerlink" title="adb shell dumpsys batterystats"></a>adb shell dumpsys batterystats</h4><ul>
-<li>从Android5.0开始batterystats工具也能采集很详细的数据，所以最后我采用这种方式来获取App的耗电量，它能够采集：一段时间内，App使用了多久Cpu、WakeLock耗用多长时间及哪些进程操作了wakelock多长时间等。</li>
-</ul>
-<h6 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h6><ul>
-<li><p>连上手机，执行如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ adb shell dumpsys batterystats --enable full-wake-history</div><div class="line">$ adb shell dumpsys batterystats --reset 清空电量数据</div></pre></td></tr></table></figure>
-</li>
-<li><p>拔掉手机，测试自己的场景。</p>
-</li>
-<li><p>连上手机，执行命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ adb shell batterystats package_name &gt; bugreport.txt</div><div class="line">  用于采集数据</div></pre></td></tr></table></figure>
-</li>
-<li><p>我这里写了个Python脚本，主要是用来分析收集采集的数据，写入excel,可以在<a href="http://gitlab.idc.safecenter.cn/zhouliwei/AutoScriptForAndroid/blob/master/apptestcase/battery_auto_inspect.py" target="_blank" rel="external">公司内网</a>访问代码。</p>
-</li>
-<li>也可以用github上面的<a href="https://github.com/liwei721/battery-historian" target="_blank" rel="external">battery-historian</a>将结果图形化。不过生成的html，js文件需要翻墙才能访问。</li>
-</ul>
-<h6 id="采集到的数据名词"><a href="#采集到的数据名词" class="headerlink" title="采集到的数据名词"></a>采集到的数据名词</h6><ul>
-<li>Estimated power use (mAh) ：它下面列出的是各个uid的耗电量，也就是app中各个应用和硬件的耗电。</li>
-<li>Computed drain ：是根据power_proile.xml计算出来的值。</li>
-<li><p>actual drain ：根据电池实际的电量消耗计算最小值到最大值的范围。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">pw.print(prefix); pw.print(<span class="string">"    Capacity: "</span>);</div><div class="line">                    printmAh(pw, helper.getPowerProfile().getBatteryCapacity());</div><div class="line">                    pw.print(<span class="string">", Computed drain: "</span>); printmAh(pw, helper.getComputedPower());</div><div class="line">                    pw.print(<span class="string">", actual drain: "</span>); printmAh(pw, helper.getMinDrainedPower());</div><div class="line">                    <span class="keyword">if</span> (helper.getMinDrainedPower() != helper.getMaxDrainedPower()) &#123;</div><div class="line">                        pw.print(<span class="string">"-"</span>); printmAh(pw, helper.getMaxDrainedPower());</div><div class="line">                    &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>Statistics since last charge: 从上次充电之后的数据情况。</p>
-</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>拿了之前安全芯片的功耗仪测试数据，用软件的方式测，拿到的结果和功耗仪的数据还是有差别的，Android自己也承认了，用power_profile.xml计算出来的电量是模拟值。不过在结果中的actual drain值是个范围，感觉和功耗仪的结果比较接近。</li>
-<li>能不能替代功耗仪测试电量，还得继续多个版本来看，从目前的测试情况来看，我感觉是可以替代看看的。因为软件方式可以看到这段时间内的耗电进程及拿到粗略的电量值。</li>
-</ul>
+          背景
+这一周都在花时间在做电量方面的分析工作，主要是为了验证通过软件的方式测电量是否可以替代功耗仪测电量。
 
-          
+功耗仪 or 软件方式  至于为啥想用软件方式替代功耗仪，我个人的观点是：
+功耗仪
+功耗仪虽然比较精确，但是测的是整机的电量情况，对测App的电量会造成一定的影响，且不知道具体进行了什么操作
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/24/Android耗电量测试/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1612,7 +1064,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1640,44 +1092,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-19T17:28:59+08:00">
-                2016-10-19
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试工具/" itemprop="url" rel="index">
-                    <span itemprop="name">测试工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1716,73 +1136,16 @@
       
         
           
-            <h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><h4 id="MAT简介"><a href="#MAT简介" class="headerlink" title="MAT简介"></a>MAT简介</h4><ul>
-<li><p>MAT(Memory Analyzer Tool)，一个用于内存分析的工具，它能够抓取一段时间内的内存快照，帮助我们分析这一段时间内存的分配情况，通过分析内存情况可以帮助我们发现内存泄漏、内存大量分配等问题的原因所在。Eclipse本身可以装MAT的插件，但是现在我们一般都转向AndroidStudio，所以可以使用MAT独立的版本，可以从这里下载<a href="https://eclipse.org/mat/downloads.php" target="_blank" rel="external">MAT</a></p>
-</li>
-<li><p>下载完成之后，解压就可以直接使用。</p>
-</li>
-</ul>
-<h4 id="java垃圾回收机制"><a href="#java垃圾回收机制" class="headerlink" title="java垃圾回收机制"></a>java垃圾回收机制</h4><ul>
-<li>java比较幸福的一件事情就是有GC（Garbage Collection），但是在项目节奏比较快的情况下，有可能开发同学会随心所欲的使用内存，重而就有可能造成内存泄漏，即有些内存明明不使用了，但是却不能被回收，严重浪费资源。</li>
-<li>JVM（java虚拟机）是根据<strong>对象树</strong>来判断某个对象是否能被回收的。如下图所示：<br><img src="/upload/image/gc_tree.png" alt="GC Tree"></li>
-<li>即从GC Root（直译为GC 根，形象的理解为一颗大树的根吧）开始检查看哪些对象是可以到达的，直到遍历完所有的叶子结点。遍历完成之后，就去回收那些不可达的对象。</li>
-</ul>
-<h6 id="GC-root分类"><a href="#GC-root分类" class="headerlink" title="GC root分类"></a>GC root分类</h6><ul>
-<li>我们应该掌握几种GC root，便于后面使用MAT对内存进行分析。</li>
-<li>Class：即由System Class Loader/Boot Class Loader加载的类对象，这些类对象不会被回收。</li>
-<li>Thread线程：激活状态的线程</li>
-<li>Stack Local栈中的对象，每个线程都会分配一个栈，栈中的局部变量或者参数都是GC root，因为它们的引用随时可能被用到</li>
-<li>JNI JNI中的引用的对象；可能在JNI中定义的，也可能在虚拟机中定义</li>
-<li>Monitor Used 用于保证同步的对象，例如wait()，notify()中使用的对象、锁等。</li>
-<li>Held by JVM JVM持有的对象。JVM为了特殊用途保留的对象，它与JVM的具体实现有关。比如有System Class Loader, 一些Exceptions对象，和一些其它的Class Loader。对于这些类，JVM也没有过多的信息。</li>
-</ul>
-<h2 id="使用MAT"><a href="#使用MAT" class="headerlink" title="使用MAT"></a>使用MAT</h2><h4 id="抓取内存快照"><a href="#抓取内存快照" class="headerlink" title="抓取内存快照"></a>抓取内存快照</h4><h6 id="DDMS"><a href="#DDMS" class="headerlink" title="DDMS"></a>DDMS</h6><ul>
-<li>直接使用DDMS，点击[Dump Hprof file],等待5s钟会弹出保存hprof文件的对话框，如下图所示：<br><img src="/upload/image/mat.PNG" alt="DDMS MAT"></li>
-<li>不过在Dump Hprof file之前，需要GC至少两次，让JVM回收那些可以被回收的对象。如下图所示：<img src="/upload/image/ddmsgc.PNG" alt="ddms gc"></li>
-<li>生成的hprof不能直接被MAT打开，需要用Android SDK Tools中工具转一下<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hprof-conv dump.hprof converted-dump.hprof</div><div class="line">  之后就可以打开了。</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h6 id="AndroidStudio-Monitor"><a href="#AndroidStudio-Monitor" class="headerlink" title="AndroidStudio Monitor"></a>AndroidStudio Monitor</h6><ul>
-<li>AndroidStudio最新版本我感觉比DDMS要人性化，所有的操作都可以在一个面板中完成，如下图所示：<img src="/upload/image/androidstudio_MAT.PNG" alt="AndroidStudio monitor"></li>
-<li>如图中所示，1 对应的就是GC   2 对应的是可以抓取堆内存快照hprof文件（堆中对象的引用情况）  3 对应的是抓取一定时间内对象的分配情况（分配对象的个数及大小）。</li>
-<li>抓取hprof时，还是先GC至少两次。</li>
-<li>点击【dump java heap】后会在AndroidStudio的左边目录栏的Captures选项中的Heap SnapShot列表中多一个以时间命名的hprof文件，然后在hprof文件上右键选择【Export to standard .hprof】即可以转成MAT能打开的格式。如下图所示：<br><img src="/upload/image/Androidstudio_hprof.PNG" alt="Androidstudio_hprof"></li>
-<li>这里要说下AndroidStudio比较好用的功能，最新版（我也不知道从哪个版本开始）提供了可以检测内存泄漏的工具，直接点击上一步中生成的hprof文件，然后在右侧有一个【Analyzer Tasks】的选项，用它就可以直接来分析内存泄漏。如下图所示：<br><img src="/upload/image/AndroidStudio_Analyzermemory.PNG" alt="AndroidStudio_Analyzermemor"></li>
-</ul>
-<h4 id="MAT分析hprof文件"><a href="#MAT分析hprof文件" class="headerlink" title="MAT分析hprof文件"></a>MAT分析hprof文件</h4><ul>
-<li>这里主要介绍下MAT的各个模块都是干啥的以及简单用法，至于更详细的用法会在后面的实例分析中进行说明。</li>
-<li>打开hprof文件之后，如下图所示：<br><img src="/upload/image/MAT_hprof.PNG" alt="MAT_hprof"></li>
-<li>如上所示，最顶部的是工具栏，大家可以自己点点用用，反正我觉得是不经常用到，这里就不过多介绍了。最常用的是【Histogram】(用于列出每个class的实例个数)和【Dominator Tree】(用于列出还存活的大对象，是从大到小进行排序)，下面就分别介绍下他们简单的用法</li>
-</ul>
-<h6 id="Histogram"><a href="#Histogram" class="headerlink" title="Histogram"></a>Histogram</h6><ul>
-<li>点开Histogram，会列出每个class对应的对象个数，以及他们占有内存的大小，如下图所示：<img src="/upload/image/histogram.PNG" alt="histogram"></li>
-<li>如图中所示最左边这一列是class，第二列是Object个数，第三列是Shallow Heap表示<strong>对象在内存中的实际空间</strong>，第四列是<strong>对象回收后能释放出来的空间</strong></li>
-<li>需要说明非常有用的是第一行是可以过滤信息的，可以写正则表达式，一般我们想过滤和我们业务有关系的，比如：xdja，我们就直接输入xdja，然后就可以过滤出来我们需要的东西啦。</li>
-</ul>
-<h6 id="doinator-tree"><a href="#doinator-tree" class="headerlink" title="doinator_tree"></a>doinator_tree</h6><ul>
-<li>点开doinator_tree,会列出每个对象的内存大小情况，样子和HIstogram长的比较像，如下图所示：<img src="/upload/image/Dominator_tree.PNG" alt="Dominator_tree"></li>
-<li>如图所示第一列是所有对象的名称 第二列是Shallow Heap表示<strong>对象实际所占用的内存空间大小</strong>，第三列是Retained Heap 表示<strong>对象被释放之后所能释放的空间大小</strong> 第四列表示对象占用内存空间的百分比</li>
-<li>我们一般通过比较Retained Heap 的大小来估计内存泄漏的内存大小。Shallow Heap在分析问题时一般作用不大。</li>
-<li>Shallow Heap 和 Dominator的单位是Byte，所以一般可以直接除以1000，转成KB来预估大小。</li>
-</ul>
-<h6 id="查看对象树"><a href="#查看对象树" class="headerlink" title="查看对象树"></a>查看对象树</h6><ul>
-<li>通过上面两种方式可以过滤出自己关心的类或者对象，然后在类或者对象的item上单击右键，如下图所示：<br><img src="/upload/image/gc_root_look.png" alt="gc_root_look"></li>
-<li>如图所示，我们介绍下弹出菜单中各个选项的作用。</li>
-<li>【merge shortest Paths to  GC Roots】合并从GC根节点到一个对象或一组对象的共同路径。</li>
-<li>【Path To GC Roots】查看这个对象所有的GC Roots。</li>
-<li>上面两个选项，点击之后子菜单中再选择exclude all phantom/weak/soft etc.references(排查虚引用/弱引用/软引用等）因为被虚引用/弱引用/软引用的对象可以直接被GC给回收。</li>
-<li>List objects -&gt; with incoming references ：查看这个对象持有的外部对象引用</li>
-<li><p>List objects -&gt; with outcoming references ：查看这个对象被哪些外部对象引用</p>
-</li>
-<li><p>其实所有MAT的菜单选项都是由SQL语句组成的，你也可以写自己的sql语句，只不过MAT帮我们封装的基本已经够我们用了</p>
-</li>
-</ul>
-<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><ul>
-<li>上面只是简单介绍了MAT的基本用法，其实它还有很多可供我们使用的工具，比如：将drawable怎么以bitmap的形式查看、查看集合的值、写SQL语句、查看线程信息等。大家可以在使用的时候Google一下就可以了。上面讲的是最常用的用法。</li>
-<li>之后会有结合实例分析的文章，进一步熟悉MAT的使用。</li>
-</ul>
-
-          
+          背景介绍MAT简介
+MAT(Memory Analyzer Tool)，一个用于内存分析的工具，它能够抓取一段时间内的内存快照，帮助我们分析这一段时间内存的分配情况，通过分析内存情况可以帮助我们发现内存泄漏、内存大量分配等问题的原因所在。Eclipse本身可以装MAT的插件，但是现在我们一般都转向A
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/19/MAT工具的使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1829,7 +1192,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1857,44 +1220,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-19T15:50:49+08:00">
-                2016-10-19
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试工具/" itemprop="url" rel="index">
-                    <span itemprop="name">测试工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1933,87 +1264,17 @@
       
         
           
-            <h2 id="TraceView简介"><a href="#TraceView简介" class="headerlink" title="TraceView简介"></a>TraceView简介</h2><ul>
-<li>在性能分析和定位过程中，TraceView是使用比较多的一个工具，在遇到APP启动时间过长、界面切换时间比较长以及卡顿的时候，都可以先用TraceView来查看方法调用栈，查看比较耗时的方法以及各个线程的执行情况。</li>
-<li>Traceview是Android平台特有的数据采集和分析工具,它主要用于分析Android中应用程序的性能问题。Traceview本身只是一个数据分析工具,而数据的采集则需要使用Android SDK中的Debug类或者利用DDMS工具。</li>
-</ul>
-<h2 id="TraceView的使用"><a href="#TraceView的使用" class="headerlink" title="TraceView的使用"></a>TraceView的使用</h2><h4 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h4><ul>
-<li>上面提到，数据采集有两种方式，使用Android SDK中的Debug类或者利用DDMS工具，下面就分别介绍下：</li>
-</ul>
-<h5 id="Android-SDK中Debug类"><a href="#Android-SDK中Debug类" class="headerlink" title="Android SDK中Debug类"></a>Android SDK中Debug类</h5><ul>
-<li>开发者在一些关键代码段开始前调用Android SDK中Debug类的startMethodTracing函数,并在关键代码段结束前调用stopMethodTracing函数。这两个函数运行过程中将采集运行时间内该应用所有线程（注意,只能是Java线程）的函数执行情况,并将采集数据保存到/mnt/sdcard/下的一个文件中。</li>
-</ul>
-<h5 id="DDMS工具"><a href="#DDMS工具" class="headerlink" title="DDMS工具"></a>DDMS工具</h5><ul>
-<li>借助Android SDK中的DDMS工具。DDMS可采集系统中某个正在运行的进程的函数调用信息。对开发者而言,此方法适用于没有目标应用源代码的情况。DDMS工具中Traceview的使用如图所示。<br><img src="/upload/image/Traceview_ddms.jpg" alt="DDMS_traceView的使用"></li>
-<li>在对Android4.4以上手机点击TraceView按钮的时候，会出现2中方式的选择对话框，如下图所示：<br><img src="/upload/image/traceview_choose.png" alt="TraceView DDMS"></li>
-<li>Sample based profiling：以固定的频率像VM发送中断,并搜集调用栈信息。低版本手机也是采用该方式来采集样本的,默认是1毫秒采集一次。精确度和采集的频率有关,间隔频率越小会越精确,但运行也会相应的更慢。一般我们默认用1000微秒就足够了。</li>
-<li>Trace based profiling：不论多小的函数,都会跟踪整个函数的执行过程,所以开销也会很大。运行起来会非常的慢,不适合检测滑动性能。</li>
-</ul>
-<h5 id="上面两种方式比较"><a href="#上面两种方式比较" class="headerlink" title="上面两种方式比较"></a>上面两种方式比较</h5><ul>
-<li>使用Android Debug类一般还需要去熟悉代码，且采集到的数据还要pull到本地，然后转换成MAT（参考MAT的使用），使用起来相对麻烦，所以对于测试同学来说DDMS是比较好的方式，但是对于某些场景是需要用Debug类方式来测试的，比如APP首次启动，因为进程还没创建，所以DDMS没法用。</li>
-<li>在做性能分析的过程中,基本都是采用DDMS工具中来启动TraceView,这样简单易用,随便哪个地方的代码都可以跟踪。所以一般测试过程中，我们用DDMS工具的方式比较多。</li>
-</ul>
-<h4 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h4><h5 id="初识Traceview界面"><a href="#初识Traceview界面" class="headerlink" title="初识Traceview界面"></a>初识Traceview界面</h5><ul>
-<li>使用DDMS工具采集数据的方式，暂停之后会自动打开一个分析数据的界面，如下图所示：<img src="/upload/image/trace_view_panel.png" alt="TraceView面板"></li>
-<li>不过需要注意的是，在DDMS工具中打开的Traceview界面中的搜索框是没作用的，你不管输入任何东西也过滤不出来。如果想使用搜索功能（搜索功能其实还挺有用），可以通过 Android SDK tools 下的TraceView命令打开数据采集生成的trace文件（一般存放在C:\Users\xxx\AppData\Local\Temp\xxxx.trace）</li>
-<li>如上图所示，Traceview其UI划分为上下两个面板,即Timeline Panel和Profile Panel。</li>
-<li>Timeline Panel左边是测试数据中所采集的线程信息,右边Pane所示为时间线,时间线上是每个线程测试时间段内所涉及的函数调用信息。内容的丰富代表该时间段执行的函数多,从而可以反应线程的繁忙状态。也可以看出线程的启动时间和结束时间等。开发者可以在时间线Pane中移动时间线纵轴。纵轴上边将显示当前时间点中某线程正在执行的函数信息。</li>
-<li>Profile Panel是Traceview的核心界面,其内涵非常丰富。它主要展示了某个线程（先在Timeline Panel中选择线程）中各个函数调用的情况,包括CPU使用时间、调用次数等信息。而这些信息正是查找性能瓶颈的关键依据。</li>
-<li>两个面板之间是相互联动的，点击下面的函数，可以在时间轴上显示对应的位置（如上图所示，点击draw方法，在时间线main线程上有很多下拉框）。另外在时间线上拉伸可以放大时间线，双击顶部的时间条区域可以缩小原始状态。</li>
-</ul>
-<h5 id="Profile-Panel中各列的含义"><a href="#Profile-Panel中各列的含义" class="headerlink" title="Profile Panel中各列的含义"></a>Profile Panel中各列的含义</h5><ul>
-<li>网上关于这个的介绍非常多，我这里就再搬过来写一遍，省去大家去查找的时间了。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>列名</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Name</td>
-<td>该线程运行过程中所调用的函数名</td>
-</tr>
-<tr>
-<td>Incl Cpu Time</td>
-<td>某函数占用的CPU时间,包含内部调用其它函数的CPU时间</td>
-</tr>
-<tr>
-<td>Excl Cpu Time</td>
-<td>某函数占用的CPU时间,但不含内部调用其它函数所占用的CPU时间</td>
-</tr>
-<tr>
-<td>Incl Real Time</td>
-<td>某函数运行的真实时间（以毫秒为单位）,内含调用其它函数所占用的真实时间</td>
-</tr>
-<tr>
-<td>Excl Real Time</td>
-<td>数运行的真实时间（以毫秒为单位）,不含调用其它函数所占用的真实时间</td>
-</tr>
-<tr>
-<td>Call+Recur Calls/Total</td>
-<td>某函数被调用次数以及递归调用次数/总调用次数</td>
-</tr>
-<tr>
-<td>Cpu Time/Call</td>
-<td>某函数调用CPU时间与调用次数的比。相当于该函数平均执行时间</td>
-</tr>
-<tr>
-<td>Real Time/Call</td>
-<td>同CPU Time/Call类似,只不过统计单位换成了真实时间</td>
-</tr>
-</tbody>
-</table>
-<h6 id="上面这些指标中我们经常用到的有"><a href="#上面这些指标中我们经常用到的有" class="headerlink" title="上面这些指标中我们经常用到的有"></a>上面这些指标中我们经常用到的有</h6><ul>
-<li>Incl Cpu Time 可以用来排序查找比较耗时的逻辑。</li>
-<li>Call+Recur Calls/Total 可以用来查看是否有重复调用的情况，比如：ListView在滑动过程中，是否多次调用getview()。</li>
-<li>Cpu Time/Call 可以用来查看一个方法的平均执行时间，比如：App首次启动过程中某个初始化方法init()执行时间比较长。</li>
-<li>这几个指标可以排序，结合起来排查问题。</li>
-</ul>
-
-          
+          TraceView简介
+在性能分析和定位过程中，TraceView是使用比较多的一个工具，在遇到APP启动时间过长、界面切换时间比较长以及卡顿的时候，都可以先用TraceView来查看方法调用栈，查看比较耗时的方法以及各个线程的执行情况。
+Traceview是Android平台特有的数据采集和分析工
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/19/TraceView工具的使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2083,7 +1344,7 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
+               src="/avatar.jpg"
                alt="Liwei" />
           <p class="site-author-name" itemprop="name">Liwei</p>
            
@@ -2161,22 +1422,11 @@
   &copy; 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Liwei</span>
 </div>
 
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
 
 
         
@@ -2239,21 +1489,21 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
 
 
 
   
-  
-
   
 
   
 
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
 
 
 

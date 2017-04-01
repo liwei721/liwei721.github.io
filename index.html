@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,19 +68,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
+  <meta name="keywords" content="利伟,技术博客" />
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
 
 
 
@@ -103,8 +103,8 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -115,8 +115,8 @@
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      hits: "",
+      labels: ""
     }
   };
 </script>
@@ -202,6 +202,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -218,6 +228,26 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
           </a>
         </li>
       
@@ -255,7 +285,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -282,16 +312,6 @@
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T13:44:09+08:00">
-                2017-04-01
-              </time>
             
 
             
@@ -337,17 +357,15 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/01/hello-world/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -394,7 +412,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -422,44 +440,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T14:41:00+08:00">
-                2017-03-28
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">Android性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -498,99 +484,17 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>apk的安全是应用的最后一道防线，当我们做好功能，成功发布之后，如果apk对安全考虑不周，会带来非常严重的后果。比如：通过发送不带extra的Intent，有可能使程序crash、再比如网络通信过程中使用了明文密码，可想而知后果会怎么样。</li>
-<li>因此对apk的安全测试，是我们必须要考虑的事情。下面就介绍下一些常见的思路。</li>
-<li>下面这张图是从TestHome上面盗来的，我觉得总结的很全面，涵盖了安全的很多方面。不过图中提到的乌云的连接都没法看了（乌云去年被关停了），可自行搜索查看。<br><img src="/upload/image/zlw/安全图.jpg" alt="Android安全"></li>
-</ul>
-<h2 id="Android组件安全性测试"><a href="#Android组件安全性测试" class="headerlink" title="Android组件安全性测试"></a>Android组件安全性测试</h2><ul>
-<li>上面有对Android各个组件的安全问题描述，大家可以对照看下各个组件可能会存在的攻击情况。</li>
-<li>对于Android组件安全性的评估我们采用drozer。具体命令及使用参考<a href="https://xdjatesterhome.github.io/2017/03/01/安全扫描工具drozer的使用/" target="_blank" rel="external">drozer使用</a></li>
-</ul>
-<h3 id="drozer测试的一般思路"><a href="#drozer测试的一般思路" class="headerlink" title="drozer测试的一般思路"></a>drozer测试的一般思路</h3><ul>
-<li>首先进入drozer模式，我就直接用命令来说明测试的思路。</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">// 用于查看drozer所有的命令</div><div class="line">$ list    </div><div class="line"></div><div class="line">// 获取攻击面，即获取组件中哪些是可能被攻击的</div><div class="line">$ run app.package.attacksurface packageName</div><div class="line">比如，下面是我获取的一些内容</div><div class="line">Attack Surface:</div><div class="line">  1 activities exported</div><div class="line">  2 broadcast receivers exported</div><div class="line">  0 content providers exported</div><div class="line">  2 services exported</div><div class="line">    is debuggable</div><div class="line"></div><div class="line">// 接着就是查看各个攻击面的详细情况（一般是组件被导出 <span class="built_in">export</span> = <span class="literal">true</span>，且没有加访问权限控制）我这里就拿Activity举个例子，其他的参考上文提到的工具使用。</div><div class="line">// 这里注意app的启动Activity一定是<span class="built_in">export</span> = <span class="literal">true</span>的</div><div class="line">$ run app.activity.info <span class="_">-a</span> packageName</div><div class="line">$ run.app.activity.start -component packageName activity   可以启动对应有攻击可能的Activity，看是否会有异常。</div><div class="line"></div><div class="line">// 其他攻击面就顺着这个思路排查问题，ContentProvider需要注意的点比较多。</div></pre></td></tr></table></figure>
-<h3 id="需要注意的一些点"><a href="#需要注意的一些点" class="headerlink" title="需要注意的一些点"></a>需要注意的一些点</h3><ul>
-<li>有些组件虽然没有明确声明export = true，但是当添加了intent-filter 之后export默认就是true。</li>
-<li>在AndroidManifest.xml中自定义权限时，要注意android:protectionLevel的值：<blockquote>
-<ol>
-<li>normal：默认值，低风险权限，在安装的时候，系统会自动授予权限给 application。</li>
-<li>dangerous：高风险权限，如发短信，打电话，读写通讯录。使用此protectionLevel来标识用户可能关注的一些权限。Android将会在安装程序时，警示用户关于这些权限的需求，具体的行为可能依据Android版本或者所安装的移动设备而有所变化。</li>
-<li>signature： 签名权限，在其他 app 引用声明的权限的时候，需要保证两个 app 的签名一致。这样系统就会自动授予权限给第三方 app，而不提示给用户。</li>
-<li>signatureOrSystem：除了具有相同签名的APP可以访问外，Android系统中的程序有权限访问。</li>
-<li>大部分开放的Provider，是提供给本公司的其他应用使用的，一般的话一个公司打包签名APP的签名证书都应该是一致的，这种情况下，Provider的android:protectionLevel应为设为“signature”。</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<h3 id="问题判定的标准"><a href="#问题判定的标准" class="headerlink" title="问题判定的标准"></a>问题判定的标准</h3><ul>
-<li>通过drozer获取了攻击面，就能够知道哪些组件是export的，对于没必要export = true的组件是存在问题的（自己拿不准可以跟开发讨论下）。</li>
-<li>对于需要export= true的组件，可以通过drozer发送启动组件或者模拟获取组件数据的请求，来查看app组件是否存在问题：是否会crash、是否可以拿到app数据库中的数据、是否可以监听到broadReceiver来获取action中的数据等等。</li>
-<li>也可结合代码查看是否有潜在的问题存在。</li>
-</ul>
-<h3 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h3><ul>
-<li>最直接的办法是export = false</li>
-<li><p>对于需要export = true的，要做以下的处理：</p>
-<blockquote>
-<ol>
-<li>保证对intent.getAction、intent.getAction.getExtra 做判null处理，避免其他程序恶意攻击，导致应用crash。</li>
-<li>对service来说，当其他程序bindService时要做权限控制，即是当前应用的才返回service实例。避免敏感数据泄露，同时也要做好Service敏感数据的保护。</li>
-<li>对于BroadcastReceiver，要对广播的发送者和接受者做限制：可以通过自定义权限，在AndroidManifest.xml中声明receiver时配置权限。（注意安全的等级）</li>
-<li>对于ContentProvider我们可以参考<a href="https://jaq.alibaba.com/community/art/show?articleid=352" target="_blank" rel="external">阿里安全ContentProvider分析</a>，讲的很详细</li>
-</ol>
-</blockquote>
-</li>
-<li><p>总结来说通过export = false、加自定义权限等方式来解决组件的安全问题。</p>
-</li>
-</ul>
-<h2 id="Android-data-data-packageName目录"><a href="#Android-data-data-packageName目录" class="headerlink" title="Android /data/data/packageName目录"></a>Android /data/data/packageName目录</h2><ul>
-<li>这里提到的/data/data/packageName 目录存放的是app常用的数据，比如：数据库、SharedPreferences及其他缓存数据，主要是关注数据是否存在泄露敏感数据的风险。比如：密码、包含敏感信息的文本等。</li>
-<li>上面Android组件测试中提到的drozer测ContentProvider，也可以检测到一些通过ContentProvider访问数据库的问题。</li>
-</ul>
-<h3 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h3><ul>
-<li>其实非常简单，在root过的手机上，直接去/data/data/packageName/ 目录查找类似databases、shared_prefs等目录，然后用adb pull命令将db文件拉到本地。</li>
-<li><p>对于数据库db用SqliteManager（sqlite可视化工具）打开db，查看是否涉及隐私信息，我大致总结了如下：</p>
-<blockquote>
-<ol>
-<li>是否涉及账号信息，且密码是否用明文保存。</li>
-<li>是否涉及隐私内容信息，比如邮件正文等。</li>
-<li>其他可能泄露的点。</li>
-</ol>
-</blockquote>
-</li>
-<li><p>对于shared_prefs及其他文本，可以直接用文本工具打开查看。</p>
-</li>
-</ul>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ul>
-<li>对于隐私数据，可以进行加密。比如密码存储加密过后的。</li>
-<li>还可以直接将数据库加密。</li>
-</ul>
-<h2 id="第三方扫描工具"><a href="#第三方扫描工具" class="headerlink" title="第三方扫描工具"></a>第三方扫描工具</h2><ul>
-<li><p>现在有很多的扫描工具，我通过查资料，推荐几款用的较多的平台：</p>
-<blockquote>
-<ol>
-<li><a href="http://service.security.tencent.com/kingkong" target="_blank" rel="external">腾讯金刚</a></li>
-<li><a href="https://jaq.alibaba.com" target="_blank" rel="external">阿里聚安全</a>  （查看详情需要通过签名认证app，且查看全部高危漏洞需要付费）</li>
-<li><a href="http://yaq.qq.com/" target="_blank" rel="external">腾讯御安全</a>  (查看详情需要认证)</li>
-<li><a href="http://appscan.360.cn/" target="_blank" rel="external">360显微镜</a></li>
-<li><a href="http://www.ineice.com/" target="_blank" rel="external">爱内测</a>    （无法查看详情）</li>
-</ol>
-</blockquote>
-</li>
-<li><p>不过平台扫出来的有些漏洞需要手动的去辨别是否是问题。</p>
-</li>
-</ul>
-<h2 id="平台化"><a href="#平台化" class="headerlink" title="平台化"></a>平台化</h2><ul>
-<li>国内有一些公司基于<a href="https://github.com/liwei721/Mobile-Security-Framework-MobSF" target="_blank" rel="external">MobSf</a>来做自己的安全平台，这个后续可以作为一个研究内容。</li>
-<li>抽空需要了解它的源码及原理。</li>
-</ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="http://yaq.qq.com/blog" target="_blank" rel="external">腾讯御安全技术博客</a></li>
-<li><a href="http://appscan.360.cn/blog" target="_blank" rel="external">360安全博客</a></li>
-</ul>
-
-          
+          背景
+apk的安全是应用的最后一道防线，当我们做好功能，成功发布之后，如果apk对安全考虑不周，会带来非常严重的后果。比如：通过发送不带extra的Intent，有可能使程序crash、再比如网络通信过程中使用了明文密码，可想而知后果会怎么样。
+因此对apk的安全测试，是我们必须要考虑的事情。下面就
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/28/Android安全测试/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -637,7 +541,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -665,44 +569,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-21T16:35:10+08:00">
-                2017-03-21
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android技术/" itemprop="url" rel="index">
-                    <span itemprop="name">Android技术</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -741,115 +613,16 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>近距离无线通信技术（Near Field Communication ，NFC），是由飞利浦公司和索尼公司共同开发的一中非接触式识别和互联技术，可以在移动设备、消费类电子产品、PC和智能设备间进行近距离无线通信。NFC提供了一中简单的、非触控式的解决方案，可以让消费者简单直观的交换信息、访问内容与服务。</li>
-<li>NFC整合了非接触式读卡器、非接触式智能卡和点对点通信功能。它的应用场景很广泛，例如：移动支付、位置服务信息、身份识别、公共交通卡等应用。</li>
-</ul>
-<h2 id="内容介绍"><a href="#内容介绍" class="headerlink" title="内容介绍"></a>内容介绍</h2><h3 id="NFC的三种工作模式"><a href="#NFC的三种工作模式" class="headerlink" title="NFC的三种工作模式"></a>NFC的三种工作模式</h3><ul>
-<li>读卡器模式（Reader/Writer mode）：作为非接触读卡器使用，比如从海报或者展览信息电子标签上读取相关信息。</li>
-<li>仿真卡模式（Card emulation mode）：将设备模拟成采用RFID技术的IC卡，进行卡模拟的设备必须自带安全组件，NFC芯片。</li>
-<li>点对点模式（P2P mode）：和红外线、蓝牙类似于数据交换，在Android Beam之后的Android系统（Android4.0）支持了点对点数据传输。</li>
-</ul>
-<h3 id="Android系统检测NFC流程"><a href="#Android系统检测NFC流程" class="headerlink" title="Android系统检测NFC流程"></a>Android系统检测NFC流程</h3><ul>
-<li>Android设备在开启NFC功能后无论屏幕是否打开都会一直监听设备附近的NFC tag。</li>
-<li>检测到NFC tag后会解析内部附带的数据：MIME/URI（不同类型的NFC tag所携带的数据也不一样）。</li>
-<li>将解析到的数据存到Intent中，并通过intent开启应用。</li>
-</ul>
-<h3 id="intent类型"><a href="#intent类型" class="headerlink" title="intent类型"></a>intent类型</h3><ul>
-<li>ACTION_NDEF_DISCOVERED：当tag中附带NDEF数据的时候触发。</li>
-<li>ACTION_TECH_DISCOVERED：当tag中没有检测到NDEF数据，但是其中包含的数据时已知的类型。</li>
-<li>ACTION_TAG_DISCOVERED:如果上面两种都没有检测到，就使用这个启动应用。</li>
-<li>上面三个action排序优先级从高到底。</li>
-</ul>
-<h3 id="NFC开发中的类"><a href="#NFC开发中的类" class="headerlink" title="NFC开发中的类"></a>NFC开发中的类</h3><ul>
-<li>NfcManager：用来管理Android设备中所有NFC Adapter。因为大部分Android设备只支持一个NFC Adapter，因此可以直接使用getDefaultAdapter来获取系统的AfcAdapter。</li>
-<li>NfcAdapter：手机的NFC硬件设备，更专业的称呼是NFC适配器，该类可以定义一个Intent使系统在检测到NFC tag时通知用户定义的Activity，并提供用来注册Foreground tag消息发送的方法等。</li>
-<li>tag：代表一个被动式NFC对象，比如一张公交卡，Tag可以理解成能被手机NFC读写的对象。当Android检测到一个tag时，会创建一个Tag对象，将其放到Intent对象中，然后发送到相应的Activity。</li>
-<li><p>IsoDep: 该类位于android.nfc.tech.IsoDep包中，是支持ISO-DEP(ISO 14443-4)协议tag的操作类。NFC协议众多，其他的协议就要用到其他类了，常见的还有：</p>
-<blockquote>
-<ol>
-<li>MifareClassic类：支持MifareClassic协议</li>
-<li>MifareUltralight类：支持 Mifare Ultralight协议</li>
-<li>Ndef类和DdefFormatable类：支持NDEF格式</li>
-<li>NfcA类：支持NFC-A（ISO-14443-3A）协议</li>
-<li>NfcB类：支持NFC-B（ISO-14443-3B）协议</li>
-<li>NfcF类：支持NFC-F（JIS 6319-4）协议</li>
-<li>Nfcv类：支持NFC-V（ISO 15693）协议</li>
-<li>等等</li>
-</ol>
-</blockquote>
-</li>
-<li><p>我们的二代身份证 用的是NfcB协议，Android 文件分享用的是Ndef格式传输数据。</p>
-</li>
-</ul>
-<h3 id="NFC调度系统"><a href="#NFC调度系统" class="headerlink" title="NFC调度系统"></a>NFC调度系统</h3><ul>
-<li>NFC调度是指手机检测到NFC对象后如何处理，调度系统分为前台调度系统（Foreground Dispatch System）和标签调度系统（NFC Tag Dispatch System）</li>
-</ul>
-<h4 id="前台调度系统"><a href="#前台调度系统" class="headerlink" title="前台调度系统"></a>前台调度系统</h4><ul>
-<li>NFC前台调度系统是一种用于在运行的程序中（前台呈现的Activity）处理tag的技术，即前台调度系统允许Activity拦截Intent对象，并且声明该Activity的优先级比其他的处理Intent对象的Activity高。前台调度系统在一些涉及需要在前台呈现的页面中直接获取或推送NFC信息时十分方便。</li>
-<li>前台调度的使用方法如下：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 创建一个PendingIntent对象，以便Android系统能够在扫描到NFC标签时，用它来封装NFC标签的详细信息</span></div><div class="line">PendingIntent pendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>, <span class="number">0</span>, <span class="keyword">new</span> Intent(<span class="keyword">this</span>, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), <span class="number">0</span>);</div><div class="line"><span class="comment">// 创建Intent过滤器</span></div><div class="line">IntentFilter iso = <span class="keyword">new</span> IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);</div><div class="line"><span class="comment">// 创建一个处理NFC标签技术的数组</span></div><div class="line">String[][] techLists = <span class="keyword">new</span> String[][]&#123;<span class="keyword">new</span> String[]&#123;IsoDep.class.getName()&#125;&#125;;</div><div class="line"><span class="comment">// 在主线程中调用enableForegroundDispatch()方法，一旦NFC标签接触到手机，这个方法就会被激活</span></div><div class="line">adapter.enableForegroundDispatch(<span class="keyword">this</span>, pendingIntent, <span class="keyword">new</span> IntentFilter[]&#123;iso&#125;, techLists);</div></pre></td></tr></table></figure>
-<h4 id="标签调度系统"><a href="#标签调度系统" class="headerlink" title="标签调度系统"></a>标签调度系统</h4><ul>
-<li>NFC标签调度系统是一种通过预先定义好的Tag或NDEF消息来启动应用程序的机制，当扫描到一个NFC Tag时，如果Intent中注册对应的App，那么在处理该Tag信息时就会启动该App。当存在多个可以处理该Tag信息的Apps时，系统会弹出一个Activity Choose，供用户选择开启哪个应用。标签调度系统定义了3种Intent对象，按照优先级由高到低分别为ACTION_NDEF_DISCOVERED、ACTION_TECH_DISCOVERED、ACTION_TAB_DISCOVERED（就是上面提到的三种intent）。</li>
-<li>标签调度的基本工作方法如下：<blockquote>
-<ol>
-<li>用解析NFC标签时由标签调度系统创建的Intent对象（ACTION_NDEF_DISCOVERED）来尝试启动Activity。</li>
-<li>如果没有对应的处理Intent的Activity，就会尝试使用下一个优先级的Intent（ACTION_TECH_DISCOVERED，继而ACTION_TAG_DISCOVERED）来启动Activity，直到有对应的App来处理这个Intent，或者是直接标签调度系统尝试了所有可能的Intent。</li>
-<li>如果没有应用程序来处理任何类型的Intent，就不做任何事情</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<h2 id="NFC基本使用"><a href="#NFC基本使用" class="headerlink" title="NFC基本使用"></a>NFC基本使用</h2><h3 id="申请权限"><a href="#申请权限" class="headerlink" title="申请权限"></a>申请权限</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">在AndroidManifest.xml中配置</div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.NFC"</span> /&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="申明app具有nfc功能（非必须）"><a href="#申明app具有nfc功能（非必须）" class="headerlink" title="申明app具有nfc功能（非必须）"></a>申明app具有nfc功能（非必须）</h3><ul>
-<li>下面标签作用：在应用商店显示本app需要手机支持NFC功能，如果NFC功能是非必须的，可以不声明，在代码中通过getDefaultAdapter()的返回值判断手机是否支持NFC。<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.nfc"</span> <span class="attr">android:required</span>=<span class="string">"true"</span> /&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Filter-设置"><a href="#Filter-设置" class="headerlink" title="Filter 设置"></a>Filter 设置</h3><h4 id="例子1：MIME：text-plain"><a href="#例子1：MIME：text-plain" class="headerlink" title="例子1：MIME：text/plain"></a>例子1：MIME：text/plain</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.NDEF_DISCOVERED"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div></pre></td></tr></table></figure>
-<h4 id="例子2：URI-http-developer-android-com-index-html"><a href="#例子2：URI-http-developer-android-com-index-html" class="headerlink" title="例子2：URI:http://developer.android.com/index.html"></a>例子2：URI:<a href="http://developer.android.com/index.html" target="_blank" rel="external">http://developer.android.com/index.html</a></h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.NDEF_DISCOVERED"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"http"</span></span></div><div class="line">                 <span class="attr">android:host</span>=<span class="string">"developer.android.com"</span></div><div class="line">             <span class="attr">android:pathPrefix</span>=<span class="string">"/index.html"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="ACTION-TECH-DISCOVERED"><a href="#ACTION-TECH-DISCOVERED" class="headerlink" title="ACTION_TECH_DISCOVERED"></a>ACTION_TECH_DISCOVERED</h3><ul>
-<li>如果定义了这个action，必须创建一个XML资源文件定义activity所支持的技术.</li>
-<li><p>/res/xml文件夹下创建资源文件：(例子):</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resources</span> <span class="attr">xmlns:xliff</span>=<span class="string">"urn:oasis:names:tc:xliff:document:1.2"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tech-list</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.IsoDep<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.NfcA<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.NfcB<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.NfcF<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.NfcV<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.Ndef<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.NdefFormatable<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.MifareClassic<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">tech</span>&gt;</span>android.nfc.tech.MifareUltralight<span class="tag">&lt;/<span class="name">tech</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">tech-list</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>在AndroidManifest.xml中创建<meta-data>:</meta-data></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span>&gt;</span></div><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.TECH_DISCOVERED"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.TECH_DISCOVERED"</span></span></div><div class="line">    <span class="attr">android:resource</span>=<span class="string">"@xml/nfc_tech_filter"</span> /&gt;</div><div class="line">...</div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="ACTION-TAG-DISCOVERED"><a href="#ACTION-TAG-DISCOVERED" class="headerlink" title="ACTION_TAG_DISCOVERED"></a>ACTION_TAG_DISCOVERED</h3><ul>
-<li>声明这个action，只需要在AndroidMainfest中配置：<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.nfc.action.TAG_DISCOVERED"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="从Intent中获取数据"><a href="#从Intent中获取数据" class="headerlink" title="从Intent中获取数据"></a>从Intent中获取数据</h3><ul>
-<li><p>intent中可能携带的数据有下面三种，具体哪个里面有数据取决于检测到的NFC tag中的数据类型</p>
-<blockquote>
-<ol>
-<li>EXTRA_TAG:必须</li>
-<li>ECTRA_NDEF_MESSAGES:可选</li>
-<li>EXTRA_ID:可选</li>
-</ol>
-</blockquote>
-</li>
-<li><p>获取数据的例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onResume();</div><div class="line">    ...</div><div class="line">    <span class="keyword">if</span> (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) &#123;</div><div class="line">        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);</div><div class="line">        <span class="keyword">if</span> (rawMsgs != <span class="keyword">null</span>) &#123;</div><div class="line">            msgs = <span class="keyword">new</span> NdefMessage[rawMsgs.length];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rawMsgs.length; i++) &#123;</div><div class="line">                msgs[i] = (NdefMessage) rawMsgs[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//process the msgs array</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>或者：可以从Intent中获取Tag 对象，tag对象中包含了数据和数据类型</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="处理-Tag-对象"><a href="#处理-Tag-对象" class="headerlink" title="处理 Tag 对象"></a>处理 Tag 对象</h3><ul>
-<li><p>上面提到了tag有不同的技术协议实现，这里需要转换成对应协议的对象，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">IsoDep isoDep = IsoDep.get(tag);</div><div class="line"><span class="keyword">this</span>.nfcB = NfcB.get((Tag)p);</div></pre></td></tr></table></figure>
-</li>
-<li><p>获取到该对象后进行I/O流读写，注意读写代码属于耗时操作需要在子线程中执行,要从nfc卡中读取信息，需要发起一个指令才能收到相应的信息，不同的nfc卡的指令不同。</p>
-</li>
-</ul>
-<h3 id="一个完整的Demo"><a href="#一个完整的Demo" class="headerlink" title="一个完整的Demo"></a>一个完整的Demo</h3><ul>
-<li><a href="https://github.com/fangmd/NFC_Demo" target="_blank" rel="external">NFC例子</a></li>
-</ul>
-
-          
+          背景
+近距离无线通信技术（Near Field Communication ，NFC），是由飞利浦公司和索尼公司共同开发的一中非接触式识别和互联技术，可以在移动设备、消费类电子产品、PC和智能设备间进行近距离无线通信。NFC提供了一中简单的、非触控式的解决方案，可以让消费者简单直观的交换信息、访问内
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/21/Android的NFC技术介绍/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -896,7 +669,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -924,44 +697,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T19:58:27+08:00">
-                2017-03-20
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/gradle/" itemprop="url" rel="index">
-                    <span itemprop="name">gradle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1000,81 +741,17 @@
       
         
           
-            <h2 id="productFlavors"><a href="#productFlavors" class="headerlink" title="productFlavors"></a>productFlavors</h2><ul>
-<li>项目中一般都会用到ProductFlavors，实现比如不同的场景，包名不一样或者配置信息不一样等待。</li>
-<li><p>举个例子，假如，我们的app有手机版（com.xx.xxx）和 pad版(com.xx.xxx.hd)两个版本，它们共用一份代码，那么在build.gradle中配置如下：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">productFlavors &#123;</div><div class="line">   Hd&#123;</div><div class="line">      applicationId <span class="string">"com.xx.xxx.hd"</span></div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//我们可以通过gradle assembleHd命令来生成hd适配包。</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>再举个例子（美团的例子），假设有个需求，wandoujia市场默认禁止自动更新功能，可以这么写：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultConfig &#123;</div><div class="line">        buildConfigField <span class="string">"boolean"</span>, <span class="string">"AUTO_UPDATES"</span>, <span class="string">"true"</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    productFlavors &#123;</div><div class="line">        wandoujia &#123;</div><div class="line">            buildConfigField <span class="string">"boolean"</span>, <span class="string">"AUTO_UPDATES"</span>, <span class="string">"false"</span></div><div class="line">        &#125;        </div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 运行gradle assembleWandoujia命令生成  AUTO_UPDATES = false的包，然后代码中可以通过判断AUTO_UPDATES的值确定是否可以自动升级。</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>Gradle会在generateSources阶段为flavors生成一个BuildConfig.java文件，BuildConfig类默认提供了一些常量字段，比如，应用的版本名（VERSION_NAME）、应用的包名（PACKAGE_NAME）等。上面的是自定义的一些字段。很强大吧。</p>
-</li>
-</ul>
-<h2 id="buildTypes"><a href="#buildTypes" class="headerlink" title="buildTypes"></a>buildTypes</h2><ul>
-<li><p>应用场景是：构建App的内测版和正式版，让他们能够安装到同一个手机上。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">android&#123;</div><div class="line">  buildTypes&#123;</div><div class="line">    release&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    debug&#123;</div><div class="line">      applicationIdSuffix <span class="string">'.debug'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>不过需要考虑到自定义view在布局文件中的包名、其他用到包名的地方也要做修改。</p>
-</li>
-</ul>
-<h2 id="依赖更新"><a href="#依赖更新" class="headerlink" title="依赖更新"></a>依赖更新</h2><ul>
-<li>手动设置 changing 标记为true，项目依赖的远程包如果有更新，会有提醒或者自动更新。gradle会每24小时检查更新，通过更改resolutionStrategy可以修改检查周期。<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">configurations.all &#123;</div><div class="line">    <span class="comment">// check for updates every build</span></div><div class="line">    resolutionStrategy.cacheChangingModulesFor <span class="number">0</span>, <span class="string">'seconds'</span></div><div class="line">&#125;</div><div class="line">dependencies &#123;</div><div class="line">    compile <span class="string">group:</span> <span class="string">"group"</span>, <span class="string">name:</span> <span class="string">"projectA"</span>, <span class="string">version:</span> <span class="string">"1.1-SNAPSHOT"</span>, <span class="string">changing:</span> <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="上传aar到Maven仓库"><a href="#上传aar到Maven仓库" class="headerlink" title="上传aar到Maven仓库"></a>上传aar到Maven仓库</h2><ul>
-<li><p>在工程的build.gradle中添加以下脚本：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">apply <span class="string">plugin:</span> <span class="string">'maven'</span></div><div class="line">uploadArchives &#123;</div><div class="line">    repositories &#123;</div><div class="line">        mavenDeployer &#123;</div><div class="line">            pom.groupId = GROUP_ID</div><div class="line">            pom.artifactId = ARTIFACT_ID</div><div class="line">            pom.version = VERSION</div><div class="line">            repository(<span class="string">url:</span> RELEASE_REPOSITORY_URL) &#123;</div><div class="line">                authentication(<span class="string">userName:</span> USERNAME, <span class="string">password:</span> PASSWORD)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>在build.gradle同目录下添加gradle.properties文件，配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">GROUP_ID=dianping.android.nova.thirdparty</div><div class="line">ARTIFACT_ID=zxing</div><div class="line">VERSION=1.0</div><div class="line">RELEASE_REPOSITORY_URL=http://mvn.dp.com/nova</div><div class="line">USERNAME=hello</div><div class="line">PASSWORD=hello</div></pre></td></tr></table></figure>
-</li>
-<li><p>最后执行 gradle :Zxing:uploadArchives</p>
-</li>
-</ul>
-<h2 id="取消任务"><a href="#取消任务" class="headerlink" title="取消任务"></a>取消任务</h2><ul>
-<li><p>项目构建过程中，有些任务不需要，可以直接关掉，在build.gradle中加入如下脚本：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tasks.whenTaskAdded &#123; task -&gt;</div><div class="line">    <span class="keyword">if</span> (task.name.contains(<span class="string">'AndroidTest'</span>)) &#123;</div><div class="line">        task.enabled = <span class="literal">false</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>tasks 会获取当前project中所有的task，enabled属性控制任务开关，whenTaskAdded后面的闭包会在gradle配置阶段完成。</p>
-</li>
-</ul>
-<h2 id="加入任务"><a href="#加入任务" class="headerlink" title="加入任务"></a>加入任务</h2><ul>
-<li><p>上面提到取消任务，那么也可以添加任务，比如，想在执行dex打包之前，加入一个hello任务，可以这么写：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">afterEvaluate &#123;</div><div class="line">    android.applicationVariants.each &#123; variant -&gt;</div><div class="line">        <span class="keyword">def</span> dx = tasks.findByName(<span class="string">"dex$&#123;variant.name.capitalize()&#125;"</span>)</div><div class="line">        <span class="keyword">def</span> hello = <span class="string">"hello$&#123;variant.name.capitalize()&#125;"</span></div><div class="line">        task(hello) &lt;&lt; &#123;</div><div class="line">            println <span class="string">"hello"</span></div><div class="line">        &#125;</div><div class="line">        tasks.findByName(hello).dependsOn dx.taskDependencies.getDependencies(dx)</div><div class="line">        dx.dependsOn tasks.findByName(hello)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>afterEvaluate可以理解在配置阶段结束时，会走到这一步。variant = productFlavors  + buildTyps。</p>
-</li>
-<li>dx.taskDependencies.getDependencies(dx)会获取dx任务的所有依赖，让hello任务以来dx任务的所有依赖，再让dx依赖hello任务，这样就可以加入某个任务到构建流程了。</li>
-</ul>
-<h2 id="任务监听"><a href="#任务监听" class="headerlink" title="任务监听"></a>任务监听</h2><ul>
-<li>通过hook方式，我们可以监听一个task执行过程以及执行时间，如下所示：<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TimingsListener</span> <span class="keyword">implements</span> <span class="title">TaskExecutionListener</span>, <span class="title">BuildListener</span> &#123;</span></div><div class="line">    <span class="keyword">private</span> Clock clock</div><div class="line">    <span class="keyword">private</span> timings = []</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">void</span> beforeExecute(Task task) &#123;</div><div class="line">        clock = <span class="keyword">new</span> org.gradle.util.Clock()</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">void</span> afterExecute(Task task, TaskState taskState) &#123;</div><div class="line">        <span class="keyword">def</span> ms = clock.timeInMs</div><div class="line">        timings.add([ms, task.path])</div><div class="line">        task.project.logger.warn <span class="string">"$&#123;task.path&#125; took $&#123;ms&#125;ms"</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">void</span> buildFinished(BuildResult result) &#123;</div><div class="line">        println <span class="string">"Task timings:"</span></div><div class="line">        <span class="keyword">for</span> (timing <span class="keyword">in</span> timings) &#123;</div><div class="line">            <span class="keyword">if</span> (timing[<span class="number">0</span>] &gt;= <span class="number">50</span>) &#123;</div><div class="line">                printf <span class="string">"%7sms  %s\n"</span>, timing</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">void</span> buildStarted(Gradle gradle) &#123;&#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">void</span> projectsEvaluated(Gradle gradle) &#123;&#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">void</span> projectsLoaded(Gradle gradle) &#123;&#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">void</span> settingsEvaluated(Settings settings) &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">gradle.addListener <span class="keyword">new</span> TimingsListener()</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="buildscript方法"><a href="#buildscript方法" class="headerlink" title="buildscript方法"></a>buildscript方法</h2><ul>
-<li><p>Android项目中，跟工程默认的build.gradle如下：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Top-level build file where you can add configuration options common to all sub-projects/modules.</span></div><div class="line"></div><div class="line"><span class="keyword">buildscript</span> &#123;</div><div class="line">    <span class="keyword">repositories</span> &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">dependencies</span> &#123;</div><div class="line">        <span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:1.2.3'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">allprojects</span> &#123;</div><div class="line">    <span class="keyword">repositories</span> &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>buildscript方法的作用是配置脚本的依赖，而我们平常用的compile是配置project的依赖，repositories的意思是需要包的时候来我这里拿。</p>
-</li>
-<li>这里的com.android.tools.build:gradle:1.2.3是从C:\Program Files\Android\Android Studio\gradle\m2repository  下面取的，因此如果这里没有其他依赖（除了Android 插件相关），去掉jcenter也是可以的。</li>
-</ul>
-<h2 id="引入脚本"><a href="#引入脚本" class="headerlink" title="引入脚本"></a>引入脚本</h2><ul>
-<li>脚本写多了之后，都放到build.gradle中会显得很乱，可以将相关的一些脚本抽离除去，放到一个新的文件中，比如other.gradle,然后在build.gradle中只需要apply from ‘other.gradle’即可。</li>
-<li>但是需要注意，根工程中配置的buildscript会传递到所有工程，但只会传到build.gradle脚本中，所以你需要在other.gradle中重新配置buildscript,并且other.gradle中的repositories不再包含m2repository目录，自己配置jcenter()又会导致依赖重新下载到~/.gradle/caches目录。如果不想额外下载，也可以在other.gradle中这么搞：<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        maven &#123;</div><div class="line">            url rootProject.buildscript.repositories[<span class="number">0</span>].getUrl()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        classpath <span class="string">'com.android.tools.build:gradle:1.2.3'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="获取AndroidManifest文件"><a href="#获取AndroidManifest文件" class="headerlink" title="获取AndroidManifest文件"></a>获取AndroidManifest文件</h2><ul>
-<li>radle中的applicationid用来区分应用，manifest中packageName用来指定R文件包名，并且各个productFlavor 的manifest中的packageName应该一致。applicationid只是gradle脚本中的定义，其实最后生成的apk中的manifest文件的packageName还是会被applicationid替换掉。</li>
-<li>那获取R文件的包名怎么搞？要获取AndroidManifest中package属性，并且这个manifest要是起始的文件，因为最终文件中的package属性会被applicationid冲掉，由于各个manifest中的package属性一样，并且非主manifest可以没有package属性，所以只有获取主manifest的package属性才是最准确的。<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">def</span> manifestFile = android.sourceSets.main.manifest.srcFile</div><div class="line"><span class="keyword">def</span> packageName = <span class="keyword">new</span> XmlParser().parse(manifestFile).attribute(<span class="string">'package'</span>)</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="无用资源"><a href="#无用资源" class="headerlink" title="无用资源"></a>无用资源</h2><ul>
-<li>无用的资源就不要打包进APK了<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Resource Shrinking</div></pre></td></tr></table></figure>
-</li>
-</ul>
-
-          
+          productFlavors
+项目中一般都会用到ProductFlavors，实现比如不同的场景，包名不一样或者配置信息不一样等待。
+举个例子，假如，我们的app有手机版（com.xx.xxx）和 pad版(com.xx.xxx.hd)两个版本，它们共用一份代码，那么在build.gradle中配置
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/20/Gradle实践问题及经验/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1121,7 +798,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1149,44 +826,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T16:45:21+08:00">
-                2017-03-20
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/gradle/" itemprop="url" rel="index">
-                    <span itemprop="name">gradle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1225,78 +870,18 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>这篇文章主要讲Gradle大概的工作流程和实现原理，并以部分源码分析佐证，其中包括project中配置数据什么时候获取，各个task的创建时机，如何自定义控制编译过程等。</li>
-<li>接着分析编译过程中class到dex这一步，以及当初遇到的问题。</li>
-<li>本文是参考<a href="http://chuansong.me/n/425965451447" target="_blank" rel="external">打通Android Gradle编译过程的任督二脉</a></li>
-<li>这篇文章写的有点乱，后续再做整理。</li>
-</ul>
-<h2 id="主要工作流程"><a href="#主要工作流程" class="headerlink" title="主要工作流程"></a>主要工作流程</h2><h3 id="初始化阶段"><a href="#初始化阶段" class="headerlink" title="初始化阶段"></a>初始化阶段</h3><ul>
-<li>读取根工程中的setting.gradle中的include信息，确定有多少工程加入构建并创建project实例，每个工程中的build.gradle对应一个project实例。</li>
-</ul>
-<h3 id="配置阶段"><a href="#配置阶段" class="headerlink" title="配置阶段"></a>配置阶段</h3><ul>
-<li>根据每个工程目录下面的build.gradle，配置gradle对象，并构建好任务依赖有向图。</li>
-</ul>
-<h3 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h3><ul>
-<li><p>根据配置阶段拿到的配置信息和任务依赖有向图执行对应的task。<br><img src="/upload/image/zlw/gradle_task.jpg" alt="gradle流程"></p>
-</li>
-<li><p>配置阶段和执行阶段的不同：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">// 一个project有若干的task，一个task有若干的action</span></div><div class="line"> <span class="comment">// 这里task在配置时执行</span></div><div class="line">  task hello &#123;</div><div class="line">     print <span class="string">'hello'</span>&#125;</div><div class="line"><span class="comment">// 这里task在执行到hello这个task时才会执行。doLast 和 doFirst区别，一个插入action list最前面，一个是插入最后面。</span></div><div class="line">   task hello &#123;</div><div class="line">      doLast&#123;</div><div class="line">      print <span class="string">'hello'</span></div><div class="line">      &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="hook方式"><a href="#hook方式" class="headerlink" title="hook方式"></a>hook方式</h3><ul>
-<li>从上图中可以看出我们可以通过hook的方式来做一些操作，gradle里面有两个监听器接口：BuildListener 和 TaskExecutionListener</li>
-</ul>
-<h4 id="BuildListener"><a href="#BuildListener" class="headerlink" title="BuildListener"></a>BuildListener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">buildStarted</span><span class="params">(Gradle gradle)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">settingsEvaluated</span><span class="params">(Settings settings)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">projectsLoaded</span><span class="params">(Gradle gradle)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">projectsEvaluated</span><span class="params">(Gradle gradle)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">buildFinished</span><span class="params">(BuildResult result)</span></span>;</div></pre></td></tr></table></figure>
-<h4 id="TaskExecutionListener"><a href="#TaskExecutionListener" class="headerlink" title="TaskExecutionListener"></a>TaskExecutionListener</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">beforeExecute</span><span class="params">(Task task)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">afterExecute</span><span class="params">(Task task, TaskState state)</span></span>;</div></pre></td></tr></table></figure>
-<p>-</p>
-<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><ul>
-<li><p>Gradle源码当中主要有这么几个类，VariantManager,TaskManager,AndroidBuilder,ConfigAction:</p>
-<blockquote>
-<ul>
-<li>VariantManager负责收集对应的变量数据，如build.gradle中的一些基本配置变量可以在AndroidSourceSet类中查看</li>
-<li>TaskManager负责管理task的创建和执行</li>
-<li>AndroidBuilder负责具体执行Android构建的一些命令，如编译aidl，aapt，class转dex等。</li>
-<li>ConfigAction负责task的具体表现行为，task是由若干Action组成的，gradle在创建每一个任务的时候会默认指定一个ConfigAction来指定task名字，输入输出等。</li>
-</ul>
-</blockquote>
-</li>
-<li><p>gradle进程启动的时候，VariantManager初始化的时候会收集对应的variantData，然后根据这些信息首先创建默认的AndroidTask，然后调用对应的TaskManager继承类如ApplicationTaskManager的createTasksForvariantData创建相关的task，并构建依赖有向图，如下图所示：<br><img src="/upload/image/zlw/gradle_img.png" alt="gradle流程"></p>
-</li>
-<li><p>在createTasksForvariantData函数中创建任务的方式如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">ThreadRecorder.get().record(ExecutionType.APP_TASK_MANAGER_CREATE_COMPILE_TASK,</div><div class="line">          <span class="keyword">new</span> Recorder.Block() &#123;</div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> Void <span class="title">call</span> <span class="params">()</span> </span>&#123;</div><div class="line">           AndroidTask javacTask = createJavacTask(tasks, variantScope);</div><div class="line">           <span class="keyword">if</span> (variantData.getVariantConfiguration().getUseJack()) &#123;</div><div class="line">               createJackTask(tasks, variantScope);</div><div class="line">           &#125; <span class="keyword">else</span> &#123;</div><div class="line">               setJavaCompilerTask(javacTask, tasks, variantScope);</div><div class="line">               createJarTask(tasks, variantScope);</div><div class="line">               createPostCompilationTasks(tasks, variantScope);</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">       &#125;</div><div class="line">   &#125;);</div><div class="line"></div><div class="line"><span class="comment">// 具体创建task的方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> AndroidTask <span class="title">create</span><span class="params">(</span></span></div><div class="line">           TaskFactory taskFactory,</div><div class="line">           String taskName,</div><div class="line">           Closure configAction) &#123;</div><div class="line">       taskFactory.create(taskName, DefaultTask.class, <span class="keyword">new</span> ClosureBackedAction(configAction));</div><div class="line">       <span class="keyword">final</span> AndroidTask newTask = <span class="keyword">new</span> AndroidTask(taskName, Task.class);</div><div class="line">       tasks.put(taskName, newTask);</div><div class="line">       <span class="keyword">return</span> newTask;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>上面ThreadRecorder保证task之间是串行的，另外在具体创建每一个任务的时候的时候可以看到都传了一个ConfigAction，这个可以默认指定该任务执行某些行为，如指定该任务的输入输出等，获取AndroidBuilder中的工具等。</p>
-</li>
-</ul>
-<h2 id="打包过程"><a href="#打包过程" class="headerlink" title="打包过程"></a>打包过程</h2><ul>
-<li>打包主要包含两个过程，首先是编译过程，编译的内容包括本工程的文件以及依赖的各种库文件，编译的输出包括dex文件和编译后的资源文件。其次是打包过程。配合Keystore对第一步的输出进行签名对齐，生成最终的apk文件。<br><img src="/upload/image/zlw/build_apk.png" alt="gradle流程"></li>
-</ul>
-<p>上图主要包含四步：</p>
-<ul>
-<li>Java编译器对工程本身的java代码进行编译，这些java代码有三个来源：app的源代码，由资源文件生成的R文件(aapt工具)，以及有aidl文件生成的java接口文件(aidl工具)。产出为.class文件。</li>
-<li>.class文件和依赖的三方库文件通过dex工具生成Delvik虚拟机可执行的.dex文件，可能有一个或多个，包含了所有的class信息，包括项目自身的class和依赖的class。产出为.dex文件。、</li>
-<li>apkbuilder工具将.dex文件和编译后的资源文件生成未经签名对齐的apk文件。这里编译后的资源文件包括两部分，一是由aapt编译产生的编译后的资源文件，二是依赖的三方库里的资源文件。产出为未经签名的.apk文件。</li>
-<li>分别由Jarsigner和zipalign对apk文件进行签名和对齐，生成最终的apk文件。</li>
-</ul>
-<h2 id="加速Android-gradle构建"><a href="#加速Android-gradle构建" class="headerlink" title="加速Android/gradle构建"></a>加速Android/gradle构建</h2><h3 id="开启gradle单独的守护进程"><a href="#开启gradle单独的守护进程" class="headerlink" title="开启gradle单独的守护进程"></a>开启gradle单独的守护进程</h3><ul>
-<li><p>在下面的目录下面创建gradle.properties文件,在文件中添加 org.gradle.daemon=true：</p>
-<blockquote>
-<ol>
-<li>/home/<username>/.gradle/ (Linux)</username></li>
-<li>/Users/<username>/.gradle/ (Mac)</username></li>
-<li>C:\Users\<username>.gradle (Windows)</username></li>
-</ol>
-</blockquote>
-</li>
-<li><p>同时修改项目下的gradle.properties文件也可以优化：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># Project-wide Gradle settings.</div><div class="line"># IDE (e.g. Android Studio) users:</div><div class="line"># Settings specified in this file will override any Gradle settings</div><div class="line"># configured through the IDE.</div><div class="line"># For more details on how to configure your build environment visit</div><div class="line"># http://www.gradle.org/docs/current/userguide/build_environment.html</div><div class="line"># The Gradle daemon aims to improve the startup and execution time of Gradle.</div><div class="line"># When set to true the Gradle daemon is to run the build.</div><div class="line"># TODO: disable daemon on CI, since builds should be clean and reliable on servers</div><div class="line">org.gradle.daemon=true</div><div class="line"># Specifies the JVM arguments used for the daemon process.</div><div class="line"># The setting is particularly useful for tweaking memory settings.</div><div class="line"># Default value: -Xmx10248m -XX:MaxPermSize=256m</div><div class="line">org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</div><div class="line"># When configured, Gradle will run in incubating parallel mode.</div><div class="line"># This option should only be used with decoupled projects. More details, visit</div><div class="line"># http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects</div><div class="line">org.gradle.parallel=true</div><div class="line"># Enables new incubating mode that makes Gradle selective when configuring projects.</div><div class="line"># Only relevant projects are configured which results in faster builds for large multi-projects.</div><div class="line"># http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:configuration_on_demand</div><div class="line">org.gradle.configureondemand=true</div></pre></td></tr></table></figure>
-</li>
-<li><p>这个配置文件也可以配置到上面在用户目录下面创建的gradle.properties里面，这样这个配置就适用于所有的项目</p>
-</li>
-</ul>
-
-          
+          背景
+这篇文章主要讲Gradle大概的工作流程和实现原理，并以部分源码分析佐证，其中包括project中配置数据什么时候获取，各个task的创建时机，如何自定义控制编译过程等。
+接着分析编译过程中class到dex这一步，以及当初遇到的问题。
+本文是参考打通Android Gradle编译过程的任督
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/20/gradle构建过程-Android/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1343,7 +928,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1371,44 +956,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-16T19:49:57+08:00">
-                2017-03-16
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/gradle/" itemprop="url" rel="index">
-                    <span itemprop="name">gradle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1447,38 +1000,22 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>要彻底理解gradle，我们需要对Groovy语法有一定的了解，这对我们自定义自己的gradle task及使用gradle很有用处。</li>
-</ul>
-<h2 id="理解Groovy"><a href="#理解Groovy" class="headerlink" title="理解Groovy"></a>理解Groovy</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
-<li>Groovy起源于java，其运行在JVM上，它的目标是创造更简单，更直接的语言。</li>
-<li>Groovy中一些基础的用法：</li>
-</ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 打印一个字符串</span></div><div class="line">print <span class="string">'Hello world!!'</span></div><div class="line"><span class="comment">// 上面用到了单引号，但是也可以使用双引号，不过双引号可以插入语句，如下：</span></div><div class="line"><span class="keyword">def</span> name = <span class="string">'Andy'</span></div><div class="line"><span class="keyword">def</span> greeting = <span class="string">"Hello $name!"</span>       <span class="comment">// Hello Andy</span></div><div class="line"><span class="keyword">def</span> name_sie = <span class="string">"Your name is $&#123;name.size()&#125; characters long"</span>  <span class="comment">// Your name is 4 characters long</span></div><div class="line"></div><div class="line"><span class="comment">// 上面可以看到,对于占位符是方法或者变量的，要用$&#123;&#125;这种格式，而对于单一变量，只需要$就可以了。</span></div><div class="line"></div><div class="line"><span class="comment">// 还可以像下面这样写，这在java中是不可能的。但在Groovy中是合法的</span></div><div class="line"><span class="keyword">def</span> method = <span class="string">'toString'</span></div><div class="line"><span class="keyword">new</span> Date().<span class="string">"$method"</span>()</div></pre></td></tr></table></figure>
-<h3 id="Classes和members"><a href="#Classes和members" class="headerlink" title="Classes和members"></a>Classes和members</h3><ul>
-<li>Groovy里面创建类和java类似，举个例子：</li>
-</ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyGroovyClass</span> &#123;</span></div><div class="line">       String greeting</div><div class="line">       String getGreeting() &#123;</div><div class="line">           <span class="keyword">return</span> <span class="string">'Hello!'</span></div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 类名和成员变量都不需要修饰符，类默认的修饰符是public，成员变量默认修饰符是private</span></div><div class="line"></div><div class="line"><span class="comment">// 使用MyGroovyClass，用def创建变量，成员变量的get/set方法是Groovy默认添加的</span></div><div class="line"><span class="keyword">def</span> instance = <span class="keyword">new</span> MyGroovyClass()</div><div class="line">instance.setGreeting <span class="string">'Hello, Groovy!'</span></div><div class="line">instance.getGreeting()</div><div class="line"></div><div class="line"><span class="comment">// 使用成员变量，可以这么干（两种方式都是可以的）：</span></div><div class="line"> println instance.getGreeting()</div><div class="line"> println instance.greeting</div></pre></td></tr></table></figure>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
-<li>直接来看个例子：</li>
-</ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">def</span> square(<span class="keyword">def</span> num) &#123;</div><div class="line">      num * num</div><div class="line">&#125;</div><div class="line">square <span class="number">4</span>   <span class="comment">// 16</span></div><div class="line"></div><div class="line"><span class="comment">//可以看到相对于java来说没有了返回值、修饰符变成了def、方法体内没有了return。</span></div><div class="line"></div><div class="line"><span class="comment">// 我们甚至可以写的更简单</span></div><div class="line"><span class="keyword">def</span> square = &#123; num -&gt;</div><div class="line">       num * num</div><div class="line">&#125;</div><div class="line">square <span class="number">8</span></div></pre></td></tr></table></figure>
-<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><ul>
-<li>闭包是一段匿名的方法体，其可以接受参数和返回值，他们可以定义变量或者可以将参数传递给方法：</li>
-</ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Closure square = &#123;</div><div class="line">       it * it</div><div class="line">&#125;</div><div class="line">square <span class="number">16</span></div><div class="line"></div><div class="line"><span class="comment">// Groovy会默认为你添加一个参数叫做it</span></div></pre></td></tr></table></figure>
-<h3 id="Collections"><a href="#Collections" class="headerlink" title="Collections"></a>Collections</h3><ul>
-<li>Groovy中，有两个重要的容器：lists和maps</li>
-</ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">List list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</div><div class="line"></div><div class="line"><span class="comment">//迭代list</span></div><div class="line">list.each() &#123; element -&gt;</div><div class="line">       println element</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//你甚至可以使得你的代码更加简洁，使用it:</span></div><div class="line">list.each() &#123;</div><div class="line">       println it</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//map</span></div><div class="line">Map pizzaPrices = [<span class="string">margherita:</span><span class="number">10</span>, <span class="string">pepperoni:</span><span class="number">12</span>]</div><div class="line"></div><div class="line"><span class="comment">// 如果你想取出map中的元素，可以使用get方法：</span></div><div class="line">pizzaPrices.get(<span class="string">'pepperoni'</span>)</div><div class="line">pizzaPrices[<span class="string">'pepperoni'</span>]</div><div class="line"></div><div class="line"><span class="comment">// 甚至可以这么用：</span></div><div class="line">pizzaPrices.pepperoni</div></pre></td></tr></table></figure>
-<h3 id="Groovy-导入包"><a href="#Groovy-导入包" class="headerlink" title="Groovy 导入包"></a>Groovy 导入包</h3><ul>
-<li>在gradle脚本中使用InputStream不用import包，而使用ZipFile需要import包,是因为Groovy默认import下面的包和类：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">java.io.*</div><div class="line">java.lang.*</div><div class="line">java.math.BigDecimal</div><div class="line">java.math.BigInteger</div><div class="line">java.net.*</div><div class="line">java.util.*</div><div class="line">groovy.lang.*</div><div class="line">groovy.util.*</div></pre></td></tr></table></figure>
-<h3 id="build-gradle-中-groovy-常用写法"><a href="#build-gradle-中-groovy-常用写法" class="headerlink" title="build.gradle 中 groovy 常用写法"></a>build.gradle 中 groovy 常用写法</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//apply是一个方法，plugin是参数，值为'com.android.application'</span></div><div class="line">apply <span class="string">plugin:</span> <span class="string">'com.android.application'</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">*buildscript,repositories和dependencies本身是方法名。</div><div class="line">*后面跟的大括号部分，都是一个闭包，作为方法的参数。</div><div class="line">*闭包可以简单的理解为一个代码块或方法指针。</div><div class="line">*/</div><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        classpath <span class="string">'com.android.tools.build:gradle:1.2.3'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//groovy遍历的一种写法 each后面是闭包</span></div><div class="line">android.applicationVariants.each &#123; variant -&gt;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          背景
+要彻底理解gradle，我们需要对Groovy语法有一定的了解，这对我们自定义自己的gradle task及使用gradle很有用处。
 
-          
+理解Groovy简介
+Groovy起源于java，其运行在JVM上，它的目标是创造更简单，更直接的语言。
+Groovy中一些基础的用法：
+
+12345678
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/16/理解Groovy/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1525,7 +1062,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1553,44 +1090,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-16T19:03:54+08:00">
-                2017-03-16
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/gradle/" itemprop="url" rel="index">
-                    <span itemprop="name">gradle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1629,73 +1134,16 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>为了确保app或者library库的质量，有一个完整的测试非常重要。很长一段时间，Android开发工具都缺乏针对完整性测试的支持，但是最近，google为之做了大量的工作，其让开发者做测试变得更加容易了，一些旧的框架更新了版本，新的框架也被加入进来。我们现在不仅可以在Android studio中运行这些测试，甚至可以用gradle通过命令行直接执行。</li>
-<li>接下来，主要说明三部分内容：<blockquote>
-<ol>
-<li>单元测试</li>
-<li>功能测试</li>
-<li>测试覆盖率</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><ul>
-<li>AndroidStudio和gradle android插件默认都支持单元测试，使用之前，需要做一些配置。</li>
-<li>好的单元测试不仅仅能够确保app的质量，同时还能让新代码的开发更加容易。</li>
-</ul>
-<h3 id="JUnit"><a href="#JUnit" class="headerlink" title="JUnit"></a>JUnit</h3><ul>
-<li>JUnit是非常常用的一个框架，但是它只能测试代码的逻辑，对于Android SDK 相关的代码却没办法执行，运行会报错。</li>
-<li><p>开始编写junit测试之前，需要新建一个目录（一般叫test），它会和main目录在同一层级，如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">app</div><div class="line">└─── src</div><div class="line">     ├─── main</div><div class="line">          ├─── java</div><div class="line">          │    └─── com.example.app</div><div class="line">          └─── res</div><div class="line">     └─── test</div><div class="line">          └─── java</div><div class="line">               └─── com.example.app</div></pre></td></tr></table></figure>
-</li>
-<li><p>这样，你就可以在test目录下创建JUnit测试代码了。同时，你需要在build.gradle中添加JUnit依赖：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">       testCompile <span class="string">'junit:junit:4.12'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>这里testCompile,表示junit包只会在测试的时候导入，其他情况不会导入jar包。如果你有其他的构建版本，你可以这么做：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">       testPaidCompile <span class="string">'junit:junit:4.12'</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>上面都配置好之后，我们就可以开始写测试代码了，下面是个简单的例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line">   <span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertEquals;</div><div class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogicTest</span> </span>&#123;</div><div class="line">       <span class="meta">@Test</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addingNegativeNumberShouldSubtract</span><span class="params">()</span> </span>&#123;</div><div class="line">           Logic logic = <span class="keyword">new</span> Logic();</div><div class="line">           assertEquals(<span class="string">"6 + -2 must be 4"</span>, <span class="number">4</span>, logic.add(<span class="number">6</span>, -<span class="number">2</span>));</div><div class="line">           assertEquals(<span class="string">"2 + -5 must be -3"</span>, -<span class="number">3</span>, logic.add(<span class="number">2</span>, -<span class="number">5</span>));</div><div class="line">       &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>通过下面的命令运行上面的测试代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ gradlew <span class="built_in">test</span></div><div class="line"></div><div class="line">如果想在特定版本执行，可以这么做：</div><div class="line">$ gradlew <span class="built_in">test</span>Debug</div><div class="line"></div><div class="line">如果单个用例失败导致整个测试失败，我们可以通过下面的命令，将整个用例都跑一遍：</div><div class="line">$ gradlew <span class="built_in">test</span> --continue</div></pre></td></tr></table></figure>
-</li>
-<li><p>执行完之后，可以在app/build/reports/tests/debug/目录下面找到一个html测试报告。这份测试报告描述了测试的大致情况：几个用例执行成功，耗时多少等等，如下图所示：<br><img src="/upload/image/zlw/JUnit_report.png" alt="单元测试报告"></p>
-</li>
-</ul>
-<h3 id="Robolectric"><a href="#Robolectric" class="headerlink" title="Robolectric"></a>Robolectric</h3><ul>
-<li>JUnit只能测试和Android 无关的代码，那么如果想测试Android相关的代码，那么Robolectric就是利器，它可以使用Android SDK和资源文件，它还是跑在JVM上，测试相对来说比其他UI自动化要迅速。</li>
-<li><p>在使用Robolectric之前，需要添加依赖，注意同时还需要添加JUnit包：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'org.robolectric'</span></div><div class="line">   dependencies &#123;</div><div class="line">       <span class="function">compile <span class="title">fileTree</span><span class="params">(dir: <span class="string">'libs'</span>, include: [<span class="string">'*.jar'</span>])</span></span></div><div class="line">       compile 'com.android.support:appcompat-v7:22.2.0'</div><div class="line">       testCompile 'junit:junit:4.12'</div><div class="line">       testCompile'org.robolectric:robolectric:3.0'</div><div class="line">       testCompile'org.robolectric:shadows-support:3.0'</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>Robolectric测试类也需要写在test文件夹下，如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 看上去写法有点复杂</span></div><div class="line"><span class="meta">@RunWith</span>(RobolectricTestRunner.class)</div><div class="line"><span class="meta">@Config</span>(manifest = <span class="string">"app/src/main/AndroidManifest.xml"</span>, sdk = <span class="number">18</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivityTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clickingButtonShouldChangeText</span><span class="params">()</span> </span>&#123;</div><div class="line">        AppCompatActivity activity = Robolectric.buildActivity</div><div class="line">          (MainActivity.class).create().get();</div><div class="line">        Button button = (Button)</div><div class="line">          activity.findViewById(R.id.button);</div><div class="line">        TextView textView = (TextView)</div><div class="line">          activity.findViewById(R.id.label);</div><div class="line">        button.performClick();</div><div class="line">        assertThat(textView.getText().toString(), equalTo</div><div class="line">          (activity.getString(R.string.hello_robolectric)));</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><ul>
-<li>用于测试一个app的多个模块能否正常工作，比如：点击某个按钮之后，是否能正确打开某个页面。</li>
-<li>这里介绍的是Google自己的框架：Espresso。AndroidStudio最新版本已经支持Espresso脚本录制。</li>
-</ul>
-<h3 id="Espresso"><a href="#Espresso" class="headerlink" title="Espresso"></a>Espresso</h3><ul>
-<li>Google创建Espresso的目的在于简化开发人员编写测试用例。</li>
-<li>需要定义一个runner来运行测试用例，放到AndroidTest目录下（和上面提到的test目录、main目录同一层级），Google提供了AndroidJUnitRunner测试runner，它能在手机上运行JUnit测试，测试runner可以安装apk、执行测试、生成报告。</li>
-<li><p>在build.gradle中需要如下配置：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">defaultConfig &#123;</div><div class="line">       testInstrumentationRunner</div><div class="line">         <span class="string">"android.support.test.runner.AndroidJUnitRunner"</span></div><div class="line">   &#125;</div><div class="line"></div><div class="line">   dependencies &#123;</div><div class="line">      <span class="function">compile <span class="title">fileTree</span><span class="params">(dir: <span class="string">'libs'</span>, include: [<span class="string">'*.jar'</span>])</span></span></div><div class="line">      compile 'com.android.support:appcompat-v7:22.2.0'</div><div class="line">      androidTestCompile 'com.android.support.test:runner:0.3'</div><div class="line">      androidTestCompile 'com.android.support.test:rules:0.3'</div><div class="line">      androidTestCompile</div><div class="line">        'com.android.support.test.espresso:espresso-core:2.2'</div><div class="line">      androidTestCompile</div><div class="line">        'com.android.support.test.espresso:espresso-contrib:2.2'</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>直接运行可能会报错：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">     Error: duplicate files during packaging of APK app-androidTest.apk</div><div class="line">     Path in archive: LICENSE.txt</div><div class="line">     Origin <span class="number">1</span>: ...\hamcrest-library-<span class="number">1.1</span>.jar</div><div class="line">     Origin <span class="number">2</span>: ...\junit-dep-<span class="number">4.10</span>.jar</div><div class="line"></div><div class="line">     <span class="comment">//解决方案是</span></div><div class="line">     android &#123;</div><div class="line">     packagingOptions &#123;</div><div class="line">     exclude <span class="string">'LICENSE.txt'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>下面是个简单的测试用例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RunWith</span>(AndroidJUnit4.class)</div><div class="line">   <span class="meta">@SmallTest</span></div><div class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestingEspressoMainActivityTest</span> </span>&#123;</div><div class="line">       <span class="meta">@Rule</span></div><div class="line">       <span class="keyword">public</span> ActivityTestRule&lt;MainActivity&gt; mActivityRule = <span class="keyword">new</span></div><div class="line">         ActivityTestRule&lt;&gt;(MainActivity.class);</div><div class="line">       <span class="meta">@Test</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testHelloWorldIsShown</span><span class="params">()</span> </span>&#123;</div><div class="line">           onView(withText(<span class="string">"Hello world!"</span>)).check</div><div class="line">             (matches(isDisplayed()));</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="测试覆盖率"><a href="#测试覆盖率" class="headerlink" title="测试覆盖率"></a>测试覆盖率</h2><ul>
-<li>当代码中有单元测试之后，我们就需要对测试代码对源码覆盖率有个了解，这样方便我们调整和优化我们的单元测试代码。</li>
-<li>这里介绍Jacoco，在另一篇文章中其实已经涉及到了<a href="https://xdjatesterhome.github.io/2017/03/02/代码覆盖工具jacoco的介绍和使用/" target="_blank" rel="external">Jacoco</a></li>
-</ul>
-
-          
+          背景
+为了确保app或者library库的质量，有一个完整的测试非常重要。很长一段时间，Android开发工具都缺乏针对完整性测试的支持，但是最近，google为之做了大量的工作，其让开发者做测试变得更加容易了，一些旧的框架更新了版本，新的框架也被加入进来。我们现在不仅可以在Android stud
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/16/gradle之测试/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1742,7 +1190,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1770,44 +1218,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-16T13:43:13+08:00">
-                2017-03-16
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android性能测试/" itemprop="url" rel="index">
-                    <span itemprop="name">Android性能测试</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1846,107 +1262,19 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>内存对移动设备来说是非常宝贵的资源，因为每个app可以使用的内存是有限的，从最开始的16M、32M到现在的128M，虽然随着硬件成本的降低，内存在增大，但是我们还是会经常碰到OOM。</li>
-<li>OOM其实只是一个表象，更深层次的原因是内存泄露。因为对内存的测试，是我们完善产品质量的一个重要环节。</li>
-</ul>
-<h2 id="测试内容"><a href="#测试内容" class="headerlink" title="测试内容"></a>测试内容</h2><ul>
-<li>对内存的测试我们主要关注两个方面：<strong>内存泄露</strong> 和 <strong>内存抖动</strong></li>
-<li>内存泄露的主要影响是上面提到的：容易造成OOM影响app产品体验，且间接的会造成频繁GC。</li>
-<li>内存抖动的原因是：频繁的GC（所以内存会短时间内增加或降低），造成的影响是:界面在使用时比较卡顿，因为GC会导致JVM暂停执行你的任务进行内存回收。</li>
-<li>产生内存抖动的代码层面的原因是：<blockquote>
-<ol>
-<li>在循环中创建对象，产生内存碎片。</li>
-<li>瞬间创建比较大的对象。</li>
-<li>内存泄露也是一方面原因。</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<h2 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h2><h3 id="内存泄露"><a href="#内存泄露" class="headerlink" title="内存泄露"></a>内存泄露</h3><ul>
-<li>之前制定的文档中，准备采用纯手工的方式去测，但是实践了一段时间，发现手工测试工作量大且对于小量的内存泄露不太好发现。于是就尝试了用LeakCanary工具。</li>
-<li>LeakCanary确实比较强大，甚至可以发现系统的一些泄露，比如我在测试自己app的时候，调整了音量，然后LeakCanary报了一个mediasessionlegacyhelper的内存泄露，其实这个泄露是SDK自身的泄露，当使用它mediasessionlegacyhelper.getHelper(context),传入context后因为其内部是静态变量持有了传入的context，所以造成泄露。</li>
-<li>随后决定之后内存泄露用LeakCanary。</li>
-</ul>
-<h4 id="LeakCanary改良版"><a href="#LeakCanary改良版" class="headerlink" title="LeakCanary改良版"></a>LeakCanary改良版</h4><ul>
-<li><p>使用LeakCanary手动测试，它自带一个展示页面DisplayActivity，测试过程中发现的泄露都会展示在这里。但是如果我们想通过跑自动化的方式来收集内存泄露信息会碰到如下问题：</p>
-<blockquote>
-<ol>
-<li>跑monkey时会经常进到DisplayActivity中，影响测试。</li>
-<li>跑monkey时，如果进入到DisplayActivity中，monkey有可能会点击删除已经发现的泄露。</li>
-<li>如果有UI自动化的话，上面两个问题倒不存在。</li>
-</ol>
-</blockquote>
-</li>
-<li><p>为了能跑自动化，我们要对LeakCanary改良下。主要是两方面的改动：</p>
-</li>
-<li><p>在app的自定义Application的onCreate方法中：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">      RefWatcher refWatcher;</div><div class="line"><span class="comment">//        refWatcher = LeakCanary.install(this);   // 没有改良之前，是这么用的，直接install(this)</span></div><div class="line">       refWatcher = LeakCanary.install(<span class="keyword">this</span>, LeakUploadService.class, AndroidExcludedRefs.createAndroidDefaults().build());</div><div class="line">       refWatcher.watch(<span class="keyword">this</span>);</div><div class="line">       LeakCanaryInternals.setEnabled(<span class="keyword">this</span>, DisplayLeakActivity.class, <span class="keyword">false</span>);  <span class="comment">//这句代码的意思是不显示DisplayActivity，将false改成true就可以看见DisplayActivity。</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>自定义一个Service用于处理采集到的泄露数据，我这里是直接保存到sdcard中，也可以上传到服务端数据库中。可以新建一个leakcanary包，将下面的service代码放到包中。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.os.Environment;</div><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.squareup.leakcanary.AnalysisResult;</div><div class="line"><span class="keyword">import</span> com.squareup.leakcanary.DisplayLeakService;</div><div class="line"><span class="keyword">import</span> com.squareup.leakcanary.HeapDump;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.BufferedWriter;</div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.FileWriter;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by zlw on 2016/12/7.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LeakUploadService</span> <span class="keyword">extends</span> <span class="title">DisplayLeakService</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String TAG = LeakUploadService.class.getSimpleName();</div><div class="line">    <span class="keyword">private</span> String LocalFileName = <span class="string">"LeakCanary.log"</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">afterDefaultHandling</span><span class="params">(HeapDump heapDump, AnalysisResult result, String leakInfo)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!result.leakFound || result.excludedLeak) <span class="keyword">return</span>;</div><div class="line">        <span class="comment">// 将LeakCanary信息写入本地</span></div><div class="line">        writeToFile(leakInfo);</div><div class="line"></div><div class="line">        Log.d(TAG, <span class="string">"leakInfo = "</span> + leakInfo);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *  将采集的泄露数据写入本地</div><div class="line">     * <span class="doctag">@param</span> leakInfo</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeToFile</span><span class="params">(String leakInfo)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span> (leakInfo == <span class="keyword">null</span> || <span class="string">""</span>.equals(leakInfo)) <span class="keyword">return</span>;</div><div class="line"></div><div class="line">        String sdcardPath = Environment.getExternalStorageDirectory().getAbsolutePath();</div><div class="line">        File leakFolder = <span class="keyword">new</span> File(sdcardPath + <span class="string">"/leakcanary/"</span>);</div><div class="line">        File leakFile = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (!leakFolder.exists())&#123;</div><div class="line">            <span class="keyword">boolean</span> suc = leakFolder.mkdirs();</div><div class="line">            <span class="keyword">if</span> (!suc)&#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            leakFile = <span class="keyword">new</span> File(sdcardPath + <span class="string">"/leakcanary/"</span> + LocalFileName);</div><div class="line">            <span class="keyword">if</span> (!leakFile.exists())&#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="keyword">boolean</span> suc1= leakFile.createNewFile();</div><div class="line">                    <span class="keyword">if</span> (!suc1) <span class="keyword">return</span>;</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        BufferedWriter bw = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (leakFile == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">            bw = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(leakFile, <span class="keyword">true</span>));</div><div class="line">            bw.write(leakInfo);</div><div class="line"></div><div class="line">            bw.write(<span class="string">"================================================="</span>);</div><div class="line">            bw.newLine();</div><div class="line">            bw.flush();</div><div class="line">        &#125;<span class="keyword">catch</span> (Exception ex)&#123;</div><div class="line">            ex.printStackTrace();</div><div class="line"></div><div class="line">        &#125;<span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">try</span>&#123;</div><div class="line">                <span class="keyword">if</span> (bw != <span class="keyword">null</span>)&#123;</div><div class="line">                    bw.close();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;<span class="keyword">catch</span> (IOException e)&#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>接下来需要在AndroidMainfest.xml中配置Service，并检查app有没有读写sdcard的权限</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_EXTERNAL_STORAGE"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--leakcanary service begin--&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">service</span> <span class="attr">android:name</span>=<span class="string">".leakcanary.LeakUploadService"</span> <span class="attr">android:exported</span>=<span class="string">"false"</span>/&gt;</span></div><div class="line">   <span class="comment">&lt;!--leakcanary service end--&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>这样就大功告成了，上面唯一的不足是需要源码，并能将源码编译通过。我暂时没想到更好的解决办法。</p>
-</li>
-</ul>
-<h4 id="UI自动化"><a href="#UI自动化" class="headerlink" title="UI自动化"></a>UI自动化</h4><ul>
-<li>如果已经有现成的UI自动化脚本最好，直接拿来跑就完了，比如我们有appium脚本。</li>
-<li>如果没有UI自动化脚本，只能使用monkey了，我这里提供一个monkey，仅空参考(我主要是屏蔽了点击物理按键)：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adb shell monkey -p com.XXX.XXXX --pct-touch 30 --pct-motion 20 --pct-appswitch 50 --pct-rotation 0 --pct-syskeys 0 --pct-nav 0 <span class="_">-s</span> 12358 --throttle 400 --ignore-crashes --ignore-timeouts -v 9000</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
-<li>还有一个问题，就是monkey容易点通知栏，有可能会将网络关掉，这个有大牛已经解决了，详情见<a href="https://github.com/Orange-OpenSource/simiasque" target="_blank" rel="external">simiasque</a>。这是一个apk，我们可以提前装到手机上。</li>
-<li>simiasque 打开状态可以屏蔽状态栏，这样monkey就点不到通知栏了。另外它还提供了命令行打开和关闭模式，不过前提是得打开app。结合之前的monkey命令，我们可以写个批处理：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">adb shell am broadcast <span class="_">-a</span> org.thisisafactory.simiasque.SET_OVERLAY --ez <span class="built_in">enable</span> <span class="literal">true</span></div><div class="line"></div><div class="line">adb shell monkey -p com.xxx.xxxxx --pct-touch 30 --pct-motion 20 --pct-appswitch 50 --pct-rotation 0 --pct-syskeys 0 --pct-nav 0 <span class="_">-s</span> 12358 --throttle 400 --ignore-crashes --ignore-timeouts -v 9000</div><div class="line"></div><div class="line">adb shell am broadcast <span class="_">-a</span> org.thisisafactory.simiasque.SET_OVERLAY --ez <span class="built_in">enable</span> <span class="literal">false</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h4><ul>
-<li>测试完成后，可以去/sdcard/leakcanary/目录下看是否生成LeakCanary.log， 如果没有生成说明没有内存泄露。</li>
-<li><p>如果有内存泄露，我们将LeakCanary.log 用adb 命令pull到本地：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adb pull /sdcard/leakcanary/LeakCanary.log</div></pre></td></tr></table></figure>
-</li>
-<li><p>建议用nodepad++或者Sublime Text等文本工具打开，格式支持更好一些。</p>
-</li>
-<li><p>我们举个例子，如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">In com.XXX.XXXXXX:<span class="number">3.1</span>.0.4653:<span class="number">3104653</span>.</div><div class="line">* com.XXXX.XXXXX.application.XXXXX has leaked:</div><div class="line">* GC ROOT <span class="keyword">static</span> com.raizlabs.android.dbflow.config.FlowManager.config</div><div class="line">* references com.raizlabs.android.dbflow.config.FlowConfig.context</div><div class="line">* leaks com.XXXX.XXXXX.application.XXXXX instance</div><div class="line"></div><div class="line">* Retaining: <span class="number">288</span> B.</div><div class="line">* Reference Key: a3f8a717-<span class="number">8</span>de8-<span class="number">4149</span>-<span class="number">8431</span>-ce6c6e59e373</div><div class="line">* Device: XDJA ACTOMA ACTOMA ACE XDJA_SCM</div><div class="line">* Android Version: <span class="number">5.0</span>.2 API: <span class="number">21</span> LeakCanary: <span class="number">1.4</span>-beta2 <span class="number">3799172</span></div><div class="line">* Durations: watch=<span class="number">6673</span>ms, gc=<span class="number">166</span>ms, heap dump=<span class="number">1168</span>ms, analysis=<span class="number">425892</span>ms</div><div class="line"></div><div class="line">* Details:</div><div class="line">* Class com.raizlabs.android.dbflow.config.FlowManager</div><div class="line">|   <span class="keyword">static</span> DEFAULT_DATABASE_HOLDER_NAME = java.lang.String@<span class="number">316030112</span> (<span class="number">0x12d63ca0</span>)</div><div class="line">|   <span class="keyword">static</span> config = com.raizlabs.android.dbflow.config.FlowConfig@<span class="number">316030048</span> (<span class="number">0x12d63c60</span>)</div><div class="line">|   <span class="keyword">static</span> DEFAULT_DATABASE_HOLDER_CLASSNAME = java.lang.String@<span class="number">316030432</span> (<span class="number">0x12d63de0</span>)</div><div class="line">|   <span class="keyword">static</span> $staticOverhead = <span class="keyword">byte</span>[<span class="number">48</span>]@<span class="number">314895937</span> (<span class="number">0x12c4ee41</span>)</div><div class="line">|   <span class="keyword">static</span> globalDatabaseHolder = com.raizlabs.android.dbflow.config.FlowManager$GlobalDatabaseHolder@<span class="number">316030208</span> (<span class="number">0x12d63d00</span>)</div><div class="line">|   <span class="keyword">static</span> DEFAULT_DATABASE_HOLDER_PACKAGE_NAME = java.lang.String@<span class="number">316030272</span> (<span class="number">0x12d63d40</span>)</div><div class="line">|   <span class="keyword">static</span> loadedModules = java.util.HashSet@<span class="number">316098192</span> (<span class="number">0x12d74690</span>)</div><div class="line">* Instance of com.raizlabs.android.dbflow.config.FlowConfig</div><div class="line">|   context = com.XXXX.XXXXX.application.XXXXXXX@<span class="number">314752224</span> (<span class="number">0x12c2bce0</span>)</div><div class="line">|   databaseConfigMap = java.util.HashMap@<span class="number">316020144</span> (<span class="number">0x12d615b0</span>)</div><div class="line">|   databaseHolders = java.util.Collections$UnmodifiableSet@<span class="number">316098144</span> (<span class="number">0x12d74660</span>)</div><div class="line">|   openDatabasesOnInit = <span class="keyword">false</span></div><div class="line">* Instance of com.XXXX.XXXXXX.application.XXXXXXX</div><div class="line">|   <span class="keyword">static</span> STOP_DEB_LOCKING = <span class="keyword">false</span></div><div class="line">|   <span class="keyword">static</span> $staticOverhead = <span class="keyword">byte</span>[<span class="number">16</span>]@<span class="number">315848705</span> (<span class="number">0x12d37801</span>)</div><div class="line">|   <span class="keyword">static</span> SCREEN_BROADCAST = java.lang.String@<span class="number">315978240</span> (<span class="number">0x12d57200</span>)</div><div class="line">|   appComponent = com.xdja.HDSafeEMailClient.di.components.DaggerAppComponent@<span class="number">316306176</span> (<span class="number">0x12da7300</span>)</div><div class="line">|   isPauseActivity = java.lang.String@<span class="number">318262688</span> (<span class="number">0x12f84da0</span>)</div><div class="line">|   mScreenReceiver = com.XXXX.XXXXXX.application.XXXXXXXX$ScreenBroadcastReceiver@<span class="number">314600064</span> (<span class="number">0x12c06a80</span>)</div><div class="line">|   onResumeTime = <span class="number">1489630302358</span></div><div class="line">|   screenLockTime = <span class="number">0</span></div><div class="line">|   isBackGrounded = <span class="keyword">false</span></div><div class="line">|   isScreenLocked = <span class="keyword">false</span></div><div class="line">|   isSetPattern = <span class="keyword">false</span></div><div class="line">|   applicationComponent = com.XXXX.frame.di.components.DaggerApplicationComponent@<span class="number">314881856</span> (<span class="number">0x12c4b740</span>)</div><div class="line">|   loggable = <span class="keyword">true</span></div><div class="line">|   applicationLifeCycles = <span class="keyword">null</span></div><div class="line">|   components = java.util.HashMap@<span class="number">315022016</span> (<span class="number">0x12c6dac0</span>)</div><div class="line">|   mActivityLifecycleCallbacks = java.util.ArrayList@<span class="number">315978304</span> (<span class="number">0x12d57240</span>)</div><div class="line">|   mAssistCallbacks = <span class="keyword">null</span></div><div class="line">|   mComponentCallbacks = java.util.ArrayList@<span class="number">315978272</span> (<span class="number">0x12d57220</span>)</div><div class="line">|   mLoadedApk = android.app.LoadedApk@<span class="number">314737664</span> (<span class="number">0x12c28400</span>)</div><div class="line">|   mBase = android.app.ContextImpl@<span class="number">315114752</span> (<span class="number">0x12c84500</span>)</div><div class="line">* Excluded Refs:</div><div class="line">| Field: android.view.Choreographer$FrameDisplayEventReceiver.mMessageQueue (always)</div><div class="line">| Thread:FinalizerWatchdogDaemon (always)</div><div class="line">| Thread:main (always)</div><div class="line">| Thread:LeakCanary-Heap-Dump (always)</div><div class="line">| Class:java.lang.ref.WeakReference (always)</div><div class="line">| Class:java.lang.ref.SoftReference (always)</div><div class="line">| Class:java.lang.ref.PhantomReference (always)</div><div class="line">| Class:java.lang.ref.Finalizer (always)</div><div class="line">| Class:java.lang.ref.FinalizerReference (always)</div><div class="line">| Root Class:android.os.Binder (always)</div></pre></td></tr></table></figure>
-</li>
-<li><p>如上所示，我们分以下几步分析问题：</p>
-<blockquote>
-<ol>
-<li>通过 com.XXXX.XXXXX.application.XXXXX has leaked:  我们知道com.XXXX.XXXXX.application.XXXXX发生了内存泄露。</li>
-<li>接下来我们看Retaining: 288 B    知道大致泄露了288B。有时候泄露比较小时，比如本例中的288B，可以适当放宽处理。</li>
-<li>再来就是分析泄露原因，LeakCanary这一点做的很好，我们直接看Details就好了：Details内容最上面的Class是GC Roots，本例就是：com.raizlabs.android.dbflow.config.FlowConfig@316030048 (0x12d63c60)。所以我们应该从下往上找，一般下面的类是跟我们关系比较大的类。</li>
-<li>本例我们可以得出 com.XXXX.XXXXXX.application.XXXXXXX  以 context传入 com.raizlabs.android.dbflow.config.FlowConfig， 然后com.raizlabs.android.dbflow.config.FlowConfig又以static config的形式存在于com.raizlabs.android.dbflow.config.FlowManager，这样就引起了内存泄露。</li>
-<li>非常好分析吧，LeakCanary比MAT工具分析起来要容易一些。</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<h4 id="手动测试"><a href="#手动测试" class="headerlink" title="手动测试"></a>手动测试</h4><ul>
-<li>当然你可能担心自动化覆盖不全你的用例，你也可以手动去操作。</li>
-<li>获取数据和分析数据的方式和上面都是一样的。</li>
-</ul>
-<h3 id="内存抖动"><a href="#内存抖动" class="headerlink" title="内存抖动"></a>内存抖动</h3><ul>
-<li>内存抖动的跟踪，有两种方式：AndroidStudio monitor和自己写脚本分析。</li>
-</ul>
-<h4 id="AndroidStudio-monitor"><a href="#AndroidStudio-monitor" class="headerlink" title="AndroidStudio monitor"></a>AndroidStudio monitor</h4><ul>
-<li>这是我比较推荐的方式，因为图形的方式，观察抖动更直接。如下图所示：<br><img src="/upload/image/zlw/内存抖动.PNG" alt="内存抖动"></li>
-<li>另外如果有抖动发生，可以直接抓取一个Memory Allocation来查看内存分配情况。</li>
-<li>建议测内存泄露时，可以同时检测内存抖动。</li>
-</ul>
-<h4 id="自己写脚本"><a href="#自己写脚本" class="headerlink" title="自己写脚本"></a>自己写脚本</h4><ul>
-<li>可以自己写脚本收集抖动数据，这需要一个判断标准，我目标的标准是：10s内抖动4次。</li>
-<li>这种方式用于我们跑自动化，没有人参与的情况。</li>
-<li>我们需要记录发生抖动的页面或者截图，方便日后场景重现分析问题。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>内存对性能测试来说是非常重要的，因此需要花更多的时间去测试和验证。</li>
-<li>对于测试过程中发现的问题，最好找到根本原因，这样可以提高问题解决的效率。</li>
-</ul>
+          背景
+内存对移动设备来说是非常宝贵的资源，因为每个app可以使用的内存是有限的，从最开始的16M、32M到现在的128M，虽然随着硬件成本的降低，内存在增大，但是我们还是会经常碰到OOM。
+OOM其实只是一个表象，更深层次的原因是内存泄露。因为对内存的测试，是我们完善产品质量的一个重要环节。
 
-          
+测试
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/16/Android对内存的测试/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1993,7 +1321,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -2021,44 +1349,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-08T19:29:51+08:00">
-                2017-03-08
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/gradle/" itemprop="url" rel="index">
-                    <span itemprop="name">gradle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -2097,43 +1393,16 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>Android studio不仅允许你为你的app和依赖库创建模块，同时也可为Android wear，Android TV，Google App Engine等创建模块，而这些单独的模块又可以在一个单独的项目中使用。举个栗子，在你的app开发后期阶段，你可能需要用到Google Clound或者Android Wear。这种情况下，你可以在你的工程下拥有三个模块：分别是app,google cloud,Android Wear整合。了解在一个工程下的多模块构建将会加速你的开发周期。</li>
-</ul>
-<h2 id="多模块构建的结构"><a href="#多模块构建的结构" class="headerlink" title="多模块构建的结构"></a>多模块构建的结构</h2><ul>
-<li>一个工程包含多个模块，这些模块会存放到父目录下，然后为了告诉gradle，项目的结构及哪一个子文件夹包含模块，需要添加一个setting.gradle文件，每个模块可以提供其独立的build.gradle文件。举个例子，如下所示：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">project</div><div class="line">  ├─── setting.gradle</div><div class="line">  ├─── build.gradle</div><div class="line">  ├─── app</div><div class="line">  │    └─── build.gradle</div><div class="line">  └─── library</div><div class="line">       └─── build.gradle</div></pre></td></tr></table></figure>
-<ul>
-<li>setting.gradle文件声明的内容如下：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">include <span class="string">':app'</span>, <span class="string">':library'</span></div><div class="line"><span class="comment">// 这保证了app和library模块都会包含在构建配置中</span></div></pre></td></tr></table></figure>
-<ul>
-<li>如果需要在你的app模块中添加library模块作为其依赖，可以在app的build.gradle中添加：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">      <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':library'</span>)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>如果模块中还包含了子模块，gradle可以满足你的要求，比如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">project</div><div class="line">├─── setting.gradle</div><div class="line">├─── build.grade</div><div class="line">├─── app</div><div class="line">│    └─── build.gradle</div><div class="line">└─── libraries</div><div class="line">     ├─── library1</div><div class="line">     │    └─── build.gradle</div><div class="line">     └─── library2</div><div class="line">          └─── build.gradle</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>如果是这种情况，使用library1和library2就需要如下配置：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">---setting.gradle</div><div class="line">include <span class="string">':app'</span>, <span class="string">':libraries:library1'</span>, <span class="string">':libraries:library2'</span></div><div class="line"></div><div class="line">--- app build.gradle</div><div class="line">dependencies &#123;</div><div class="line">       <span class="function">compile <span class="title">project</span><span class="params">(<span class="string">':libraries:library1'</span>)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="构建声明周期"><a href="#构建声明周期" class="headerlink" title="构建声明周期"></a>构建声明周期</h2><ul>
-<li>初始化阶段，gradle首先会去找setting.gradle文件，如果该文件不存在，那么gradle会认为你只有一个模块。如果有多个模块，setting.gradle定义了这些模块的位置，如果子模块中包含build.gradle，那么gradle会执行他们，并将他们合并到构建任务中。</li>
-<li>gradle最大的策略是混合，你可以在根目录下定义一个build文件去定义所有模块相同的属性，然后在每个模块中的build文件去配置只属于该模块的参数。</li>
-</ul>
-<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><ul>
-<li>在AndroidStudio中运行tasks，假如你定义了多个tasks，在AndroidStudio gradle面板中是可以展示出来的，如下图所示：<br><img src="/upload/image/zlw/AndroidStudio_gradle.png" alt="gradle_androidStudio"></li>
-</ul>
-<h3 id="加速你的多模块构建"><a href="#加速你的多模块构建" class="headerlink" title="加速你的多模块构建"></a>加速你的多模块构建</h3><ul>
-<li>当你构建你的多模块项目，gradle会依次执行所有的模块。当你的电脑内存够大的时候，让你的构建过程多线程将会更快。该特性在gradle早已存在，但是其默认关闭。所以如果你希望启动parallel构建，你需要在grade.properties文件中配置如下属性：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">org.gradle.parallel=<span class="keyword">true</span></div></pre></td></tr></table></figure>
-<h3 id="模块耦合"><a href="#模块耦合" class="headerlink" title="模块耦合"></a>模块耦合</h3><ul>
-<li>即你可以在一个模块中引用其他模块的属性，但是不建议这么做，可以在根目录下的build文件中定义这些公共属性。</li>
-</ul>
-
-          
+          背景
+Android studio不仅允许你为你的app和依赖库创建模块，同时也可为Android wear，Android TV，Google App Engine等创建模块，而这些单独的模块又可以在一个单独的项目中使用。举个栗子，在你的app开发后期阶段，你可能需要用到Google Clound
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/08/多模块构建/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2180,7 +1449,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -2208,44 +1477,12 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-08T16:15:00+08:00">
-                2017-03-08
-              </time>
-            
 
             
 
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/gradle/" itemprop="url" rel="index">
-                    <span itemprop="name">gradle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -2284,127 +1521,16 @@
       
         
           
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>当你在开发一个app,通常你会有几个版本。大多数情况是你需要一个开发版本，用来测试app和弄清它的质量，然后还需要一个生产版本。这些版本通常有不同的设置，例如不同的URL地址。更可能的是你可能需要一个免费版和收费版本。基于上述情况，你需要处理不同的版本：开发免费版，开发付费版本，生产免费版，生产付费版，而针对不同的版本不同的配置，这极大增加的管理难度。</li>
-<li>Gradle有一些方便的方法来管理这些问题。我们很早之前谈过debug和release版本，现在我们谈到另外一个概念，不同的产品版本。构建版本和生产版本通常可以合并，构建版本和生产版本的合并版叫做构建变种。</li>
-</ul>
-<h2 id="构建版本"><a href="#构建版本" class="headerlink" title="构建版本"></a>构建版本</h2><ul>
-<li><p>在Gradle的Android插件中，一个构建版本意味着定义一个app或者依赖库如何被构建，每个构建版本都有特殊的需求，比如是否需要debug，applicationId是什么，是否需要删除无用的资源文件，通过buildTypes方法来定义一个构建版本。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">       buildTypes &#123;</div><div class="line">           release &#123;</div><div class="line">               <span class="function">minifyEnabled <span class="keyword">false</span></span></div><div class="line">               proguardFiles <span class="title">getDefaultProguardFile</span></div><div class="line">                 <span class="params">(<span class="string">'proguard-android.txt'</span>)</span>, 'proguard-rules.pro'</div><div class="line">           &#125;</div><div class="line">        &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>这个文件定义了模块的release版本，然后定义了proguard的位置，该release版本不是唯一的构建版本，默认情况下，还有个debug版本，AndroidStudio把它视为默认的构建版本。</p>
-</li>
-</ul>
-<h3 id="创建自己的构建版本"><a href="#创建自己的构建版本" class="headerlink" title="创建自己的构建版本"></a>创建自己的构建版本</h3><ul>
-<li><p>创建构建版本只需要在buildTypes写入自己的版本，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    buildTypes &#123;</div><div class="line">        staging &#123;</div><div class="line">            applicationIdSuffix <span class="string">".staging"</span></div><div class="line">            versionNameSuffix <span class="string">"-staging"</span></div><div class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"API_URL"</span>,</div><div class="line">            <span class="string">"\"http://staging.example.com/api\""</span></div><div class="line">         &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>上面定义了一个staging版本，该版本定义了一个新的applicationid，这让其与debug和release版本的applicationId不同，假设使用了默认的配置，那么applicationID将会是这样：</p>
-<blockquote>
-<ol>
-<li>Debug:com.package</li>
-<li>Release: com.package</li>
-<li>Staging: com.package.staging</li>
-</ol>
-</blockquote>
-</li>
-<li><p>构建类型默认的属性和值如下图所示：<br><img src="/upload/image/zlw/buildtypes.PNG" alt="buildTypes"></p>
-</li>
-<li><p>这意味着你可以在你的设备上安装staging版本和release版本，但是你可以继承已有的版本：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">       buildTypes &#123;</div><div class="line">           staging.initWith(buildTypes.debug)</div><div class="line">           staging &#123;</div><div class="line">               applicationIdSuffix <span class="string">".staging"</span></div><div class="line">               versionNameSuffix <span class="string">"-staging"</span></div><div class="line">               debuggable = <span class="keyword">false</span></div><div class="line">           &#125;</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// initWith()方法创建了一个新的版本的同时，复制所有存在的构建版本，类似于继承。</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Source-sets"><a href="#Source-sets" class="headerlink" title="Source sets"></a>Source sets</h3><ul>
-<li>当你创建了一个新的构建版本，Gradle也创建了新的source set。使用source set的目的是将一些源文件组合起来，为了某个特殊目的在逻辑上进行分组，方便对文件进行管理。默认情况下，该文件夹不会自动为你创建，所以要手工创建。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">app</div><div class="line">└── src</div><div class="line">├── debug</div><div class="line">│ ├── java</div><div class="line">       │   │   └── com.<span class="keyword">package</span></div><div class="line"> │ │</div><div class="line">│ ├── res</div><div class="line">│ │ └── layout</div><div class="line">│   │       └── activity_main.xml</div><div class="line">│   └── AndroidManifest.xml</div><div class="line">├── main</div><div class="line">│ ├── java</div><div class="line">│   │   └── com.<span class="keyword">package</span></div><div class="line">│ │</div><div class="line">│ ├── res</div><div class="line">└── MainActivity.java</div><div class="line">└── Constants.java</div><div class="line">│ │</div><div class="line">│ │</div><div class="line">│ │</div><div class="line">│   └── AndroidManifest.xml</div><div class="line">├── staging</div><div class="line">│ ├── java</div><div class="line">│   │   └── com.<span class="keyword">package</span></div><div class="line">├── drawable</div><div class="line">└── layout</div><div class="line">└── activity_main.xml</div><div class="line">│ │</div><div class="line">│ ├── res</div><div class="line">│ │ └── layout</div><div class="line">│   │       └── activity_main.xml</div><div class="line">│   └── AndroidManifest.xml</div><div class="line">└── release</div><div class="line">    ├── java</div><div class="line">    │   └── com.<span class="keyword">package</span></div><div class="line">    │       └── Constants.java</div><div class="line">    └── AndroidManifest.xml</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<ol>
-<li>当添加了一个java类到staging版本，你可以添加相同的类到debug和release版本，但是不能添加到main版本，否则会抛出异常。</li>
-</ol>
-</blockquote>
-<ul>
-<li><p>当使用不同的source sets时，资源文件的处理需要特殊的方式，Drawable和layout文件将会覆盖在main中的重名文件，但是values文件夹下的资源不会，gradle将会把这些资源连同main里面的资源一起合并。举个例子</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">在main中创建了一个string.xml</div><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"app_name"</span>&gt;</span>TypesAndFlavors<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"hello_world"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div><div class="line"></div><div class="line">在staging版本也添加了string.xml</div><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"app_name"</span>&gt;</span>TypesAndFlavors STAGING<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div><div class="line">然后合并的strings.xml将会是这样的：</div><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"app_name"</span>&gt;</span>TypesAndFlavors STAGING<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"hello_world"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div><div class="line">当你创建一个新的构建版本不是staging，最终的string.xml将会是main目录下的strings.xml</div></pre></td></tr></table></figure>
-</li>
-<li><p>manifest和value的情况一样，Android插件会合并他们，比如，你在staging下面创建一个manifest，那么你只需要添加自己的标签，不需要去拷贝在main下面的mainfest文件。</p>
-</li>
-</ul>
-<h3 id="依赖包"><a href="#依赖包" class="headerlink" title="依赖包"></a>依赖包</h3><ul>
-<li>每一个构建版本都有自己的依赖包，如果你想为debug版本添加一个logging框架，可以这么做：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">   <span class="function">compile <span class="title">fileTree</span><span class="params">(dir: <span class="string">'libs'</span>, include: [<span class="string">'*.jar'</span>])</span></span></div><div class="line">   compile 'com.android.support:appcompat-v7:22.2.0'</div><div class="line">   debugCompile 'de.mindpipe.android:android-logging-log4j:1.0.3'</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="product-flavors（产品版本）"><a href="#product-flavors（产品版本）" class="headerlink" title="product flavors（产品版本）"></a>product flavors（产品版本）</h2><ul>
-<li>和构建版本不同，product flavors用来为一个app创建不同的版本。典型的例子是，一个app有付费和免费版。它简化了基于相同的代码构建不同版本的app。</li>
-</ul>
-<h3 id="创建product-flavors"><a href="#创建product-flavors" class="headerlink" title="创建product flavors"></a>创建product flavors</h3><ul>
-<li><p>productFlavors代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    productFlavors &#123;</div><div class="line">        red &#123;</div><div class="line">             applicationId <span class="string">'com.gradleforandroid.red'</span></div><div class="line">             versionCode <span class="number">3</span></div><div class="line">        &#125;</div><div class="line">        blue &#123;</div><div class="line">             applicationId <span class="string">'com.gradleforandroid.blue'</span></div><div class="line">             minSdkVersion <span class="number">14</span></div><div class="line">             versionCode <span class="number">4</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>product flavors和构建版本的配置不同，因为product flavors有自己的ProductFlavor类，就像defaultConfig，这意味着你的所有的productFlavors都分享一样的属性。</p>
-</li>
-</ul>
-<h3 id="多个flavor构建变体"><a href="#多个flavor构建变体" class="headerlink" title="多个flavor构建变体"></a>多个flavor构建变体</h3><ul>
-<li><p>在某些场景下，你可能需要创建一些product flavors的合并版本，举个例子：client A 和client B都需要一个free和paid版本，而他们又都基于一样的代码，但是不一样的颜色，如果创建4个不同的flavors意味着重复的配置，合并flavors最简单的做法可能是使用flavor dimensions：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">      flavorDimensions <span class="string">"color"</span>, <span class="string">"price"</span></div><div class="line">      productFlavors &#123;</div><div class="line">          red &#123;</div><div class="line">              flavorDimension <span class="string">"color"</span></div><div class="line">          &#125;</div><div class="line">          blue &#123;</div><div class="line">              flavorDimension <span class="string">"color"</span></div><div class="line">          &#125;</div><div class="line">          free &#123;</div><div class="line">              flavorDimension <span class="string">"price"</span></div><div class="line">          &#125;</div><div class="line">          paid &#123;</div><div class="line">              flavorDimension <span class="string">"price"</span></div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>当你添加了flavor dimensions，你就需要为每个flavor添加flavorDimension，否则会提示错误。flavorDimensions定义了不同的dimensions，当然其顺序也很重要。当你合并二个不同的flavors时，他们可能有一样的配置和资源。例如上例：</p>
-<blockquote>
-<ol>
-<li>blueFreeDebug and blueFreeRelease</li>
-<li>bluePaidDebug and bluePaidRelease</li>
-<li>redFreeDebug and redFreeRelease</li>
-<li>redPaidDebug and redPaidRelease</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<h2 id="构建变体"><a href="#构建变体" class="headerlink" title="构建变体"></a>构建变体</h2><ul>
-<li>构建变体是构建版本和生产版本的结合体，可以在AndroidStudio左下角的BuildVariants中查看。</li>
-<li>如果没有product flavors，那么变体就只包含构建版本，即使没有定义任何构建版本，AndroidStudio 也会默认为你创建debug版本的。</li>
-</ul>
-<h3 id="tasks"><a href="#tasks" class="headerlink" title="tasks"></a>tasks</h3><ul>
-<li>Android插件会为每一个变体创建不同的配置，一个新的Android项目会有debug和release版本，所以可以使用assembleDebug和assembleRelease，也可以只使用assemble，debug和release都会执行，当添加了新的构建版本或者生产版本，同样的也会创建新的task。以上面的productFlavors为例：<blockquote>
-<ol>
-<li>assembleBlue uses the blue flavor configuration and assembles both BlueRelease and BlueDebug.</li>
-<li>assembleBlueDebug combines the flavor configuration with the build type configuration, and the flavor settings override the build type settings.</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<h3 id="Source-sets-1"><a href="#Source-sets-1" class="headerlink" title="Source sets"></a>Source sets</h3><ul>
-<li>构建变体也可以有自己的资源文件夹，比如，上面列子，可以有src/blueFreeDebug/java/</li>
-</ul>
-<h3 id="资源文件和manifest的合并"><a href="#资源文件和manifest的合并" class="headerlink" title="资源文件和manifest的合并"></a>资源文件和manifest的合并</h3><ul>
-<li>在打包app之前，Android插件会合并main中的代码和构建的代码，当然，依赖项目也可以提供额外的资源，他们也会被合并，举个例子：你不想在main中申明这个权限，因为可能会导致一些问题，所以你可以添加一个额外的manifest文件在debug的文件夹中，申请额外的权限。资源和manifest的优先级是这样的：<br><img src="/upload/image/zlw/资源优先级.png" alt="资源优先级"></li>
-<li>如果一个资源在main中和在flavor中定义了，那么那个在flavor中的资源有更高的优先级。这样那个在flavor文件夹中的资源将会被打包到apk。而在依赖项目申明的资源总是拥有最低优先级。</li>
-</ul>
-<h3 id="创建构建变体"><a href="#创建构建变体" class="headerlink" title="创建构建变体"></a>创建构建变体</h3><ul>
-<li>gradle让处理构建变体变得更加容易：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">       buildTypes &#123;</div><div class="line">           debug &#123;</div><div class="line">               buildConfigField <span class="string">"String"</span>, <span class="string">"API_URL"</span>,</div><div class="line">               <span class="string">"\"http://test.example.com/api\""</span></div><div class="line">        &#125;</div><div class="line">           staging.initWith(android.buildTypes.debug)</div><div class="line">           staging &#123;</div><div class="line">               buildConfigField <span class="string">"String"</span>, <span class="string">"API_URL"</span>,</div><div class="line">                 <span class="string">"\"http://staging.example.com/api\""</span></div><div class="line">               applicationIdSuffix <span class="string">".staging"</span></div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       productFlavors &#123;</div><div class="line">           red &#123;</div><div class="line">               applicationId <span class="string">"com.gradleforandroid.red"</span></div><div class="line">               resValue <span class="string">"color"</span>, <span class="string">"flavor_color"</span>, <span class="string">"#ff0000"</span></div><div class="line">           &#125;</div><div class="line">           blue &#123;</div><div class="line">               applicationId <span class="string">"com.gradleforandroid.blue"</span></div><div class="line">               resValue <span class="string">"color"</span>, <span class="string">"flavor_color"</span>, <span class="string">"#0000ff"</span></div><div class="line">           &#125;</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="变体过滤器"><a href="#变体过滤器" class="headerlink" title="变体过滤器"></a>变体过滤器</h3><ul>
-<li>忽略某个变体是可行的，这样你可以加速你的构建，当使用assemble时候，将不会执行你不需要的变体，在build.gradle中添加代码：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android.variantFilter &#123; variant -&gt;</div><div class="line">       <span class="keyword">if</span>(variant.buildType.name.equals(<span class="string">'release'</span>)) &#123;</div><div class="line">           variant.getFlavors().each() &#123; flavor -&gt;</div><div class="line">               <span class="keyword">if</span> (flavor.name.equals(<span class="string">'blue'</span>)) &#123; variant.setIgnore(<span class="keyword">true</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="签名配置"><a href="#签名配置" class="headerlink" title="签名配置"></a>签名配置</h3><ul>
-<li><p>在发布你的应用之前，你需要为你的app私钥签名，如果你有付费版和免费版，你需要有不同的key去签名不同的变体，配置签名可以这样定义：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">     signingConfigs &#123;</div><div class="line">         staging.initWith(signingConfigs.debug)</div><div class="line">         release &#123;</div><div class="line">             <span class="function">storeFile <span class="title">file</span><span class="params">(<span class="string">"release.keystore"</span>)</span></span></div><div class="line">             storePassword"secretpassword"</div><div class="line">             keyAlias "gradleforandroid"</div><div class="line">             keyPassword "secretpassword"</div><div class="line">         &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>上面这个例子，我们创建了2个不同的签名配置，debug配置是AndroidStudio默认的，其使用了公共的keystore和password。release配置默认使用了storeFile，定义了key alias和password。</p>
-</li>
-<li><p>在构建版本有一个属性叫做singingConfig，可以这么配置：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">       buildTypes &#123;</div><div class="line">           release &#123;</div><div class="line">               signingConfig signingConfigs.release</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>假如你需要对每个版本生成不同的验证，你可以这么定义：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">       productFlavors &#123;</div><div class="line">           blue &#123;</div><div class="line">               signingConfig signingConfigs.release</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>但是上面也提到，buildType的优先级高于flavor，所以在flavor中定义可能会被覆盖，最好的方式如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">       buildTypes &#123;</div><div class="line">           release &#123;</div><div class="line">               productFlavors.red.signingConfig signingConfigs.red</div><div class="line">               productFlavors.blue.signingConfig signingConfigs.blue</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-
-          
+          背景
+当你在开发一个app,通常你会有几个版本。大多数情况是你需要一个开发版本，用来测试app和弄清它的质量，然后还需要一个生产版本。这些版本通常有不同的设置，例如不同的URL地址。更可能的是你可能需要一个免费版和收费版本。基于上述情况，你需要处理不同的版本：开发免费版，开发付费版本，生产免费版，生
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/08/构建变体/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2474,7 +1600,7 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
+               src="/avatar.jpg"
                alt="Liwei" />
           <p class="site-author-name" itemprop="name">Liwei</p>
            
@@ -2552,22 +1678,11 @@
   &copy; 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Liwei</span>
 </div>
 
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
 
 
         
@@ -2630,21 +1745,21 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
 
 
 
   
-  
-
   
 
   
 
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
 
 
 
