@@ -92,19 +92,19 @@
 Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继续使用XML编写生成规范，它的依赖约定能通过网络下载依赖关系（这是特点）。但它的缺点是它不会处理同一库版本之间的冲突">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识gradle（gradle系列一）">
-<meta property="og:url" content="https://liwei721.github.io/2017/03/07/初识gradle/index.html">
+<meta property="og:url" content="https://yoursite.com/2017/03/07/初识gradle/index.html">
 <meta property="og:site_name" content="利伟的技术博客">
 <meta property="og:description" content="背景
 大家对Ant和Maven一定不陌生，Ant是2000年发布，它基于程序编程思想的发展，但它主要缺点是使用XML作为一种格式来写构建脚本，XML是分层的，不利于程序的编程，而且当XML文件变大之后维护变的困难。
 Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继续使用XML编写生成规范，它的依赖约定能通过网络下载依赖关系（这是特点）。但它的缺点是它不会处理同一库版本之间的冲突">
-<meta property="og:image" content="https://liwei721.github.io/upload/image/zlw/gradleV.PNG">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/gradleV.PNG">
 <meta property="og:updated_time" content="2017-03-08T02:38:14.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识gradle（gradle系列一）">
 <meta name="twitter:description" content="背景
 大家对Ant和Maven一定不陌生，Ant是2000年发布，它基于程序编程思想的发展，但它主要缺点是使用XML作为一种格式来写构建脚本，XML是分层的，不利于程序的编程，而且当XML文件变大之后维护变的困难。
 Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继续使用XML编写生成规范，它的依赖约定能通过网络下载依赖关系（这是特点）。但它的缺点是它不会处理同一库版本之间的冲突">
-<meta name="twitter:image" content="https://liwei721.github.io/upload/image/zlw/gradleV.PNG">
+<meta name="twitter:image" content="https://yoursite.com/upload/image/zlw/gradleV.PNG">
 
 
 
@@ -132,7 +132,7 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
 
 
 
-  <link rel="canonical" href="https://liwei721.github.io/2017/03/07/初识gradle/"/>
+  <link rel="canonical" href="https://yoursite.com/2017/03/07/初识gradle/"/>
 
 
 
@@ -287,7 +287,7 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liwei721.github.io/2017/03/07/初识gradle/">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/03/07/初识gradle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
@@ -358,6 +358,17 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/07/初识gradle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/03/07/初识gradle/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -504,6 +515,21 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
     <div>
       
         
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/03/07/初识gradle/" title="初识gradle（gradle系列一）">https://yoursite.com/2017/03/07/初识gradle/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
 
       
     </div>
@@ -562,6 +588,13 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
 
           
   <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     
   </div>
 
@@ -793,6 +826,26 @@ Maven在2004年推出，比Ant有很大的改进，它改变了结构并且继�
 
   
 
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/03/07/初识gradle/';
+          this.page.identifier = '2017/03/07/初识gradle/';
+          this.page.title = '初识gradle（gradle系列一）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
 
   
 

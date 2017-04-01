@@ -92,22 +92,22 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
 对于和Android打交道的同学，对Adb一定不陌生，每天的工作基本都离不开它，最近有时会碰到Adb的问题，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Adb工作原理">
-<meta property="og:url" content="https://liwei721.github.io/2017/02/08/Adb工作原理/index.html">
+<meta property="og:url" content="https://yoursite.com/2017/02/08/Adb工作原理/index.html">
 <meta property="og:site_name" content="利伟的技术博客">
 <meta property="og:description" content="引言
 Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个工具来协助开发人员在开发android应用的过程中更快更好的调试apk，因此adb具有安装卸载apk、拷贝推送文件、查看设备硬件信息、查看应用程序占用资源、在设备执行shell命令等功能。
 对于和Android打交道的同学，对Adb一定不陌生，每天的工作基本都离不开它，最近有时会碰到Adb的问题，">
-<meta property="og:image" content="https://liwei721.github.io/upload/image/zlw/adb_tasklist.png">
-<meta property="og:image" content="https://liwei721.github.io/upload/image/zlw/adbd_sbin.png">
-<meta property="og:image" content="https://liwei721.github.io/upload/image/zlw/Adb_logic.png">
-<meta property="og:image" content="https://liwei721.github.io/upload/image/zlw/adb_logic2.png">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/adb_tasklist.png">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/adbd_sbin.png">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/Adb_logic.png">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/adb_logic2.png">
 <meta property="og:updated_time" content="2017-03-15T06:34:41.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Adb工作原理">
 <meta name="twitter:description" content="引言
 Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个工具来协助开发人员在开发android应用的过程中更快更好的调试apk，因此adb具有安装卸载apk、拷贝推送文件、查看设备硬件信息、查看应用程序占用资源、在设备执行shell命令等功能。
 对于和Android打交道的同学，对Adb一定不陌生，每天的工作基本都离不开它，最近有时会碰到Adb的问题，">
-<meta name="twitter:image" content="https://liwei721.github.io/upload/image/zlw/adb_tasklist.png">
+<meta name="twitter:image" content="https://yoursite.com/upload/image/zlw/adb_tasklist.png">
 
 
 
@@ -135,7 +135,7 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
 
 
 
-  <link rel="canonical" href="https://liwei721.github.io/2017/02/08/Adb工作原理/"/>
+  <link rel="canonical" href="https://yoursite.com/2017/02/08/Adb工作原理/"/>
 
 
 
@@ -290,7 +290,7 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://liwei721.github.io/2017/02/08/Adb工作原理/">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/02/08/Adb工作原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liwei">
@@ -361,6 +361,17 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/08/Adb工作原理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/02/08/Adb工作原理/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -477,6 +488,21 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
     <div>
       
         
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/02/08/Adb工作原理/" title="Adb工作原理">https://yoursite.com/2017/02/08/Adb工作原理/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
 
       
     </div>
@@ -535,6 +561,13 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
 
           
   <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     
   </div>
 
@@ -766,6 +799,26 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
 
   
 
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/02/08/Adb工作原理/';
+          this.page.identifier = '2017/02/08/Adb工作原理/';
+          this.page.title = 'Adb工作原理';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
 
   
 

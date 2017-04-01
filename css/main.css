@@ -544,6 +544,7 @@ pre code {
   background-color: #eff2f3;
 }
 .highlight .code pre {
+  width: 100%;
   padding-left: 10px;
   padding-right: 10px;
   background-color: #f7f7f7;
@@ -1126,11 +1127,17 @@ pre .javascript .function {
   .posts-expand {
     margin: 0 20px;
   }
-  .post-body pre,
-  .post-body .highlight {
+  .post-body pre {
     padding: 10px;
   }
-  .post-body pre .gutter pre,
+  .post-body pre .gutter pre {
+    padding-right: 10px;
+  }
+  .post-body .highlight {
+    margin-left: -40px;
+    margin-right: -40px;
+    padding: 0;
+  }
   .post-body .highlight .gutter pre {
     padding-right: 10px;
   }
@@ -1527,6 +1534,13 @@ pre .javascript .function {
 .fancybox-close:hover {
   border: none;
 }
+.post-copyright {
+  margin: 2em 0 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid #ff1700;
+  background-color: #f9f9f9;
+  list-style: none;
+}
 .sidebar {
   position: fixed;
   right: 0;
@@ -1684,7 +1698,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff38b9;
+  background: #cc6eff;
 }
 .links-of-blogroll {
   font-size: 13px;
