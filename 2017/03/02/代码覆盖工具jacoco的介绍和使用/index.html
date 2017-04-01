@@ -1,0 +1,857 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javacoco, 代码覆盖率," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="背景
+我们平时写自动化，或者功能测试，最理想的状态是测完之后能自信的告诉开发，我们测试没问题了，可以发布了。
+代码覆盖率就是这样一个工具，可以帮助我们了解我们的测试现状，对源代码的覆盖程度。
+但是需要明确代码覆盖率本身对 产品质量 是没有意义的。并不能说覆盖率高，产品质量就高。
+
+基本概念代码覆盖率
+代码覆盖率我的理解是一种度量方式，用来度量测试代码对源码逻辑的覆盖程度。作为对测试用例的一个补充、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈代码覆盖率">
+<meta property="og:url" content="http://yoursite.com/2017/03/02/代码覆盖工具jacoco的介绍和使用/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="背景
+我们平时写自动化，或者功能测试，最理想的状态是测完之后能自信的告诉开发，我们测试没问题了，可以发布了。
+代码覆盖率就是这样一个工具，可以帮助我们了解我们的测试现状，对源代码的覆盖程度。
+但是需要明确代码覆盖率本身对 产品质量 是没有意义的。并不能说覆盖率高，产品质量就高。
+
+基本概念代码覆盖率
+代码覆盖率我的理解是一种度量方式，用来度量测试代码对源码逻辑的覆盖程度。作为对测试用例的一个补充、">
+<meta property="og:image" content="http://yoursite.com/upload/image/zlw/代码覆盖率.png">
+<meta property="og:image" content="http://yoursite.com/upload/image/zlw/codeConvery.png">
+<meta property="og:image" content="http://yoursite.com/upload/image/zlw/覆盖率工具工作流程.png">
+<meta property="og:image" content="http://yoursite.com/upload/image/zlw/插桩原理.jpg">
+<meta property="og:image" content="http://yoursite.com/upload/image/zlw/jenkins-jacoco.png">
+<meta property="og:updated_time" content="2017-03-31T05:54:58.156Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈代码覆盖率">
+<meta name="twitter:description" content="背景
+我们平时写自动化，或者功能测试，最理想的状态是测完之后能自信的告诉开发，我们测试没问题了，可以发布了。
+代码覆盖率就是这样一个工具，可以帮助我们了解我们的测试现状，对源代码的覆盖程度。
+但是需要明确代码覆盖率本身对 产品质量 是没有意义的。并不能说覆盖率高，产品质量就高。
+
+基本概念代码覆盖率
+代码覆盖率我的理解是一种度量方式，用来度量测试代码对源码逻辑的覆盖程度。作为对测试用例的一个补充、">
+<meta name="twitter:image" content="http://yoursite.com/upload/image/zlw/代码覆盖率.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/02/代码覆盖工具jacoco的介绍和使用/"/>
+
+
+
+
+
+  <title> 浅谈代码覆盖率 | Hexo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/02/代码覆盖工具jacoco的介绍和使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                浅谈代码覆盖率
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-02T11:22:25+08:00">
+                2017-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/测试工具/" itemprop="url" rel="index">
+                    <span itemprop="name">测试工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li>我们平时写自动化，或者功能测试，最理想的状态是测完之后能自信的告诉开发，我们测试没问题了，可以发布了。</li>
+<li>代码覆盖率就是这样一个工具，可以帮助我们了解我们的测试现状，对源代码的覆盖程度。</li>
+<li>但是需要明确代码覆盖率本身对 产品质量 是没有意义的。并不能说覆盖率高，产品质量就高。<br><img src="/upload/image/zlw/代码覆盖率.png" alt="代码覆盖率"></li>
+</ul>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="代码覆盖率"><a href="#代码覆盖率" class="headerlink" title="代码覆盖率"></a>代码覆盖率</h3><ul>
+<li>代码覆盖率我的理解是一种度量方式，用来度量测试代码对源码逻辑的覆盖程度。作为对测试用例的一个补充、衡量和完善。</li>
+</ul>
+<h3 id="代码覆盖率统计方式"><a href="#代码覆盖率统计方式" class="headerlink" title="代码覆盖率统计方式"></a>代码覆盖率统计方式</h3><ul>
+<li>行覆盖率：度量被测程序的每行代码是否被执行，判断标准行中是否至少有一个指令被执行。</li>
+<li>类覆盖率：度量计算class类文件是否被执行。</li>
+<li>分支覆盖率：度量if和switch语句的分支覆盖情况，计算一个方法里面的总分支数，确定执行和不执行的 分支数量。</li>
+<li>方法覆盖率：度量被测程序的方法执行情况，是否执行取决于方法中是否有至少一个指令被执行。</li>
+<li>圈复杂度：又称断言覆盖(PredicateCoverage)。它度量了是否函数的每一个分支都被执行了。 这句话也非常好理解，就是所有可能的分支都执行一遍，有多个分支嵌套时，需要对多个分支进行排列组合，可想而知，测试路径随着分支的数量指数级别增加。</li>
+<li>关于这几种代码覆盖率方式详细介绍<a href="http://www.cnblogs.com/coderzh/archive/2009/03/29/1424344.html" target="_blank" rel="external">请点我</a>，这篇文章中介绍了代码覆盖率的概念、策略使用优先级以及对使用代码覆盖率的建议，可以认真看看。</li>
+</ul>
+<h3 id="代码覆盖率意义"><a href="#代码覆盖率意义" class="headerlink" title="代码覆盖率意义"></a>代码覆盖率意义</h3><ul>
+<li>分析未覆盖部分的代码，从而反推在前期测试设计是否充分，没有覆盖到的代码是否是测试设计的盲点，为什么没有考虑到？需求/设计不够清晰，测试设计的理解有误，工程方法应用后的造成的策略性放弃等等，之后进行补充测试用例设计。</li>
+<li>检测出程序中的废代码，可以逆向反推在代码设计中思维混乱点，提醒设计/开发人员理清代码逻辑关系，提升代码质量。</li>
+<li>代码覆盖率高不能说明代码质量高，但是反过来看，代码覆盖率低，代码质量不会高到哪里去，可以作为测试自我审视的重要工具之一。</li>
+</ul>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><ul>
+<li>主流的测试工具有Jacoco、Emma，这俩工具是同一个团队做的，不过Emma已经不再维护了。下图是常用工具的一些对比：<br><img src="/upload/image/zlw/codeConvery.png" alt="代码覆盖率"></li>
+<li>由于jacoco的优点，推荐使用jacoco做代码覆盖率检查。下面我们花点时间介绍下Jacoco。</li>
+</ul>
+<h3 id="Jacoco简介"><a href="#Jacoco简介" class="headerlink" title="Jacoco简介"></a>Jacoco简介</h3><ul>
+<li>JaCoCo是一个开源的覆盖率工具(官网地址：<a href="http://www.eclemma.org/JaCoCo/)，它针对的开发语言是java，其使用方法很灵活，可以嵌入到Ant、Maven中；可以作为Eclipse插件，可以使用其JavaAgent技术监控Java程序等等。" target="_blank" rel="external">http://www.eclemma.org/JaCoCo/)，它针对的开发语言是java，其使用方法很灵活，可以嵌入到Ant、Maven中；可以作为Eclipse插件，可以使用其JavaAgent技术监控Java程序等等。</a></li>
+<li>此外JaCoCo还可以集成到Jenkins中做持续集成。</li>
+</ul>
+<h3 id="Jacoco等工具的工作原理"><a href="#Jacoco等工具的工作原理" class="headerlink" title="Jacoco等工具的工作原理"></a>Jacoco等工具的工作原理</h3><p><img src="/upload/image/zlw/覆盖率工具工作流程.png" alt="工作原理"></p>
+<ol>
+<li>对Java字节码进行插桩（插入用于统计信息的标志），On-The-Fly（需要使用agent代理）和Offine（需要源码，测试之前插桩）两种方式。</li>
+<li>执行测试用例，收集程序执行轨迹信息，将其dump到内存。</li>
+<li>数据处理器结合程序执行轨迹信息和代码结构信息分析生成代码覆盖率报告。</li>
+<li>将代码覆盖率报告图形化展示出来，如html、xml等文件格式。</li>
+</ol>
+<h3 id="JaCoCo插桩原理"><a href="#JaCoCo插桩原理" class="headerlink" title="JaCoCo插桩原理"></a>JaCoCo插桩原理</h3><p><img src="/upload/image/zlw/插桩原理.jpg" alt="插桩原理"></p>
+<ul>
+<li>这个图包含了几种不同的收集覆盖率信息的方法，每种方法的实现方法都不一样，带颜色的部分是JaCoCo比较有特色的地方。</li>
+<li>主流代码覆盖率工具都采用字节码插桩模式，通过钩子的方式来记录代码执行轨迹信息。其中字节码插桩又分为两种模式On-The-Fly和Offine。On-The-Fly模式优点在于无需修改源代码，通过代理或者ClassLoader装载类的时候，判断是否已经插入了用于计数的探针，没有则插入，因此它可以实时获取覆盖率。Offline对应的优点是不需要开启对应的代理程序或者自定义ClassLoader，它需要程序运行完成之后</li>
+</ul>
+<h4 id="On-The-Fly"><a href="#On-The-Fly" class="headerlink" title="On-The-Fly"></a>On-The-Fly</h4><ul>
+<li>On-the-Fly模式优点在于无需修改源代码，通过代理或者ClassLoader装载类的时候，判断是否已经插入了用于计数的探针，没有则插入，因此它可以实时获取覆盖率。</li>
+</ul>
+<h4 id="Offline"><a href="#Offline" class="headerlink" title="Offline"></a>Offline</h4><ul>
+<li>Offline模式的优点是无需再额外的搞个代理程序或者自定义ClassLoader。</li>
+<li>它需要在测试之前先对文件进行插桩，生成插过桩的class文件或者jar包，执行插过桩的class文件或者jar包之后，会生成覆盖率信息到文件，最后统一对覆盖率信息进行处理，并生成报告。</li>
+<li><p>offline模式插桩又分为两种：</p>
+<blockquote>
+<ol>
+<li>Replace:修改字节码生成新的class。</li>
+<li>InJect: 在原有的class上面修改。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>更详细的可以参考腾讯tmq写的系列文章<a href="http://tmq.qq.com/2016/08/java-code-coverage-tools-jacoco-principle/" target="_blank" rel="external">JAVA代码覆盖率工具JaCoCo-原理篇</a>,它里面详细介绍了根据代码逻辑type，怎么埋标记探针。当然也可以找源码看看，不过我也没看源码呢。</p>
+</li>
+</ul>
+<h3 id="JaCoCo使用"><a href="#JaCoCo使用" class="headerlink" title="JaCoCo使用"></a>JaCoCo使用</h3><ul>
+<li>JaCoco 提供了很多使用方式，比如：Ant、命令行、Maven、gradle、jenkins集成。</li>
+<li>我比较关心的方式是（主要针对Android项目）：Jacoco和UI自动化结合、Jacoco和手动测试结合、Jacoco与Jenkins的集成。</li>
+<li>其实gradle中android插件已经支持了jacoco的使用，因此我们只需要在app build.gradle中配置 jaCoco 以及在buildTypes中配置testCoverageEnabled=true,如下是我写的一个demo：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'com.android.application'</span></div><div class="line">apply plugin: <span class="string">'jacoco'</span></div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileSdkVersion <span class="number">25</span></div><div class="line">    buildToolsVersion <span class="string">"25.0.0"</span></div><div class="line">    defaultConfig &#123;</div><div class="line">        applicationId <span class="string">"xdja.com.dreamcode"</span></div><div class="line">        minSdkVersion <span class="number">15</span></div><div class="line">        targetSdkVersion <span class="number">25</span></div><div class="line">        versionCode <span class="number">1</span></div><div class="line">        versionName <span class="string">"1.0"</span></div><div class="line">        testInstrumentationRunner <span class="string">"android.support.test.runner.AndroidJUnitRunner"</span></div><div class="line">    &#125;</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            <span class="function">minifyEnabled <span class="keyword">false</span></span></div><div class="line">            proguardFiles <span class="title">getDefaultProguardFile</span><span class="params">(<span class="string">'proguard-android.txt'</span>)</span>, 'proguard-rules.pro'</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        debug&#123;</div><div class="line">            <span class="function">proguardFiles <span class="title">getDefaultProguardFile</span><span class="params">(<span class="string">'proguard-android.txt'</span>)</span>, 'proguard-rules.pro'</span></div><div class="line">            zipAlignEnabled <span class="keyword">true</span></div><div class="line">            testCoverageEnabled = <span class="keyword">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">def coverageSourceDirs = [</div><div class="line">        <span class="string">'../app/src/main/java'</span></div><div class="line">]</div><div class="line"><span class="function">task <span class="title">jacocoTestReport</span><span class="params">(type: JacocoReport)</span> </span>&#123;</div><div class="line">    group = <span class="string">"Reporting"</span></div><div class="line">    description = <span class="string">"Generate Jacoco coverage reports after running tests."</span></div><div class="line">    reports &#123;</div><div class="line">        xml.enabled = <span class="keyword">true</span></div><div class="line">        html.enabled = <span class="keyword">true</span></div><div class="line">    &#125;</div><div class="line">    classDirectories = fileTree(</div><div class="line">            dir: <span class="string">'./build/intermediates/classes/debug'</span>,</div><div class="line">            excludes: [<span class="string">'**/R*.class'</span>,</div><div class="line">                       <span class="string">'**/*$InjectAdapter.class'</span>,</div><div class="line">                       <span class="string">'**/*$ModuleAdapter.class'</span>,</div><div class="line">                       <span class="string">'**/*$ViewInjector*.class'</span></div><div class="line">            ])</div><div class="line">    sourceDirectories = files(coverageSourceDirs)</div><div class="line">    executionData = files(<span class="string">"$buildDir/outputs/code-coverage/connected/coverage.ec"</span>)</div><div class="line"></div><div class="line">    doFirst &#123;</div><div class="line">        <span class="keyword">new</span> File(<span class="string">"$buildDir/intermediates/classes/"</span>).eachFileRecurse &#123; file -&gt;</div><div class="line">            <span class="keyword">if</span> (file.name.contains(<span class="string">'$$'</span>)) &#123;</div><div class="line">                file.renameTo(file.path.replace(<span class="string">'$$'</span>, <span class="string">'$'</span>))</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">    <span class="function">compile <span class="title">fileTree</span><span class="params">(dir: <span class="string">'libs'</span>, include: [<span class="string">'*.jar'</span>])</span></span></div><div class="line">    <span class="title">androidTestCompile</span><span class="params">(<span class="string">'com.android.support.test.espresso:espresso-core:2.2.2'</span>, &#123;</span></div><div class="line">        exclude group: <span class="string">'com.android.support'</span>, <span class="keyword">module</span>: <span class="string">'support-annotations'</span></div><div class="line">    &#125;)</div><div class="line">    compile 'com.android.support:appcompat-v7:25.0.1'</div><div class="line">    testCompile 'junit:junit:4.12'</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>上面jacocoTestReport 任务用于将采集的ec文件转成html文件。</li>
+</ul>
+<h3 id="Jacoco和手动测试结合"><a href="#Jacoco和手动测试结合" class="headerlink" title="Jacoco和手动测试结合"></a>Jacoco和手动测试结合</h3><ul>
+<li>与手动结合测试，思路是通过反射，获取收集的覆盖率数据：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">out = <span class="keyword">new</span> FileOutputStream(mCoverageFilePath.getPath(), <span class="keyword">true</span>);</div><div class="line">            Object agent = Class.forName(<span class="string">"org.jacoco.agent.rt.RT"</span>)</div><div class="line">                    .getMethod(<span class="string">"getAgent"</span>)</div><div class="line">                    .invoke(<span class="keyword">null</span>);</div><div class="line">            out.write((<span class="keyword">byte</span>[]) agent.getClass().getMethod(<span class="string">"getExecutionData"</span>, <span class="keyword">boolean</span>.class)</div><div class="line">                    .invoke(agent, <span class="keyword">false</span>));</div></pre></td></tr></table></figure>
+<ul>
+<li>网上有人实现了一种方式是不修改源码的情况下，通过Instrumentation来启动个集成首页Activity的页面，然后当测试完成销毁页面的时候会去执行收集数据的代码。</li>
+<li>不过实现方式上可以根据自己的需要来实现触发收集数据的场景，比如搞个广播、长按某个物理键等等。</li>
+<li>生成的数据时ec格式，需要用到上面的jacocoTestReport task，转成html文件。生成的报告位于：.\app\build\reports\jacoco\jacocoTestReport目录</li>
+</ul>
+<h3 id="Jacoco和UI自动化结合"><a href="#Jacoco和UI自动化结合" class="headerlink" title="Jacoco和UI自动化结合"></a>Jacoco和UI自动化结合</h3><ul>
+<li>首先需要了解gradle android plugin 一些内置的命令：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connectedAndroidTest</td>
+<td>执行android的case</td>
+</tr>
+<tr>
+<td>createDebugCoverageReport</td>
+<td>产生代码覆盖率的报告</td>
+</tr>
+<tr>
+<td>connectedCheck</td>
+<td>包含上面2个任务</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>只需要将UI自动化代码准备好，然后执行：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ gradlew clean createDebugCoverageReport</div></pre></td></tr></table></figure>
+<ul>
+<li>这个命令会执行UI自动化代码，同时生成jaCoCo报告。</li>
+<li>生成的JaCoCo报告位于：\app\build\reports\coverage（在reports目录下还有单元测试的结果报告）。</li>
+<li>这里再介绍个手动测试收集代码覆盖率的思路： 在UI自动化中，执行一个sleep（比如停10分钟），这10分钟内可以手动操作测试业务，然后10分钟之后，UI自动化结束后会自动生成报告，可以参考<a href="https://testerhome.com/topics/2510" target="_blank" rel="external">Android手工测试的代码覆盖率</a></li>
+</ul>
+<h3 id="Jacoco与Jenkins的集成"><a href="#Jacoco与Jenkins的集成" class="headerlink" title="Jacoco与Jenkins的集成"></a>Jacoco与Jenkins的集成</h3><ul>
+<li>Jenkins 集成Jacoco，其实其原理和上面提到的gradle的处理方式是比较类似的。</li>
+<li>首先Jenkins需要安装一个【Jacoco plugin】，然后在项目配置文件中会有如下图所示的配置选项：<br><img src="/upload/image/zlw/jenkins-jacoco.png" alt="Jenkins-Jacoco"></li>
+</ul>
+<p>其主要配置如下：</p>
+<ul>
+<li>Path to Exec files：\app\build\outputs\code-coverage\connected\coverage.ec    这个路径是执行gradle任务时，生成的ec文件的目录。</li>
+<li>Path to class directories:   \app\build\intermediates\classes\debug           这个路径是编译之后生成class所在的目录</li>
+<li>Path to source directories :  /src/main/java            源代码所在路径</li>
+<li>Inclusions： com/xxx/xxx/ *.class       包含哪些class文件。</li>
+<li>Exclusions： <strong>/R.class, </strong>/R$<em>.class, <strong>/Manifest.class , </strong>/Manifest$</em>.class, **/BuildConfig.class<blockquote>
+<ul>
+<li>这里需要注意，路径结尾的/必须去掉，否则会有非预期的结果，其实也就是加载了我们不需要的目录。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>代码覆盖率虽然对于项目质量不具有绝对的衡量意义，但是对于优化我们的测试用例及UI自动化脚本还是非常有用的。通过代码覆盖率结果，我们大致可以知道我们的UI自动化脚本对代码的覆盖程度。</li>
+<li>因此应该推动代码覆盖率在项目中的应用。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javacoco-代码覆盖率/" rel="tag"># javacoco, 代码覆盖率</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/01/安全扫描工具drozer的使用/" rel="next" title="安全扫描工具drozer的使用">
+                <i class="fa fa-chevron-left"></i> 安全扫描工具drozer的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/02/java代码优化建议（持续更新）/" rel="prev" title="java代码优化建议（持续更新）">
+                java代码优化建议（持续更新） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="John Doe" />
+          <p class="site-author-name" itemprop="name">John Doe</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">Kategorien</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码覆盖率"><span class="nav-number">2.1.</span> <span class="nav-text">代码覆盖率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码覆盖率统计方式"><span class="nav-number">2.2.</span> <span class="nav-text">代码覆盖率统计方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码覆盖率意义"><span class="nav-number">2.3.</span> <span class="nav-text">代码覆盖率意义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">3.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Jacoco简介"><span class="nav-number">3.1.</span> <span class="nav-text">Jacoco简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jacoco等工具的工作原理"><span class="nav-number">3.2.</span> <span class="nav-text">Jacoco等工具的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JaCoCo插桩原理"><span class="nav-number">3.3.</span> <span class="nav-text">JaCoCo插桩原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#On-The-Fly"><span class="nav-number">3.3.1.</span> <span class="nav-text">On-The-Fly</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Offline"><span class="nav-number">3.3.2.</span> <span class="nav-text">Offline</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JaCoCo使用"><span class="nav-number">3.4.</span> <span class="nav-text">JaCoCo使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jacoco和手动测试结合"><span class="nav-number">3.5.</span> <span class="nav-text">Jacoco和手动测试结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jacoco和UI自动化结合"><span class="nav-number">3.6.</span> <span class="nav-text">Jacoco和UI自动化结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jacoco与Jenkins的集成"><span class="nav-number">3.7.</span> <span class="nav-text">Jacoco与Jenkins的集成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
