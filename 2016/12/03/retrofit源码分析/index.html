@@ -99,7 +99,7 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
 Retrofit是Square公司开发的一款针对Android网络请求的框架，Retrofit2底层基于OkHttp实现的。
 官方对它的解释是：A type-safe HTTP client for Android and Java ，就是一个安全的可用于Android和java的网络库。
 它可以简化我们操作网络的成本，其实所有第三方库的功能，我们用原生的api都是可以实现的，只不过需要花费">
-<meta property="og:updated_time" content="2017-04-01T04:11:58.530Z">
+<meta property="og:updated_time" content="2017-04-05T09:33:37.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Retrofit简单实用及源码分析">
 <meta name="twitter:description" content="背景
@@ -366,7 +366,8 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/2016/12/03/retrofit源码分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/03/retrofit源码分析/" itemprop="commentCount"></span>
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/12/03/retrofit源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -409,7 +410,7 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
 <li>它可以简化我们操作网络的成本，其实所有第三方库的功能，我们用原生的api都是可以实现的，只不过需要花费时间和精力，且在某些场景下可能出现bug和性能不太好，而第三方开源库已经有很多产品使用，得到了验证和完善，所以我们推荐使用第三方库，不过我们需要对开源库的实现原理了解，这样在出现问题的时候能方便的排查问题。</li>
 </ul>
 <h3 id="Rest-API"><a href="#Rest-API" class="headerlink" title="Rest API"></a>Rest API</h3><ul>
-<li>这里简单说下什么是Rest API。 REST是一种架构风格，用于创建Web服务，几乎总是工作在HTTP上。它的工作原理几乎以同样的方式得到的网页，但你也有标准的方法来创建，更新和删除。</li>
+<li>这里简单说下什么是Rest API。 REST是一种架构风格，用于创建Web服务，几乎总是工作在HTTP上。它的工作原理几乎以同样的方式得到的网页，也有标准的方法来创建，更新和删除。</li>
 </ul>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
 <li><p>首先可以定义一个interface，代码如下所示：</p>
@@ -451,7 +452,7 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">APIService service = retrofit.create(APIService.class);</div><div class="line">Call&lt;NewsInfo&gt; call = service.getNews(<span class="string">"10"</span>);</div></pre></td></tr></table></figure>
 </li>
 <li><p>我们先看一下create的代码,它主要做了什么我都写到注释中：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">create</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; service)</span> </span>&#123;</div><div class="line">    <span class="comment">// 检查service是否是个接口</span></div><div class="line">    Utils.validateServiceInterface(service);</div><div class="line">    <span class="comment">// 检查是否要提前创建serviceMethod</span></div><div class="line">    <span class="keyword">if</span> (validateEagerly) &#123;</div><div class="line">      eagerlyValidateMethods(service);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 这里就是设计非常巧妙的地方了，用到了java动态代理，我会在另外一篇文章中讲动态代理</span></div><div class="line">    <span class="comment">// 这里返回的是一个动态代理，然后又转成了对应的接口类型</span></div><div class="line">    <span class="keyword">return</span> (T) Proxy.newProxyInstance(service.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[] &#123; service &#125;,</div><div class="line">        <span class="keyword">new</span> InvocationHandler() &#123;</div><div class="line">          <span class="keyword">private</span> <span class="keyword">final</span> Platform platform = Platform.get();</div><div class="line"></div><div class="line">          <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span></span></div><div class="line">              <span class="keyword">throws</span> Throwable &#123;</div><div class="line">            <span class="comment">// If the method is a method from Object then defer to normal invocation.</span></div><div class="line">            <span class="comment">// 判断是会否为object方法，是的话就直接调用</span></div><div class="line">            <span class="keyword">if</span> (method.getDeclaringClass() == Object.class) &#123;</div><div class="line">              <span class="keyword">return</span> method.invoke(<span class="keyword">this</span>, args);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 这里现在默认是直接返回false的。</span></div><div class="line">            <span class="keyword">if</span> (platform.isDefaultMethod(method)) &#123;</div><div class="line">              <span class="keyword">return</span> platform.invokeDefaultMethod(method, service, proxy, args);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 接下来主要做了以下事情：</span></div><div class="line">            <span class="comment">// 1. 去serviceMethodCache，查是否有对应serviceMethod的缓存。执行完一遍会缓存下来。</span></div><div class="line">            <span class="comment">// 2. 如果不存在缓存就去创建一个。</span></div><div class="line">            <span class="comment">//</span></div><div class="line">            ServiceMethod&lt;Object, Object&gt; serviceMethod =</div><div class="line">                (ServiceMethod&lt;Object, Object&gt;) loadServiceMethod(method);</div><div class="line">            OkHttpCall&lt;Object&gt; okHttpCall = <span class="keyword">new</span> OkHttpCall&lt;&gt;(serviceMethod, args);</div><div class="line">            <span class="keyword">return</span> serviceMethod.callAdapter.adapt(okHttpCall);</div><div class="line">          &#125;</div><div class="line">        &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">create</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; service)</span> </span>&#123;</div><div class="line">    <span class="comment">// 检查service是否是个接口</span></div><div class="line">    Utils.validateServiceInterface(service);</div><div class="line">    <span class="comment">// 检查是否要提前创建serviceMethod</span></div><div class="line">    <span class="keyword">if</span> (validateEagerly) &#123;</div><div class="line">      eagerlyValidateMethods(service);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 这里就是设计非常巧妙的地方了，用到了java动态代理，我会在另外一篇文章中讲动态代理</span></div><div class="line">    <span class="comment">// 这里返回的是一个动态代理，然后又转成了对应的接口类型</span></div><div class="line">    <span class="keyword">return</span> (T) Proxy.newProxyInstance(service.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[] &#123; service &#125;,</div><div class="line">        <span class="keyword">new</span> InvocationHandler() &#123;</div><div class="line">          <span class="keyword">private</span> <span class="keyword">final</span> Platform platform = Platform.get();</div><div class="line"></div><div class="line">          <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span></span></div><div class="line">              <span class="keyword">throws</span> Throwable &#123;</div><div class="line">            <span class="comment">// If the method is a method from Object then defer to normal invocation.</span></div><div class="line">            <span class="comment">// 判断是会否为object方法，是的话就直接调用</span></div><div class="line">            <span class="keyword">if</span> (method.getDeclaringClass() == Object.class) &#123;</div><div class="line">              <span class="keyword">return</span> method.invoke(<span class="keyword">this</span>, args);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 这里现在默认是直接返回false的。</span></div><div class="line">            <span class="keyword">if</span> (platform.isDefaultMethod(method)) &#123;</div><div class="line">              <span class="keyword">return</span> platform.invokeDefaultMethod(method, service, proxy, args);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// 接下来主要做了以下事情：</span></div><div class="line">            <span class="comment">// 1. 去serviceMethodCache，查是否有对应serviceMethod的缓存。执行完一遍会缓存下来。</span></div><div class="line">            <span class="comment">// 2. 如果不存在缓存就去创建一个，所以下面我们重点分析创建build的过程。</span></div><div class="line">            <span class="comment">//</span></div><div class="line">            ServiceMethod&lt;Object, Object&gt; serviceMethod =</div><div class="line">                (ServiceMethod&lt;Object, Object&gt;) loadServiceMethod(method);</div><div class="line">            OkHttpCall&lt;Object&gt; okHttpCall = <span class="keyword">new</span> OkHttpCall&lt;&gt;(serviceMethod, args);</div><div class="line">            <span class="keyword">return</span> serviceMethod.callAdapter.adapt(okHttpCall);</div><div class="line">          &#125;</div><div class="line">        &#125;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>接下来我们看下ServiceMethod的build过程：</p>
 </li>
@@ -565,8 +566,8 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/08/Adb工作原理/" rel="prev" title="Adb工作原理">
-                Adb工作原理 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/07/RxJava介绍和原理分析/" rel="prev" title="Rxjava介绍和原理分析（基于1.x）">
+                Rxjava介绍和原理分析（基于1.x） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -616,8 +617,11 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/03/retrofit源码分析/"
-           data-title="Retrofit简单实用及源码分析" data-url="https://yoursite.com/2016/12/03/retrofit源码分析/">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
@@ -666,7 +670,7 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -688,7 +692,7 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -850,39 +854,51 @@ Retrofit是Square公司开发的一款针对Android网络请求的框架，Retro
 
   
 
+
   
+
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"Android"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
     
+
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2016/12/03/retrofit源码分析/';
+          this.page.identifier = '2016/12/03/retrofit源码分析/';
+          this.page.title = 'Retrofit简单实用及源码分析';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
   
 
 
 
 
 
+  
 
 
 
 
 
+  
 
 
 

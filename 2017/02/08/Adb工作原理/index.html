@@ -368,7 +368,8 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/2017/02/08/Adb工作原理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/08/Adb工作原理/" itemprop="commentCount"></span>
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/02/08/Adb工作原理/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -523,8 +524,8 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/03/retrofit源码分析/" rel="next" title="Retrofit简单实用及源码分析">
-                <i class="fa fa-chevron-left"></i> Retrofit简单实用及源码分析
+              <a href="/2016/12/07/RxJava介绍和原理分析/" rel="next" title="Rxjava介绍和原理分析（基于1.x）">
+                <i class="fa fa-chevron-left"></i> Rxjava介绍和原理分析（基于1.x）
               </a>
             
           </div>
@@ -584,8 +585,11 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/08/Adb工作原理/"
-           data-title="Adb工作原理" data-url="https://yoursite.com/2017/02/08/Adb工作原理/">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
@@ -634,7 +638,7 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -656,7 +660,7 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -818,39 +822,51 @@ Adb是Android Debug bridge的简称，Android的初衷是用adb这样的一个�
 
   
 
+
   
+
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"Android"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
     
+
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/02/08/Adb工作原理/';
+          this.page.identifier = '2017/02/08/Adb工作原理/';
+          this.page.title = 'Adb工作原理';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
   
 
 
 
 
 
+  
 
 
 
 
 
+  
 
 
 
