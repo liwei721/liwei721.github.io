@@ -1,0 +1,1018 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Backpressure, Rxjava," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="概念
+Rxjava是一个观察者模式的架构，当这个架构中被观察者（Observable）和观察者（Observer）处于不同的线程环境中时，由于各自的工作量不一样，导致它们产生事件和处理事件的速度不一样，这就会出现两种情况：
+
+
+被观察者产生事件慢一些，观察者处理事件很快。那么观察者就会等着被观察者发送事件，（好比观察者在等米下锅，程序等待，这没有问题）。
+被观察者产生事件的速度很快，而观察者处理很">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rxjava之背压（Backpressure）">
+<meta property="og:url" content="https://yoursite.com/2017/04/06/Rxjava之背压（Backpressure）/index.html">
+<meta property="og:site_name" content="利伟的技术博客">
+<meta property="og:description" content="概念
+Rxjava是一个观察者模式的架构，当这个架构中被观察者（Observable）和观察者（Observer）处于不同的线程环境中时，由于各自的工作量不一样，导致它们产生事件和处理事件的速度不一样，这就会出现两种情况：
+
+
+被观察者产生事件慢一些，观察者处理事件很快。那么观察者就会等着被观察者发送事件，（好比观察者在等米下锅，程序等待，这没有问题）。
+被观察者产生事件的速度很快，而观察者处理很">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/rxjava_backpressure1.png">
+<meta property="og:updated_time" content="2017-04-07T02:41:40.171Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rxjava之背压（Backpressure）">
+<meta name="twitter:description" content="概念
+Rxjava是一个观察者模式的架构，当这个架构中被观察者（Observable）和观察者（Observer）处于不同的线程环境中时，由于各自的工作量不一样，导致它们产生事件和处理事件的速度不一样，这就会出现两种情况：
+
+
+被观察者产生事件慢一些，观察者处理事件很快。那么观察者就会等着被观察者发送事件，（好比观察者在等米下锅，程序等待，这没有问题）。
+被观察者产生事件的速度很快，而观察者处理很">
+<meta name="twitter:image" content="https://yoursite.com/upload/image/zlw/rxjava_backpressure1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2017/04/06/Rxjava之背压（Backpressure）/"/>
+
+
+
+
+
+  <title> Rxjava之背压（Backpressure） | 利伟的技术博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">利伟的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、交流、成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/04/06/Rxjava之背压（Backpressure）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="利伟的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Rxjava之背压（Backpressure）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-06T23:08:20+08:00">
+                2017-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开源库/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开源库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/06/Rxjava之背压（Backpressure）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/04/06/Rxjava之背压（Backpressure）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/06/Rxjava之背压（Backpressure）/" class="leancloud_visitors" data-flag-title="Rxjava之背压（Backpressure）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li><p>Rxjava是一个观察者模式的架构，当这个架构中被观察者（Observable）和观察者（Observer）处于不同的线程环境中时，由于各自的工作量不一样，导致它们产生事件和处理事件的速度不一样，这就会出现两种情况：</p>
+<blockquote>
+<ol>
+<li>被观察者产生事件慢一些，观察者处理事件很快。那么观察者就会等着被观察者发送事件，（好比观察者在等米下锅，程序等待，这没有问题）。</li>
+<li>被观察者产生事件的速度很快，而观察者处理很慢。那就出问题了，如果不作处理的话，事件会堆积起来，最终挤爆你的内存，导致程序崩溃。（好比被观察者生产的大米没人吃，堆积最后就会烂掉）。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>举一个会造成问题的例子：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//被观察者在主线程中，每1ms发送一个事件</div><div class="line">Observable.interval(1, TimeUnit.MILLISECONDS)</div><div class="line">//.subscribeOn(Schedulers.newThread())</div><div class="line">//将观察者的工作放在新线程环境中</div><div class="line"></div><div class="line">.observeOn(Schedulers.newThread())</div><div class="line">//观察者处理每1000ms才处理一个事件</div><div class="line">.subscribe(new Action1() &#123;</div><div class="line"></div><div class="line">@Override</div><div class="line">public void call(Long aLong) &#123;</div><div class="line">try &#123;</div><div class="line">Thread.sleep(1000);</div><div class="line">&#125; catch (InterruptedException e) &#123;</div><div class="line">e.printStackTrace();</div><div class="line">&#125;</div><div class="line">Log.w(&quot;TAG&quot;,&quot;----&gt;&quot;+aLong);</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>在上面的代码中，被观察者发送事件的速度是观察者处理速度的1000倍，运行代码后，抛出：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">   Caused by: rx.exceptions.MissingBackpressureException</div><div class="line">   ...</div><div class="line">   ...</div></pre></td></tr></table></figure>
+<ul>
+<li>通过上面的例子，我们可以对背压（BackPressure）做一个明确的定义：在异步场景中，被观察者发送事件速度远快于观察者的处理速度的情况下，一种告诉上游的被观察者降低发送速度的策略。也就是说背压是流速控制的一种策略。</li>
+<li>背压策略的一个前提是异步环境，也就是说，被观察者和观察者处于不同的线程环境中。</li>
+<li>背压（Backpressure）并不是一个像flatMap一样可以在程序中直接使用的操作符，他只是一种控制事件流速的策略。</li>
+</ul>
+<h2 id="响应式拉取（reactive-pull）"><a href="#响应式拉取（reactive-pull）" class="headerlink" title="响应式拉取（reactive pull）"></a>响应式拉取（reactive pull）</h2><ul>
+<li><p>在RxJava的观察者模型中，被观察者是主动的推送数据给观察者，观察者是被动接收的。而响应式拉取则反过来，观察者主动从被观察者那里去拉取数据，而被观察者变成被动的等待通知再发送数据。示意图如下所示：<br><img src="/upload/image/zlw/rxjava_backpressure1.png" alt="rxjava_backpressure1.png"></p>
+</li>
+<li><p>由上图可以看出，观察者可以根据自身实际情况按需拉取数据，而不是被动接收（也就相当于告诉上游观察者把速度慢下来），最终实现了上游被观察者发送事件的速度的控制，实现了背压的策略。</p>
+</li>
+<li>举个例子，代码如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//被观察者将产生100000个事件</span></div><div class="line">Observable observable=Observable.range(<span class="number">1</span>,<span class="number">100000</span>);</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySubscriber</span> <span class="keyword">extends</span> <span class="title">Subscriber</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//一定要在onStart中通知被观察者先发送一个事件</span></div><div class="line">      request(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T n)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">        ...</div><div class="line">        <span class="comment">//处理完毕之后，在通知被观察者发送下一个事件</span></div><div class="line">        request(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">observable.observeOn(Schedulers.newThread())</div><div class="line">            .subscribe(MySubscriber);</div></pre></td></tr></table></figure>
+<ul>
+<li>从代码中我们知道，在onNext中，一定要所有的事务都处理完毕后，再调用request方法。</li>
+<li>实际上，在上面的代码中，你也可以不需要调用request(n)方法去拉取数据，程序依然能完美运行，这是因为range –&gt; observeOn,这一段中间过程本身就是响应式拉取数据，observeOn这个操作符内部有一个缓冲区，Android环境下长度是16，它会告诉range最多发送16个事件，充满缓冲区即可。不过话说回来，在观察者中使用request(n)这个方法可以使背压的策略表现得更加直观，更便于理解。</li>
+<li>还需要说明一点，在最上面的例子，我们使用了interval操作符，但是这个例子中用了range操作符，是因为interval操作符是不支持背压的。</li>
+</ul>
+<h2 id="Hot-and-Cold-Observables"><a href="#Hot-and-Cold-Observables" class="headerlink" title="Hot and Cold Observables"></a>Hot and Cold Observables</h2><ul>
+<li><p>Hot Observables 和cold Observables并不是严格的概念区分，它只是对于两类Observable形象的描述：</p>
+<blockquote>
+<ol>
+<li>Cold Observables：指的是那些在订阅之后才开始发送事件的Observable（每个Subscriber都能接收到完整的事件）。</li>
+<li>Hot Observables:指的是那些在创建了Observable之后，（不管是否订阅）就开始发送事件的Observable</li>
+</ol>
+</blockquote>
+</li>
+<li><p>我们一般使用的都是Cold Observable，除非特殊需求，才会使用Hot Observable,在这里，Hot Observable这一类是不支持背压的，而是Cold Observable这一类中也有一部分并不支持背压（比如interval，timer等操作符创建的Observable）。</p>
+</li>
+<li>都是Observable，结果有的支持背压，有的不支持，这就是RxJava1.X的一个问题。在2.0中，这种问题已经解决。</li>
+<li>对于不支持背压的Observevable如何做流速控制呢，看下面的一些操作符。</li>
+</ul>
+<h2 id="流速控制相关的操作符"><a href="#流速控制相关的操作符" class="headerlink" title="流速控制相关的操作符"></a>流速控制相关的操作符</h2><h3 id="过滤（抛弃）"><a href="#过滤（抛弃）" class="headerlink" title="过滤（抛弃）"></a>过滤（抛弃）</h3><ul>
+<li>就是虽然生产者产生事件的速度很快，但是把大部分的事件都直接过滤（浪费）掉，从而间接的降低事件发送的速度。相关类似的操作符：Sample，ThrottleFirst….</li>
+<li>以sample为例：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Observable.interval(<span class="number">1</span>, TimeUnit.MILLISECONDS)</div><div class="line"></div><div class="line">                .observeOn(Schedulers.newThread())</div><div class="line">                <span class="comment">//这个操作符简单理解就是每隔200ms发送里时间点最近那个事件，</span></div><div class="line">                <span class="comment">//其他的事件浪费掉</span></div><div class="line">                  .sample(<span class="number">200</span>,TimeUnit.MILLISECONDS)</div><div class="line">                  .subscribe(<span class="keyword">new</span> Action1() &#123;</div><div class="line">                      <span class="meta">@Override</span></div><div class="line">                      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Long aLong)</span> </span>&#123;</div><div class="line">                          <span class="keyword">try</span> &#123;</div><div class="line">                              Thread.sleep(<span class="number">200</span>);</div><div class="line">                          &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                              e.printStackTrace();</div><div class="line">                          &#125;</div><div class="line">                          Log.w(<span class="string">"TAG"</span>,<span class="string">"----&gt;"</span>+aLong);</div><div class="line">                      &#125;</div><div class="line">                  &#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>这是以杀敌一千，自损八百的方式解决这个问题，因为抛弃了绝大部分的事件，而在我们使用RxJava 时候，我们自己定义的Observable产生的事件可能都是我们需要的，一般来说不会抛弃，所以这种方案有它的缺陷。</li>
+</ul>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><ul>
+<li>就是虽然被观察者发送事件速度很快，观察者处理不过来，但是可以选择先缓存一部分，然后慢慢读。相关类似的操作符：buffer，window…  以buffer为例:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Observable.interval(<span class="number">1</span>, TimeUnit.MILLISECONDS)</div><div class="line"></div><div class="line">                .observeOn(Schedulers.newThread())</div><div class="line">                <span class="comment">//这个操作符简单理解就是把100毫秒内的事件打包成list发送</span></div><div class="line">                .buffer(<span class="number">100</span>,TimeUnit.MILLISECONDS)</div><div class="line">                  .subscribe(<span class="keyword">new</span> Action1&gt;() &#123;</div><div class="line">                      <span class="meta">@Override</span></div><div class="line">                      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(List aLong)</span> </span>&#123;</div><div class="line">                          <span class="keyword">try</span> &#123;</div><div class="line">                              Thread.sleep(<span class="number">1000</span>);</div><div class="line">                          &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                              e.printStackTrace();</div><div class="line">                          &#125;</div><div class="line">                          Log.w(<span class="string">"TAG"</span>,<span class="string">"----&gt;"</span>+aLong.size());</div><div class="line">                      &#125;</div><div class="line">                  &#125;);</div></pre></td></tr></table></figure>
+<h3 id="onBackpressurebuffer-amp-amp-onBackpressureDrop"><a href="#onBackpressurebuffer-amp-amp-onBackpressureDrop" class="headerlink" title="onBackpressurebuffer &amp;&amp; onBackpressureDrop"></a>onBackpressurebuffer &amp;&amp; onBackpressureDrop</h3><ul>
+<li>onBackpressurebuffer：把observable发送出来的事件做缓存，当request方法被调用的时候，给下层流发送一个item(如果给这个缓存区设置了大小，那么超过了这个大小就会抛出异常)。</li>
+<li>onBackpressureDrop：将observable发送的事件抛弃掉，直到subscriber再次调用request（n）方法的时候，就发送给它这之后的n个事件。</li>
+<li>以onBackpressureDrop为例：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">Observable.interval(<span class="number">1</span>, TimeUnit.MILLISECONDS)</div><div class="line">                .onBackpressureDrop()</div><div class="line">                .observeOn(Schedulers.newThread())</div><div class="line">               .subscribe(<span class="keyword">new</span> Subscriber() &#123;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">                        Log.w(<span class="string">"TAG"</span>,<span class="string">"start"</span>);</div><div class="line"><span class="comment">//                        request(1);</span></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">                      &#125;</div><div class="line">                      <span class="meta">@Override</span></div><div class="line">                      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">                            Log.e(<span class="string">"ERROR"</span>,e.toString());</div><div class="line">                      &#125;</div><div class="line"></div><div class="line">                      <span class="meta">@Override</span></div><div class="line">                      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Long aLong)</span> </span>&#123;</div><div class="line">                          Log.w(<span class="string">"TAG"</span>,<span class="string">"----&gt;"</span>+aLong);</div><div class="line">                          <span class="keyword">try</span> &#123;</div><div class="line">                              Thread.sleep(<span class="number">100</span>);</div><div class="line">                          &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                              e.printStackTrace();</div><div class="line">                          &#125;</div><div class="line">                      &#125;</div><div class="line">                  &#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>运行结果是：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">onNext: 0</div><div class="line">onNext: 1</div><div class="line">onNext: 2</div><div class="line">...</div><div class="line">onNext: 15</div><div class="line">onNext: 1608</div><div class="line">onNext: 1609</div><div class="line">...</div><div class="line">onNext: 1623</div></pre></td></tr></table></figure>
+<ul>
+<li>由运行结果可以看出，前面 16 个数据正常的被处理的，这是应为 observeOn 在切换线程的时候， 使用了一个 16 个数据的小缓冲。</li>
+<li>你可能会觉得这两个操作符和上面讲的过滤和缓存很类似，确实，功能上是有些类似，但是这两个操作符提供了更多的特性，那就是可以响应下游观察者的request(n)方法了，也就是说，使用了这两种操作符，可以让原本不支持背压的Observable“支持”背压了。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/04/06/Rxjava之背压（Backpressure）/" title="Rxjava之背压（Backpressure）">https://yoursite.com/2017/04/06/Rxjava之背压（Backpressure）/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Backpressure-Rxjava/" rel="tag"># Backpressure, Rxjava</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/06/Rxjava介绍（进阶）/" rel="next" title="Rxjava介绍（进阶）">
+                <i class="fa fa-chevron-left"></i> Rxjava介绍（进阶）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/06/Rxjava2-0介绍/" rel="prev" title="Rxjava2.0介绍">
+                Rxjava2.0介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/avatar.jpg"
+               alt="Liwei" />
+          <p class="site-author-name" itemprop="name">Liwei</p>
+           
+              <p class="site-description motion-element" itemprop="description">平时工作和生活中的感悟记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式拉取（reactive-pull）"><span class="nav-number">2.</span> <span class="nav-text">响应式拉取（reactive pull）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hot-and-Cold-Observables"><span class="nav-number">3.</span> <span class="nav-text">Hot and Cold Observables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流速控制相关的操作符"><span class="nav-number">4.</span> <span class="nav-text">流速控制相关的操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤（抛弃）"><span class="nav-number">4.1.</span> <span class="nav-text">过滤（抛弃）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">4.2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onBackpressurebuffer-amp-amp-onBackpressureDrop"><span class="nav-number">4.3.</span> <span class="nav-text">onBackpressurebuffer && onBackpressureDrop</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liwei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/04/06/Rxjava之背压（Backpressure）/';
+          this.page.identifier = '2017/04/06/Rxjava之背压（Backpressure）/';
+          this.page.title = 'Rxjava之背压（Backpressure）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AQoVjcVEpbGjag9EVJEKK6GG-gzGzoHsz", "AqM9mdsyov2LEN1pszewM5Gd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
