@@ -1,0 +1,1102 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android, 插件化," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="背景
+插件化可以解决两种问题：
+
+
+从技术上讲，业务逻辑的复杂导致代码量急剧膨胀，各大厂商陆续碰到了65535方法数的限制。
+在业务层面上，功能模块的解耦以及团队模块分工，每个模块能够单独的发布升级，提升产品迭代效率。
+
+
+
+插件化的实现，从本质上要解决两个问题：1、代码加载   2、资源加载
+代码加载
+类的加载可以使用JAVA的ClassLoader机制，但是对于Android来说，并不是类加载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android插件化学习记录（一）">
+<meta property="og:url" content="https://yoursite.com/2017/04/18/Android插件化学习记录/index.html">
+<meta property="og:site_name" content="利伟的技术博客">
+<meta property="og:description" content="背景
+插件化可以解决两种问题：
+
+
+从技术上讲，业务逻辑的复杂导致代码量急剧膨胀，各大厂商陆续碰到了65535方法数的限制。
+在业务层面上，功能模块的解耦以及团队模块分工，每个模块能够单独的发布升级，提升产品迭代效率。
+
+
+
+插件化的实现，从本质上要解决两个问题：1、代码加载   2、资源加载
+代码加载
+类的加载可以使用JAVA的ClassLoader机制，但是对于Android来说，并不是类加载">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/Activity_app_AMS.png">
+<meta property="og:updated_time" content="2017-04-24T08:19:10.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android插件化学习记录（一）">
+<meta name="twitter:description" content="背景
+插件化可以解决两种问题：
+
+
+从技术上讲，业务逻辑的复杂导致代码量急剧膨胀，各大厂商陆续碰到了65535方法数的限制。
+在业务层面上，功能模块的解耦以及团队模块分工，每个模块能够单独的发布升级，提升产品迭代效率。
+
+
+
+插件化的实现，从本质上要解决两个问题：1、代码加载   2、资源加载
+代码加载
+类的加载可以使用JAVA的ClassLoader机制，但是对于Android来说，并不是类加载">
+<meta name="twitter:image" content="https://yoursite.com/upload/image/zlw/Activity_app_AMS.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2017/04/18/Android插件化学习记录/"/>
+
+
+
+
+
+  <title> Android插件化学习记录（一） | 利伟的技术博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">利伟的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、交流、成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/04/18/Android插件化学习记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="利伟的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android插件化学习记录（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-18T22:42:04+08:00">
+                2017-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android技术/" itemprop="url" rel="index">
+                    <span itemprop="name">Android技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/18/Android插件化学习记录/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/04/18/Android插件化学习记录/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/18/Android插件化学习记录/" class="leancloud_visitors" data-flag-title="Android插件化学习记录（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li><p>插件化可以解决两种问题：</p>
+<blockquote>
+<ol>
+<li>从技术上讲，业务逻辑的复杂导致代码量急剧膨胀，各大厂商陆续碰到了65535方法数的限制。</li>
+<li>在业务层面上，功能模块的解耦以及团队模块分工，每个模块能够单独的发布升级，提升产品迭代效率。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>插件化的实现，从本质上要解决两个问题：1、代码加载   2、资源加载</p>
+<h3 id="代码加载"><a href="#代码加载" class="headerlink" title="代码加载"></a>代码加载</h3></li>
+<li>类的加载可以使用JAVA的ClassLoader机制，但是对于Android来说，并不是类加载进来就可以使用了，Android中很多组件都是有生命的，所以我们还应该考虑组件生命周期管理。</li>
+<li>另外，如何管理加载进来的类也是一个问题。假设多个插件依赖了相同的类，是抽取公共依赖进行管理还是插件单独依赖？这就是ClassLoader的管理问题；</li>
+</ul>
+<h3 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h3><ul>
+<li>资源加载方案大家使用的原理都差不多，都是用AssetManager的隐藏方法addAssetPath。</li>
+<li>但是，不同插件的资源如何管理？是公用一套资源还是插件独立资源？共用资源如何避免资源冲突？对于资源加载，有的方案共用一套资源并采用资源分段机制解决冲突（要么修改aapt要么添加编译插件）；有的方案选择独立资源，不同插件管理自己的资源。</li>
+</ul>
+<h2 id="Hook机制之动态代理"><a href="#Hook机制之动态代理" class="headerlink" title="Hook机制之动态代理"></a>Hook机制之动态代理</h2><h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><ul>
+<li>JDK提供了动态代理方式，可以简单理解为JVM可以在运行时动态生成一系列的代理类。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/***</span></div><div class="line">*  <span class="doctag">@param</span> loader 　一个ClassLoader对象，定义了由哪个ClassLoader对象来对生成的代理对象进行加载</div><div class="line">*  <span class="doctag">@param</span> interfaces 一个Interface对象的数组，表示的是我将要给我需要代理的对象提供一组什么接口，如果我提供了一组接口给它，那么这个代理对象就宣称实现了该接口(多态)，这样我就能调用这组接口中的方法了</div><div class="line">* <span class="doctag">@param</span> 一个InvocationHandler对象，表示的是当我这个动态代理对象在调用方法的时候，会关联到哪一个InvocationHandler对象上</div><div class="line">*</div><div class="line">**/</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">newProxyInstance</span><span class="params">(ClassLoader loader, Class&lt;?&gt;[] interfaces,  InvocationHandler h)</span>  <span class="keyword">throws</span> IllegalArgumentException</span></div></pre></td></tr></table></figure>
+<ul>
+<li>上面提到了Invocationhandler，每一个动态代理类都必须要实现InvocationHandler这个接口，并且每个代理类的实例都关联到了一个handler，当我们通过代理对象调用一个方法的时候，这个方法的调用就会被转发由InvocationHandler这个接口的invoke方法来调用：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function">Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable</span></div><div class="line">proxy:   指代我们所代理的真实对象</div><div class="line">method:  指代的是我们所要调用真实对象的某个方法的method对象。</div><div class="line">args：   指代的是调用真实对象某个方法时所接受的参数。</div></pre></td></tr></table></figure>
+<h3 id="代理Hook"><a href="#代理Hook" class="headerlink" title="代理Hook"></a>代理Hook</h3><ul>
+<li>我们首先创建自己的代理对象（可以实现自己的逻辑），然后把原始对象替换为我们的代理对象，这样我们就能通过这个代理对象为所欲为了（比如：修改参数、替换返回值），这种方式我们称为Hook。</li>
+<li>找被Hook的对象：静态变量和单例比较容易被Hook，因为在一个进程内，静态变量和单例变量时相对不容易发生变化的。</li>
+</ul>
+<h3 id="hook的流程总结"><a href="#hook的流程总结" class="headerlink" title="hook的流程总结"></a>hook的流程总结</h3><ul>
+<li>寻找Hook点，原则是静态变量或单例对象，尽量Hook public的对象和方法，非public不保证每个版本都一样，需要适配。</li>
+<li>选择合适的代理方式，如果是接口可以用动态代理，如果是类可以手动写代理也可以使用cglib。</li>
+<li>偷梁换柱——用代理对象替换原始对象。</li>
+</ul>
+<h2 id="Hook机制之Binder-Hook"><a href="#Hook机制之Binder-Hook" class="headerlink" title="Hook机制之Binder Hook"></a>Hook机制之Binder Hook</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><ul>
+<li>Android系统通过Binder机制给应用程序提供了一些列的系统服务，比如：ActivityManagerService、ClipboardManager、AudioManager等，这些系统服务给应用程序提供了强大的功能。</li>
+<li>如果我们能够Hook住service，那么就可以做一些我们期望的事情，我们把Hook系统服务的机制称之为Binder Hook。</li>
+</ul>
+<h2 id="寻找Hook点"><a href="#寻找Hook点" class="headerlink" title="寻找Hook点"></a>寻找Hook点</h2><ul>
+<li><p>系统service的使用其实分为两步：</p>
+<blockquote>
+<ol>
+<li>IBinder b = ServiceManager.getService(“service_name”); // 获取原始的IBinder对象</li>
+<li>IXXInterface in = IXXInterface.Stub.asInterface(b); // 转换为Service接口</li>
+</ol>
+</blockquote>
+</li>
+<li><p>由于系统服务的使用者都是对IXXInterface进行操作，我们只需要把asInterface方法返回的对象修改为我们Hook过的对象。</p>
+</li>
+</ul>
+<h3 id="asInterface过程"><a href="#asInterface过程" class="headerlink" title="asInterface过程"></a>asInterface过程</h3><ul>
+<li>以android.content.IClipboard,IClipboard.Stub.asInterface方法为例：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> android.content.<span class="function">IClipboard <span class="title">asInterface</span><span class="params">(android.os.IBinder obj)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> ((obj == <span class="keyword">null</span>)) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR); <span class="comment">// Hook点</span></div><div class="line">    <span class="keyword">if</span> (((iin != <span class="keyword">null</span>) &amp;&amp; (iin <span class="keyword">instanceof</span> android.content.IClipboard))) &#123;</div><div class="line">        <span class="keyword">return</span> ((android.content.IClipboard) iin);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> android.content.IClipboard.Stub.Proxy(obj);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>这个方法的步骤:先查看本进程是否存在这个Binder对象，如果有那么直接就是本进程调用了，如果不存在就创建一个代理对象，让代理对象委托驱动完成跨进程调用。</li>
+<li>我们能hook的点是obj.queryLocalInterface。这里的obj就是我们得到的IBinder对象。</li>
+</ul>
+<h3 id="getService过程"><a href="#getService过程" class="headerlink" title="getService过程"></a>getService过程</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">IBinder b = ServiceManager.getService(<span class="string">"service_name"</span>);</div></pre></td></tr></table></figure>
+<ul>
+<li>根据上面的描述，我们希望修改这个getService方法的返回值，让这个方法返回一个我们伪造过的IBinder对象，这样，我们可以在自己伪造的IBinder对象的queryLocalInterface方法做处理，进而使得asInterface方法返回在queryLocalInterface方法里面处理过的值。最终实现hook系统服务的目的。</li>
+</ul>
+<h3 id="总结Hook-Binder的过程"><a href="#总结Hook-Binder的过程" class="headerlink" title="总结Hook Binder的过程"></a>总结Hook Binder的过程</h3><ul>
+<li>首先肯定需要伪造一个系统服务对象，接下来就要想办法让asInterface能够返回我们的这个伪造对象而不是原始的系统服务对象。</li>
+<li>通过上文分析我们知道，只要让getService返回IBinder对象的queryLocalInterface方法直接返回我们伪造过的系统服务对象就能达到目的。所以，我们需要伪造一个IBinder对象，主要是修改它的queryLocalInterface方法，让它返回我们伪造的系统服务对象；然后把这个伪造对象放置在ServiceManager的缓存map里面即可。</li>
+</ul>
+<h2 id="Hook机制之AMS-amp-PMS"><a href="#Hook机制之AMS-amp-PMS" class="headerlink" title="Hook机制之AMS&amp;PMS"></a>Hook机制之AMS&amp;PMS</h2><ul>
+<li><p>ActivityManagerService对于FrameWork层很重要，Android四大组件无一不与它打交道：</p>
+<blockquote>
+<ol>
+<li>startActivity最终调用了AMS的startActivity系列方法，实现了Activity的启动，Activity的声明周期回调，也在AMS中完成。</li>
+<li>startService , bindService最终调用到AMS的startService和bindService方法。</li>
+<li>动态广播的注册和接收在AMS中完成（静态广播注册在PMS中完成）</li>
+<li>getContentResolver最终从AMS的getContentProvider获取到ContentProvider。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>PackageManagerService则完成了诸如权限校验（checkPermission、checkUidPermission）、Apk meta信息获取（getApplicationInfo等）、四大组件信息获取（query系列方法）等重要功能。</p>
+</li>
+</ul>
+<h3 id="AMS获取过程"><a href="#AMS获取过程" class="headerlink" title="AMS获取过程"></a>AMS获取过程</h3><ul>
+<li>startActivity有两种形式：<blockquote>
+<ol>
+<li>直接调用Context类的startActivity方法，这种方式启动的Activity没有Activity栈，因此不能以standard方式启动，必须加上FLAG_ACTIVITY_NEW_TASK这个Flag。</li>
+<li>调用被Activity类重载过的startActivity方法，通常在我们的Activity中直接调用这个方法就是这种形式；</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ContextImpl类</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startActivity</span><span class="params">(Intent intent, Bundle options)</span> </span>&#123;</div><div class="line">    warnIfCallingFromSystemProcess();</div><div class="line">    <span class="keyword">if</span> ((intent.getFlags()&amp;Intent.FLAG_ACTIVITY_NEW_TASK) == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> AndroidRuntimeException(</div><div class="line">                <span class="string">"Calling startActivity() from outside of an Activity "</span></div><div class="line">                + <span class="string">" context requires the FLAG_ACTIVITY_NEW_TASK flag."</span></div><div class="line">                + <span class="string">" Is this really what you want?"</span>);</div><div class="line">    &#125;</div><div class="line">    mMainThread.getInstrumentation().execStartActivity(</div><div class="line">        getOuterContext(), mMainThread.getApplicationThread(), <span class="keyword">null</span>,</div><div class="line">        (Activity)<span class="keyword">null</span>, intent, -<span class="number">1</span>, options);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>通过跟进代码可以发现，不管哪种方式启动Activity，最终都是通过Instrumentation.execStartActivity来启动Activity的。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ActivityResult <span class="title">execStartActivity</span><span class="params">(</span></span></div><div class="line">           Context who, IBinder contextThread, IBinder token, Activity target,</div><div class="line">           Intent intent, <span class="keyword">int</span> requestCode, Bundle options) &#123;</div><div class="line">       IApplicationThread whoThread = (IApplicationThread) contextThread;</div><div class="line">       <span class="keyword">if</span> (mActivityMonitors != <span class="keyword">null</span>) &#123;</div><div class="line">           <span class="keyword">synchronized</span> (mSync) &#123;</div><div class="line">               <span class="keyword">final</span> <span class="keyword">int</span> N = mActivityMonitors.size();</div><div class="line">               <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;N; i++) &#123;</div><div class="line">                   <span class="keyword">final</span> ActivityMonitor am = mActivityMonitors.get(i);</div><div class="line">                   <span class="keyword">if</span> (am.match(who, <span class="keyword">null</span>, intent)) &#123;</div><div class="line">                       am.mHits++;</div><div class="line">                       <span class="keyword">if</span> (am.isBlocking()) &#123;</div><div class="line">                           <span class="keyword">return</span> requestCode &gt;= <span class="number">0</span> ? am.getResult() : <span class="keyword">null</span>;</div><div class="line">                       &#125;</div><div class="line">                       <span class="keyword">break</span>;</div><div class="line">                   &#125;</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           intent.migrateExtraStreamToClipData();</div><div class="line">           intent.prepareToLeaveProcess();</div><div class="line">           <span class="keyword">int</span> result = ActivityManagerNative.getDefault()</div><div class="line">               .startActivity(whoThread, who.getBasePackageName(), intent,</div><div class="line">                       intent.resolveTypeIfNeeded(who.getContentResolver()),</div><div class="line">                       token, target != <span class="keyword">null</span> ? target.mEmbeddedID : <span class="keyword">null</span>,</div><div class="line">                       requestCode, <span class="number">0</span>, <span class="keyword">null</span>, options);</div><div class="line">           checkStartActivityResult(result, intent);</div><div class="line">       &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>而mInstrumentation最终又调用到了ActivityManagerNative.getDefault()中。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">static public IActivityManager getDefault() &#123;</div><div class="line">    return gDefault.get();</div><div class="line">&#125;</div><div class="line"></div><div class="line">private static final Singleton&lt;IActivityManager&gt; gDefault = new Singleton&lt;IActivityManager&gt;() &#123;</div><div class="line">    protected IActivityManager create() &#123;</div><div class="line">        IBinder b = ServiceManager.getService(&quot;activity</div><div class="line">        IActivityManager am = asInterface(</div><div class="line">        return am;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>由于整个Framework与AMS打交道是如此频繁，framework使用了一个单例把这个AMS的代理对象保存了起来；这样只要需要与AMS进行IPC调用，获取这个单例即可。这是AMS这个系统服务与其他普通服务的不同之处。这里还有一点小麻烦：Android不同版本之间对于如何保存这个单例的代理对象是不同的；Android 2.x系统直接使用了一个简单的静态变量存储，Android 4.x以上抽象出了一个Singleton类</li>
+</ul>
+<h3 id="PM-获取过程"><a href="#PM-获取过程" class="headerlink" title="PM 获取过程"></a>PM 获取过程</h3><ul>
+<li>和ActivityManager比较类似，我直接上代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">public</span> PackageManager <span class="title">getPackageManager</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">if</span> (mPackageManager != <span class="keyword">null</span>) &#123;</div><div class="line">         <span class="keyword">return</span> mPackageManager;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     IPackageManager pm = ActivityThread.getPackageManager();</div><div class="line">     <span class="keyword">if</span> (pm != <span class="keyword">null</span>) &#123;</div><div class="line">         <span class="comment">// Doesn't matter if we make more than one instance.</span></div><div class="line">         <span class="keyword">return</span> (mPackageManager = <span class="keyword">new</span> ApplicationPackageManager(<span class="keyword">this</span>, pm));</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IPackageManager <span class="title">getPackageManager</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">if</span> (sPackageManager != <span class="keyword">null</span>) &#123;</div><div class="line">         <span class="comment">//Slog.v("PackageManager", "returning cur default = " + sPackageManager);</span></div><div class="line">         <span class="keyword">return</span> sPackageManager;</div><div class="line">     &#125;</div><div class="line">     IBinder b = ServiceManager.getService(<span class="string">"package"</span>);</div><div class="line">     <span class="comment">//Slog.v("PackageManager", "default service binder = " + b);</span></div><div class="line">     sPackageManager = IPackageManager.Stub.asInterface(b);</div><div class="line">     <span class="comment">//Slog.v("PackageManager", "default service = " + sPackageManager);</span></div><div class="line">     <span class="keyword">return</span> sPackageManager;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>通过上面的代码我们可以看出，我们需要hook sPackageManager为我们的代理对象。</li>
+</ul>
+<h2 id="Activity生命周期管理"><a href="#Activity生命周期管理" class="headerlink" title="Activity生命周期管理"></a>Activity生命周期管理</h2><ul>
+<li>在Android系统上，仅仅完成动态类加载是不够的；我们需要想办法把我们加载进来的Activity等组件交给系统管理，让AMS赋予组件生命周期。</li>
+</ul>
+<h3 id="Activity启动过程"><a href="#Activity启动过程" class="headerlink" title="Activity启动过程"></a>Activity启动过程</h3><ul>
+<li>Activity启动过程已经看了无数次，流程比较长，这里只是对大致的过程进行说明，下图是App进程和AMS进程的通信过程：<br><img src="/upload/image/zlw/Activity_app_AMS.png" alt="Activity_app_AMS.png"></li>
+<li>App进程会委托AMS进程完成Activity生命周期的管理及任务栈的管理，这个通信过程AMS是Server端，APP进程通过持有AMS的client代理ActivityManagerNative完成通信过程。</li>
+<li>AMS进程完成生命周期管理以及任务栈管理后，会把控制权交给App进程，让App进程完成Activity类对象的创建，以及生命周期回调；这个通信过程也是通过Binder完成的，App所在server端的Binder对象存在于ActivityThread的内部类ApplicationThread；AMS所在client通过持有IApplicationThread的代理对象完成对于App进程的通信。</li>
+<li>App进程内部的ApplicationThread server端内部有自己的Binder线程池，它与App主线程的通信通过Handler完成，这个Handler存在于ActivityThread类，叫做H。</li>
+<li>最终会调用到ActivityThread类中的performLaunchActivity方法，这个方法做了两件重要的事情：</li>
+</ul>
+<blockquote>
+<p>1.使用ClassLoader加载并通过反射创建Activity对象。</p>
+<ol>
+<li>如果Application还没有创建，那么创建Application对象并回调相应的生命周期方法；</li>
+</ol>
+</blockquote>
+<h3 id="启动不在AndroidManifest-xml中声明的Activity。"><a href="#启动不在AndroidManifest-xml中声明的Activity。" class="headerlink" title="启动不在AndroidManifest.xml中声明的Activity。"></a>启动不在AndroidManifest.xml中声明的Activity。</h3><ul>
+<li>根据上面Activity启动过程分析，(假如我们想启动TargetActivity，但是我们在AndroidManifest中配置了替换Activity，假如是SubActivity)我们的实现方案是这样：<blockquote>
+<ol>
+<li>我们启动Activity，还是用的new Intent（context，TargetActivity.class）.startActivity()。然后我们利用到之前hook的ActivityManager,即在Activity即将要交给AMS去处理时，替换成为SubActivity，因为TargetActivity未在AndroidManifest中配置，而AMS有权限校验，会报错，等于我们交给AMS的是一个假的中转Activity。</li>
+<li>AMS处理之后，会交给ApplicationThread处理，最终会调用到ActivityThread中内部类H，通过H来切换到主线程，这个H就是一个Handler，接下来就会在ActivityThread中执行对应的方法，所以在这里我们hook Handler的mCallback，将SubActivity再替换成我们的TargetActivity，这样完成启动。</li>
+<li>对于AMS来说，它只知道SubActivity的存在，因此我们在TargetActivity页面取dumpActivity栈，得到的还是SubActivity。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h3 id="启动的Activity能否收到正确声明周期"><a href="#启动的Activity能否收到正确声明周期" class="headerlink" title="启动的Activity能否收到正确声明周期"></a>启动的Activity能否收到正确声明周期</h3><ul>
+<li>其实从上面的学习我们可以明确一点，App进程和AMS交互模式比较固定：几个角色：ActivityManagerNative、ApplicationThread、ActivityThread以及内部类H，调用者使用Activity的方法，会通过ActivityManagerNative执行AMS的方法，然后再通过ApplicationThread执行到ActivityThread，然后交给内部类H转发消息到ActivityThread的方法。</li>
+<li>在Activity内有一个成员变量mToken，token可以唯一标识一个Activity对象，在AMS中，它只知道在AndroidManifest.xml中声明的Activity的存在，我们可以通过dump activity栈发现，当前页面还是在AndroidManifest中声明的Activity。</li>
+<li>然而在启动Activity的时候，回调到performLaunActivity时，通过ClassLoader加载了我们真正的Activity，完成这一操作后将activity添加进mActivities中，另外在这个方法中，我们还能看到对Activity attach方法的调用，它传递了新创建的Activity一个token对象，而这个token是在ActivityClientRecord构造函数中初始化的。</li>
+<li>因此通过这种方式启动的Activity有它自己完整而独立的生命周期！</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/04/18/Android插件化学习记录/" title="Android插件化学习记录（一）">https://yoursite.com/2017/04/18/Android插件化学习记录/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-插件化/" rel="tag"># Android, 插件化</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/18/Android插件化学习3/" rel="next" title="Android插件化学习记录（三）">
+                <i class="fa fa-chevron-left"></i> Android插件化学习记录（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/18/Android插件化学习2/" rel="prev" title="Android插件化学习记录（二）">
+                Android插件化学习记录（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/avatar.jpg"
+               alt="Liwei" />
+          <p class="site-author-name" itemprop="name">Liwei</p>
+           
+              <p class="site-description motion-element" itemprop="description">平时工作和生活中的感悟记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码加载"><span class="nav-number">1.1.</span> <span class="nav-text">代码加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源加载"><span class="nav-number">1.2.</span> <span class="nav-text">资源加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hook机制之动态代理"><span class="nav-number">2.</span> <span class="nav-text">Hook机制之动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态代理"><span class="nav-number">2.1.</span> <span class="nav-text">动态代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理Hook"><span class="nav-number">2.2.</span> <span class="nav-text">代理Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hook的流程总结"><span class="nav-number">2.3.</span> <span class="nav-text">hook的流程总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hook机制之Binder-Hook"><span class="nav-number">3.</span> <span class="nav-text">Hook机制之Binder Hook</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻找Hook点"><span class="nav-number">4.</span> <span class="nav-text">寻找Hook点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#asInterface过程"><span class="nav-number">4.1.</span> <span class="nav-text">asInterface过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getService过程"><span class="nav-number">4.2.</span> <span class="nav-text">getService过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结Hook-Binder的过程"><span class="nav-number">4.3.</span> <span class="nav-text">总结Hook Binder的过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hook机制之AMS-amp-PMS"><span class="nav-number">5.</span> <span class="nav-text">Hook机制之AMS&PMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AMS获取过程"><span class="nav-number">5.1.</span> <span class="nav-text">AMS获取过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PM-获取过程"><span class="nav-number">5.2.</span> <span class="nav-text">PM 获取过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity生命周期管理"><span class="nav-number">6.</span> <span class="nav-text">Activity生命周期管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity启动过程"><span class="nav-number">6.1.</span> <span class="nav-text">Activity启动过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动不在AndroidManifest-xml中声明的Activity。"><span class="nav-number">6.2.</span> <span class="nav-text">启动不在AndroidManifest.xml中声明的Activity。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动的Activity能否收到正确声明周期"><span class="nav-number">6.3.</span> <span class="nav-text">启动的Activity能否收到正确声明周期</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liwei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/04/18/Android插件化学习记录/';
+          this.page.identifier = '2017/04/18/Android插件化学习记录/';
+          this.page.title = 'Android插件化学习记录（一）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AQoVjcVEpbGjag9EVJEKK6GG-gzGzoHsz", "AqM9mdsyov2LEN1pszewM5Gd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

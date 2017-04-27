@@ -1,0 +1,1062 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Binder，Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="背景
+Binder是Android系统中非常重要的特性之一，也就是我们常说的跨进程通信机制，它是系统间各个组件的桥梁。
+在学习Android Hook Binder时，发现对Binder的理解还不深，之前其实研究过挺深的，但是时间长了都又还回去了，因此这里做个学习笔记，同时可以和大家交流。
+本文参考Binder学习
+
+Linux基础知识进程隔离
+进程隔离是为保护操作系统中进程互不干扰而设计的一组不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Binder学习">
+<meta property="og:url" content="https://yoursite.com/2017/04/21/Binder学习/index.html">
+<meta property="og:site_name" content="利伟的技术博客">
+<meta property="og:description" content="背景
+Binder是Android系统中非常重要的特性之一，也就是我们常说的跨进程通信机制，它是系统间各个组件的桥梁。
+在学习Android Hook Binder时，发现对Binder的理解还不深，之前其实研究过挺深的，但是时间长了都又还回去了，因此这里做个学习笔记，同时可以和大家交流。
+本文参考Binder学习
+
+Linux基础知识进程隔离
+进程隔离是为保护操作系统中进程互不干扰而设计的一组不">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/binder-model.png">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/2016binder-procedure.png">
+<meta property="og:updated_time" content="2017-04-21T07:53:46.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Binder学习">
+<meta name="twitter:description" content="背景
+Binder是Android系统中非常重要的特性之一，也就是我们常说的跨进程通信机制，它是系统间各个组件的桥梁。
+在学习Android Hook Binder时，发现对Binder的理解还不深，之前其实研究过挺深的，但是时间长了都又还回去了，因此这里做个学习笔记，同时可以和大家交流。
+本文参考Binder学习
+
+Linux基础知识进程隔离
+进程隔离是为保护操作系统中进程互不干扰而设计的一组不">
+<meta name="twitter:image" content="https://yoursite.com/upload/image/zlw/binder-model.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2017/04/21/Binder学习/"/>
+
+
+
+
+
+  <title> Binder学习 | 利伟的技术博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">利伟的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、交流、成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/04/21/Binder学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="利伟的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Binder学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-21T11:59:00+08:00">
+                2017-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android技术/" itemprop="url" rel="index">
+                    <span itemprop="name">Android技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/21/Binder学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/04/21/Binder学习/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/21/Binder学习/" class="leancloud_visitors" data-flag-title="Binder学习">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li>Binder是Android系统中非常重要的特性之一，也就是我们常说的跨进程通信机制，它是系统间各个组件的桥梁。</li>
+<li>在学习<a href="http://weishu.me/2016/02/16/understand-plugin-framework-binder-hook/" target="_blank" rel="external">Android Hook Binder</a>时，发现对Binder的理解还不深，之前其实研究过挺深的，但是时间长了都又还回去了，因此这里做个学习笔记，同时可以和大家交流。</li>
+<li>本文参考<a href="http://weishu.me/2016/01/12/binder-index-for-newer/" target="_blank" rel="external">Binder学习</a></li>
+</ul>
+<h3 id="Linux基础知识"><a href="#Linux基础知识" class="headerlink" title="Linux基础知识"></a>Linux基础知识</h3><h4 id="进程隔离"><a href="#进程隔离" class="headerlink" title="进程隔离"></a>进程隔离</h4><ul>
+<li>进程隔离是为保护操作系统中进程互不干扰而设计的一组不同硬件和软件的技术。这个技术是为了避免进程A写入进程B的情况发生。 进程的隔离实现，使用了虚拟地址空间。进程A的虚拟地址和进程B的虚拟地址不同，这样就防止进程A将数据信息写入进程B。</li>
+<li>操作系统的不同进程之间，数据不共享；对于每个进程来说，它都天真地以为自己独享了整个系统，完全不知道其他进程的存在；因此一个进程需要与另外一个进程通信，需要某种系统机制才能完成。</li>
+</ul>
+<h4 id="用户空间-内核空间"><a href="#用户空间-内核空间" class="headerlink" title="用户空间/内核空间"></a>用户空间/内核空间</h4><ul>
+<li>Linux Kernel是操作系统的核心，独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。</li>
+<li>对于Kernel这么一个高安全级别的东西，显然是不容许其它的应用程序随便调用或访问的，所以需要对Kernel提供一定的保护机制，这个保护机制用来告诉那些应用程序，你只可以访问某些许可的资源，不许可的资源是拒绝被访问的，于是就把Kernel和上层的应用程序抽像的隔离开，分别称之为Kernel Space和User Space。</li>
+</ul>
+<h4 id="系统调用-内核态-用户态"><a href="#系统调用-内核态-用户态" class="headerlink" title="系统调用/内核态/用户态"></a>系统调用/内核态/用户态</h4><ul>
+<li>用户控件访问内核空间的唯一方式是系统调用，通过这个统一入口接口，所有的资源访问都是在内核的控制下执行，以免导致用户程序对系统资源的越权访问，保证安全。</li>
+<li>当一个任务（进程）执行系统调用而陷入内核代码中执行时，我们称进程处于内核运行态（或简称内核态），同样的，当程序在执行用户自己的代码时，则其处于用户运行态（用户态）。</li>
+</ul>
+<h4 id="内核模块-驱动"><a href="#内核模块-驱动" class="headerlink" title="内核模块/驱动"></a>内核模块/驱动</h4><ul>
+<li>通过系统调用，用户空间可以访问内核空间，那么如果一个用户空间想与另外一个用户空间进行通信怎么办呢？很自然想到的是让操作系统内核添加支持；传统的Linux通信机制，比如Socket，管道等都是内核支持的；但是Binder并不是Linux内核的一部分，它是怎么做到访问内核空间的呢？Linux的动态可加载内核模块（Loadable Kernel Module，LKM）机制解决了这个问题；模块是具有独立功能的程序，它可以被单独编译，但不能独立运行。它在运行时被链接到内核作为内核的一部分在内核空间运行。这样，Android系统可以通过添加一个内核模块运行在内核空间，用户进程之间的通过这个模块作为桥梁，就可以完成通信了。</li>
+<li>Android系统中，这个运行在内核空间的，负责各个用户进程通过Binder通信的内核模块叫做 <strong>Binder驱动</strong></li>
+</ul>
+<h2 id="为什么使用Binder？"><a href="#为什么使用Binder？" class="headerlink" title="为什么使用Binder？"></a>为什么使用Binder？</h2><ul>
+<li>性能和安全：Binder相对于传统的通信方式更加高效，另外Binder机制从协议本身就是支持对通信双方做身份校验的，因而大大提升了安全性，这个也是Android权限模型的基础。</li>
+</ul>
+<h2 id="Binder通信模型"><a href="#Binder通信模型" class="headerlink" title="Binder通信模型"></a>Binder通信模型</h2><p>-对于跨进程通信的双方，姑且称之为一方是Server进程（简称server），Client进程（client） 由于进程隔离的存在，他们之间没办法通过简单的方式进行通信，那么Binder机制是怎么做的呢？   这里有一个非常形象的例子来形容Binder通信，我们日常生活中通信过程：假如A和B要进行通信，当前的媒介是打电话（假如A是Client，B是server， A给B打电话）：</p>
+<blockquote>
+<ol>
+<li>A 首先去通信录查询B的电话号码。</li>
+<li>A 拿到号码之后，通过手机拨号，连接到基站，（告诉基站我要和B通话）。</li>
+<li>这时候基站就会帮A和B建立一条通信链路。</li>
+</ol>
+</blockquote>
+<ul>
+<li>那么对应到Binder驱动中，Binder驱动相当于基站，而通信录则对应一个叫做ServiceManager的东西。通信模型如下图所示：</li>
+</ul>
+<p><img src="/upload/image/zlw/binder-model.png" alt="binder-model.png"></p>
+<ul>
+<li>整个通信步骤如下：<blockquote>
+<ol>
+<li>SM建立(建立通信录)；首先有一个进程向驱动提出申请为SM；驱动同意之后，SM进程负责管理Service（注意这里是Service而不是Server，因为如果通信过程反过来的话，那么原来的客户端Client也会成为服务端Server）不过这时候通信录还是空的，一个号码都没有。</li>
+<li>各个Server向SM注册(完善通信录)；每个Server端进程启动之后，向SM报告，我是zhangsan, 要找我请返回0x1234(这个地址没有实际意义，类比)；其他Server进程依次如此；这样SM就建立了一张表，对应着各个Server的名字和地址；就好比B与A见面了，说存个我的号码吧，以后找我拨打10086；</li>
+<li>Client想要与Server通信，首先询问SM；请告诉我如何联系zhangsan，SM收到后给他一个号码0x1234；Client收到之后，开心滴用这个号码拨通了Server的电话，于是就开始通信了。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h2 id="Binder进程间通信原理"><a href="#Binder进程间通信原理" class="headerlink" title="Binder进程间通信原理"></a>Binder进程间通信原理</h2><ul>
+<li><p>假如Client进程想要调用Server进程的object对象的一个方法add；如下图所示：<br><img src="/upload/image/zlw/2016binder-procedure.png" alt="2016binder-procedure.png"></p>
+</li>
+<li><p>首先，Server进程要向SM注册；告诉自己是谁，自己有什么能力；在这个场景就是Server告诉SM，它叫zhangsan，它有一个object对象，可以执行add 操作；于是SM建立了一张表：zhangsan这个名字对应进程Server;</p>
+</li>
+<li>然后Client向SM查询：我需要联系一个名字叫做zhangsan的进程里面的object对象；这时候关键来了：进程之间通信的数据都会经过运行在内核空间里面的驱动，驱动在数据流过的时候做了一点手脚，它并不会给Client进程返回一个真正的object对象，而是返回一个看起来跟object一模一样的代理对象objectProxy，这个objectProxy也有一个add方法，但是这个add方法没有Server进程里面object对象的add方法那个能力；objectProxy的add只是一个傀儡，它唯一做的事情就是把参数包装然后交给驱动。</li>
+<li>但是Client进程并不知道驱动返回给它的对象动过手脚，毕竟伪装的太像了，如假包换。Client开开心心地拿着objectProxy对象然后调用add方法；我们说过，这个add什么也不做，直接把参数做一些包装然后直接转发给Binder驱动。</li>
+<li>驱动收到这个消息，发现是这个objectProxy；一查表就明白了：我之前用objectProxy替换了object发送给Client了，它真正应该要访问的是object对象的add方法；于是Binder驱动通知Server进程，调用你的object对象的add方法，然后把结果发给我，Sever进程收到这个消息，照做之后将结果返回驱动，驱动然后把结果返回给Client进程；于是整个过程就完成了。</li>
+<li>由于驱动返回的objectProxy与Server进程里面原始的object是如此相似，给人感觉好像是直接把Server进程里面的对象object传递到了Client进程；因此，我们可以说Binder对象是可以进行跨进程传递的对象。</li>
+<li>但事实上我们知道，Binder跨进程传输并不是真的把一个对象传输到了另外一个进程；传输过程好像是Binder跨进程穿越的时候，它在一个进程留下了一个真身，在另外一个进程幻化出一个影子（这个影子可以很多个）；Client进程的操作其实是对于影子的操作，影子利用Binder驱动最终让真身完成操作。</li>
+<li>理解这一点非常重要；务必仔细体会。另外，Android系统实现这种机制使用的是代理模式, 对于Binder的访问，如果是在同一个进程（不需要跨进程），那么直接返回原始的Binder实体；如果在不同进程，那么就给他一个代理对象（影子）；我们在系统源码以及AIDL的生成代码里面可以看到很多这种实现。</li>
+<li>另外我们为了简化整个流程，隐藏了SM这一部分驱动进行的操作；实际上，由于SM与Server通常不在一个进程，Server进程向SM注册的过程也是跨进程通信，驱动也会对这个过程进行暗箱操作：SM中存在的Server端的对象实际上也是代理对象，后面Client向SM查询的时候，驱动会给Client返回另外一个代理对象。Sever进程的本地对象仅有一个，其他进程所拥有的全部都是它的代理。</li>
+<li>总结说就是：Client进程只不过是持有了Server端的代理；代理对象协助驱动完成了跨进程通信。</li>
+</ul>
+<h2 id="Binder到底是什么？"><a href="#Binder到底是什么？" class="headerlink" title="Binder到底是什么？"></a>Binder到底是什么？</h2><ul>
+<li>Binder的设计采用了面向对象的思想，在Binder通信模型的四个角色里面，他们的代表都是“Binder”，这样，对于Binder通信的使用者而言，Server里面的Binder和Client里面的Binder没有什么不同，一个Binder对象就代表了所有，它不用关心实现的细节，甚至不用关心驱动及SM的存在。</li>
+<li>通常意义下，Binder指的是一种通信机制，我们说AIDL使用Binder进行通信，指的是Binder这种IPC机制。</li>
+<li>对于Server进程来说，Binder指的是Binder本地对象。</li>
+<li>对于Client来说，Binder指的是Binder代理对象，它只是Binder本地对象的一个远程代理，对这个Binder代理对象的操作，会通过驱动最终转发到Binder本地对象上去完成；对于一个拥有Binder对象的使用者而言，它无须关心这是一个Binder代理对象还是Binder本地对象；对于代理对象的操作和对本地对象的操作对它来说没有区别。</li>
+<li>对于传输过程而言，Binder是可以进行跨进程传递的对象；Binder驱动会对具有跨进程传递能力的对象做特殊处理：自动完成代理对象和本地对象的转换。</li>
+</ul>
+<h3 id="驱动里面的Binder"><a href="#驱动里面的Binder" class="headerlink" title="驱动里面的Binder"></a>驱动里面的Binder</h3><ul>
+<li>我们现在知道，Server进程里面的Binder对象指的是Binder本地对象，Client里面的对象值得是Binder代理对象；在Binder对象进行跨进程传递的时候，Binder驱动会自动完成这两种类型的转换；因此Binder驱动必然保存了每一个跨越进程的Binder对象的相关信息；在驱动中，Binder本地对象的代表是一个叫做binder_node的数据结构，Binder代理对象是用binder_ref代表的；有的地方把Binder本地对象直接称作Binder实体，把Binder代理对象直接称作Binder引用（句柄），其实指的是Binder对象在驱动里面的表现形式。</li>
+</ul>
+<h3 id="深入理解java层的Binder"><a href="#深入理解java层的Binder" class="headerlink" title="深入理解java层的Binder"></a>深入理解java层的Binder</h3><ul>
+<li>IBinder/IInterface/Binder/BinderProxy/stub:<blockquote>
+<ol>
+<li>IBinder是一个接口，它代表了一种跨进程传输的能力，只要实现了这个接口，就能将这个对象进行跨进程传递，这是驱动底层支持的，在跨进程数据流经驱动的时候，驱动会识别IBinder类型的数据，从而自动完成不同进程Binder本地对象以及Binder代理对象的转换。</li>
+<li>IInterface代表的是远程server对象具有的能力，具体来说就是aidl里面的接口。</li>
+<li>java层的Binder，代表的是Binder本地对象，BinderProxy是Binder类的一个内部类，它代表远程的Binder对象的本地代理，这两个类都继承自IBinder, 因而都具有跨进程传输的能力；实际上，在跨越进程的时候，Binder驱动会自动完成这两个对象的转换。</li>
+<li>在使用AIDL的时候，编译工具会给我们生成一个Stub的静态内部类；这个类继承了Binder, 说明它是一个Binder本地对象，它实现了IInterface接口，表明它具有远程Server承诺给Client的能力；Stub是一个抽象类，具体的IInterface的相关实现需要我们手动完成，这里使用了策略模式。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h2 id="AIDL过程分析"><a href="#AIDL过程分析" class="headerlink" title="AIDL过程分析"></a>AIDL过程分析</h2><ul>
+<li>我们通过一个AIDL的使用，分析一下整个通信过程中，各个角色做了什么，AIDL到底是如何完成通信的。</li>
+<li>首先定一个aidl接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ICompute.aidl</span></div><div class="line"><span class="keyword">package</span> com.example.test.app;</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ICompute</span> </span>&#123;</div><div class="line">     <span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>编译之后，可以得到对应的ICompute.java类：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.test.app;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICompute</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">IInterface</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Local-side IPC implementation stub class.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Stub</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Binder</span> <span class="keyword">implements</span> <span class="title">com</span>.<span class="title">example</span>.<span class="title">test</span>.<span class="title">app</span>.<span class="title">ICompute</span> </span>&#123;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> java.lang.String DESCRIPTOR = <span class="string">"com.example.test.app.ICompute"</span>;</div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line">         * Construct the stub at attach it to the interface.</div><div class="line">         */</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Stub</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.attachInterface(<span class="keyword">this</span>, DESCRIPTOR);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line">         * Cast an IBinder object into an com.example.test.app.ICompute interface,</div><div class="line">         * generating a proxy if needed.</div><div class="line">         */</div><div class="line">        <span class="keyword">public</span> <span class="keyword">static</span> com.example.test.app.<span class="function">ICompute <span class="title">asInterface</span><span class="params">(android.os.IBinder obj)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> ((obj == <span class="keyword">null</span>)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">            android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);</div><div class="line">            <span class="keyword">if</span> (((iin != <span class="keyword">null</span>) &amp;&amp; (iin <span class="keyword">instanceof</span> com.example.test.app.ICompute))) &#123;</div><div class="line">                <span class="keyword">return</span> ((com.example.test.app.ICompute) iin);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> com.example.test.app.ICompute.Stub.Proxy(obj);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="keyword">public</span> android.os.<span class="function">IBinder <span class="title">asBinder</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTransact</span><span class="params">(<span class="keyword">int</span> code, android.os.Parcel data, android.os.Parcel reply, <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> android.os.RemoteException </span>&#123;</div><div class="line">            <span class="keyword">switch</span> (code) &#123;</div><div class="line">                <span class="keyword">case</span> INTERFACE_TRANSACTION: &#123;</div><div class="line">                    reply.writeString(DESCRIPTOR);</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">case</span> TRANSACTION_add: &#123;</div><div class="line">                    data.enforceInterface(DESCRIPTOR);</div><div class="line">                    <span class="keyword">int</span> _arg0;</div><div class="line">                    _arg0 = data.readInt();</div><div class="line">                    <span class="keyword">int</span> _arg1;</div><div class="line">                    _arg1 = data.readInt();</div><div class="line">                    <span class="keyword">int</span> _result = <span class="keyword">this</span>.add(_arg0, _arg1);</div><div class="line">                    reply.writeNoException();</div><div class="line">                    reply.writeInt(_result);</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, data, reply, flags);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Proxy</span> <span class="keyword">implements</span> <span class="title">com</span>.<span class="title">example</span>.<span class="title">test</span>.<span class="title">app</span>.<span class="title">ICompute</span> </span>&#123;</div><div class="line">            <span class="keyword">private</span> android.os.IBinder mRemote;</div><div class="line"></div><div class="line">            Proxy(android.os.IBinder remote) &#123;</div><div class="line">                mRemote = remote;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="keyword">public</span> android.os.<span class="function">IBinder <span class="title">asBinder</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> mRemote;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">public</span> java.lang.<span class="function">String <span class="title">getInterfaceDescriptor</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> DESCRIPTOR;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">/**</span></div><div class="line">             * Demonstrates some basic types that you can use as parameters</div><div class="line">             * and return values in AIDL.</div><div class="line">             */</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">throws</span> android.os.RemoteException </span>&#123;</div><div class="line">                android.os.Parcel _data = android.os.Parcel.obtain();</div><div class="line">                android.os.Parcel _reply = android.os.Parcel.obtain();</div><div class="line">                <span class="keyword">int</span> _result;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    _data.writeInterfaceToken(DESCRIPTOR);</div><div class="line">                    _data.writeInt(a);</div><div class="line">                    _data.writeInt(b);</div><div class="line">                    mRemote.transact(Stub.TRANSACTION_add, _data, _reply, <span class="number">0</span>);</div><div class="line">                    _reply.readException();</div><div class="line">                    _result = _reply.readInt();</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    _reply.recycle();</div><div class="line">                    _data.recycle();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> _result;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TRANSACTION_add = (android.os.IBinder.FIRST_CALL_TRANSACTION + <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Demonstrates some basic types that you can use as parameters</div><div class="line">     * and return values in AIDL.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">throws</span> android.os.RemoteException</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>现在我们只需要继承ICompute.Stub这个抽象类，实现它的方法，然后在service的onBind方法里面返回就实现了AIDL。</li>
+<li>Stub类继承了Binder，表示它是一个Binder本地对象，然后实现了ICompute接口，ICompute本身是一个IInterface，因此它携带某种客户端需要的能力（这里是方法add）。</li>
+<li>类内部还有一个Proxy，也就是Binder代理对象。</li>
+<li>再看asInterface方法，我们bind一个Service之后，在onServiceConnecttion的回调中，就是通过这个方法得到一个远程的service。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Cast an IBinder object into an com.example.test.app.ICompute interface,</div><div class="line"> * generating a proxy if needed.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> com.example.test.app.<span class="function">ICompute <span class="title">asInterface</span><span class="params">(android.os.IBinder obj)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> ((obj == <span class="keyword">null</span>)) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);</div><div class="line">    <span class="keyword">if</span> (((iin != <span class="keyword">null</span>) &amp;&amp; (iin <span class="keyword">instanceof</span> com.example.test.app.ICompute))) &#123;</div><div class="line">        <span class="keyword">return</span> ((com.example.test.app.ICompute) iin);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> com.example.test.app.ICompute.Stub.Proxy(obj);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>函数的参数是IBinder类型的obj，这个对象是驱动给我们的（onServiceConnecttion的参数），如果是Binder本地对象，那么它就是Binder类型，如果是Binder代理对象，那就是BinderProxy类型，然后，它会查找本地对象，如果找到，说明Client和Server都在同一个进程，这个参数直接就是本地对象，直接强制转换然后返回，如果找不到，说明是远程对象（处于另一个进程）那么就需要创建一个Binder代理对象，让Binder代理实现对于远程对象的访问，如果是与一个远程Service对象进行通信，那么这里返回的一定是一个Binder代理对象，这个IBinder参数的实际上是BinderProxy。</li>
+<li>aidl中的add方法，在Stub类里面，add是一个抽象方法，我们需要继承这个类并实现它，如果Client和Server在同一个进程，那么直接调用这个方法，如果不在一个进程，就远程调用，远程调用是通过Binder代理完成的，在这个例子中就是Proxy，Proxy对于add方法的实现如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function">verride</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">throws</span> android.os.RemoteException &#123;</div><div class="line">    android.os.Parcel _data = android.os.Parcel.obtain();</div><div class="line">    android.os.Parcel _reply = android.os.Parcel.obtain();</div><div class="line">    <span class="keyword">int</span> _result;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        _data.writeInterfaceToken(DESCRIPTOR);</div><div class="line">        _data.writeInt(a);</div><div class="line">        _data.writeInt(b);</div><div class="line">        mRemote.transact(Stub.TRANSACTION_add, _data, _reply, <span class="number">0</span>);</div><div class="line">        _reply.readException();</div><div class="line">        _result = _reply.readInt();</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        _reply.recycle();</div><div class="line">        _data.recycle();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>它首先用Parcel把数据序列化了，然后调用了transact方法，前面提到过，如果是Binder代理那么说明驱动返回的IBinder实际是BinderProxy，因此我们的Proxy类里面的mRomete实际类型应该是BinderProxy,我们看看BinderProxy的transact方法：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">transact</span><span class="params">(<span class="keyword">int</span> code, Parcel data, Parcel reply, <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">       Binder.checkParcel(<span class="keyword">this</span>, code, data, <span class="string">"Unreasonably large binder buffer"</span>);</div><div class="line">       <span class="keyword">return</span> transactNative(code, data, reply, flags);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>transactNative()最终调用到native层，它最终调用到了talkWithDriver函数，看名字就知道，通信过程交给驱动完成，这个函数最后通过ioctl系统调用，Client进程陷入内核态，Client调用add方法的线程挂机等待返回，驱动完成一系列的操作之后唤醒Server进程，调用Server进程本地对象的onTransact函数（实际上由Server端线程池完成）。</li>
+<li>再看Binder本地对象的onTransact方法（这里就是Stub类里面的此方法）：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTransact</span><span class="params">(<span class="keyword">int</span> code, android.os.Parcel data, android.os.Parcel reply, <span class="keyword">int</span> flags)</span> <span class="keyword">throws</span> android.os.RemoteException </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (code) &#123;</div><div class="line">        <span class="keyword">case</span> INTERFACE_TRANSACTION: &#123;</div><div class="line">            reply.writeString(DESCRIPTOR);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">case</span> TRANSACTION_add: &#123;</div><div class="line">            data.enforceInterface(DESCRIPTOR);</div><div class="line">            <span class="keyword">int</span> _arg0;</div><div class="line">            _arg0 = data.readInt();</div><div class="line">            <span class="keyword">int</span> _arg1;</div><div class="line">            _arg1 = data.readInt();</div><div class="line">            <span class="keyword">int</span> _result = <span class="keyword">this</span>.add(_arg0, _arg1);</div><div class="line">            reply.writeNoException();</div><div class="line">            reply.writeInt(_result);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, data, reply, flags);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>在Server进程里面，onTransact根据调用号（每个AIDL函数都有一个编号，在跨进程的时候，不会传递函数，而是传递编号指明调用哪个函数）调用相关函数；在这个例子里面，调用了Binder本地对象的add方法；这个方法将结果返回给驱动，驱动唤醒挂起的Client进程里面的线程并将结果返回。于是一次跨进程调用就完成了。</li>
+<li>至此，你应该对AIDL这种通信方式里面的各个类以及各个角色有了一定的了解；它总是那么一种固定的模式：一个需要跨进程传递的对象一定继承自IBinder，如果是Binder本地对象，那么一定继承Binder实现IInterface，如果是代理对象，那么就实现了IInterface并持有了IBinder引用；</li>
+</ul>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><ul>
+<li>Proxy与Stub不一样，虽然他们都既是Binder又是IInterface，不同的是Stub采用的是继承（is 关系），Proxy采用的是组合（has 关系）。他们均实现了所有的IInterface函数，不同的是，Stub又使用策略模式调用的是虚函数（待子类实现），而Proxy则使用组合模式。为什么Stub采用继承而Proxy采用组合？事实上，Stub本身is一个IBinder（Binder），它本身就是一个能跨越进程边界传输的对象，所以它得继承IBinder实现transact这个函数从而得到跨越进程的能力（这个能力由驱动赋予）。Proxy类使用组合，是因为他不关心自己是什么，它也不需要跨越进程传输，它只需要拥有这个能力即可，要拥有这个能力，只需要保留一个对IBinder的引用。</li>
+<li>再去翻阅系统的ActivityManagerServer的源码，就知道哪一个类是什么角色了：IActivityManager是一个IInterface，它代表远程Service具有什么能力，ActivityManagerNative指的是Binder本地对象（类似AIDL工具生成的Stub类），这个类是抽象类，它的实现是ActivityManagerService；因此对于AMS的最终操作都会进入ActivityManagerService这个真正实现；同时如果仔细观察，ActivityManagerNative.java里面有一个非公开类ActivityManagerProxy, 它代表的就是Binder代理对象；是不是跟AIDL模型一模一样呢？那么ActivityManager是什么？他不过是一个管理类而已，可以看到真正的操作都是转发给ActivityManagerNative进而交给他的实现ActivityManagerService 完成的。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/04/21/Binder学习/" title="Binder学习">https://yoursite.com/2017/04/21/Binder学习/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Binder，Android/" rel="tag"># Binder，Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/20/Android知识点/" rel="next" title="Android知识点">
+                <i class="fa fa-chevron-left"></i> Android知识点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/avatar.jpg"
+               alt="Liwei" />
+          <p class="site-author-name" itemprop="name">Liwei</p>
+           
+              <p class="site-description motion-element" itemprop="description">平时工作和生活中的感悟记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux基础知识"><span class="nav-number">1.1.</span> <span class="nav-text">Linux基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程隔离"><span class="nav-number">1.1.1.</span> <span class="nav-text">进程隔离</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户空间-内核空间"><span class="nav-number">1.1.2.</span> <span class="nav-text">用户空间/内核空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#系统调用-内核态-用户态"><span class="nav-number">1.1.3.</span> <span class="nav-text">系统调用/内核态/用户态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内核模块-驱动"><span class="nav-number">1.1.4.</span> <span class="nav-text">内核模块/驱动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Binder？"><span class="nav-number">2.</span> <span class="nav-text">为什么使用Binder？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binder通信模型"><span class="nav-number">3.</span> <span class="nav-text">Binder通信模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binder进程间通信原理"><span class="nav-number">4.</span> <span class="nav-text">Binder进程间通信原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binder到底是什么？"><span class="nav-number">5.</span> <span class="nav-text">Binder到底是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#驱动里面的Binder"><span class="nav-number">5.1.</span> <span class="nav-text">驱动里面的Binder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深入理解java层的Binder"><span class="nav-number">5.2.</span> <span class="nav-text">深入理解java层的Binder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AIDL过程分析"><span class="nav-number">6.</span> <span class="nav-text">AIDL过程分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结尾"><span class="nav-number">7.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liwei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/04/21/Binder学习/';
+          this.page.identifier = '2017/04/21/Binder学习/';
+          this.page.title = 'Binder学习';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AQoVjcVEpbGjag9EVJEKK6GG-gzGzoHsz", "AqM9mdsyov2LEN1pszewM5Gd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

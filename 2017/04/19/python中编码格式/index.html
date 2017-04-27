@@ -1,0 +1,1050 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python, 编码," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="背景
+最近用python写一个在手机上安装、启动、卸载apk的脚本，在自己测试的时候用的是一个不带中文的apk，没有碰到什么问题，但是当真正去跑脚本的时候，突然报错了，查看错误信息，是 编码格式有问题。
+所以就趁机把python的编码格式了解了一下。然后这里写篇文章来记录下解决问题的过程。
+这里用的python版本是2.x，3.x对编码这一块有优化。
+
+常见的编码格式ASCII码
+计算机内部，所有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python中编码格式">
+<meta property="og:url" content="https://yoursite.com/2017/04/19/python中编码格式/index.html">
+<meta property="og:site_name" content="利伟的技术博客">
+<meta property="og:description" content="背景
+最近用python写一个在手机上安装、启动、卸载apk的脚本，在自己测试的时候用的是一个不带中文的apk，没有碰到什么问题，但是当真正去跑脚本的时候，突然报错了，查看错误信息，是 编码格式有问题。
+所以就趁机把python的编码格式了解了一下。然后这里写篇文章来记录下解决问题的过程。
+这里用的python版本是2.x，3.x对编码这一块有优化。
+
+常见的编码格式ASCII码
+计算机内部，所有">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/unicode_utf-8.PNG">
+<meta property="og:updated_time" content="2017-04-19T10:01:47.581Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python中编码格式">
+<meta name="twitter:description" content="背景
+最近用python写一个在手机上安装、启动、卸载apk的脚本，在自己测试的时候用的是一个不带中文的apk，没有碰到什么问题，但是当真正去跑脚本的时候，突然报错了，查看错误信息，是 编码格式有问题。
+所以就趁机把python的编码格式了解了一下。然后这里写篇文章来记录下解决问题的过程。
+这里用的python版本是2.x，3.x对编码这一块有优化。
+
+常见的编码格式ASCII码
+计算机内部，所有">
+<meta name="twitter:image" content="https://yoursite.com/upload/image/zlw/unicode_utf-8.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2017/04/19/python中编码格式/"/>
+
+
+
+
+
+  <title> python中编码格式 | 利伟的技术博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">利伟的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、交流、成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/04/19/python中编码格式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="利伟的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                python中编码格式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T09:47:40+08:00">
+                2017-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/19/python中编码格式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/04/19/python中编码格式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/19/python中编码格式/" class="leancloud_visitors" data-flag-title="python中编码格式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li>最近用python写一个在手机上安装、启动、卸载apk的脚本，在自己测试的时候用的是一个不带中文的apk，没有碰到什么问题，但是当真正去跑脚本的时候，突然报错了，查看错误信息，是 编码格式有问题。</li>
+<li>所以就趁机把python的编码格式了解了一下。然后这里写篇文章来记录下解决问题的过程。</li>
+<li>这里用的python版本是2.x，3.x对编码这一块有优化。</li>
+</ul>
+<h3 id="常见的编码格式"><a href="#常见的编码格式" class="headerlink" title="常见的编码格式"></a>常见的编码格式</h3><h4 id="ASCII码"><a href="#ASCII码" class="headerlink" title="ASCII码"></a>ASCII码</h4><ul>
+<li>计算机内部，所有的信息最终都表示为一个二进制的字符串，每一个二进制位(bit)有0和1两种状态，因此八个二进制位（也就是一个字节）可以组合出256中状态，上个世纪60年代，美国制定了一套字符编码，对英语字符与二进制位之间的关系，做了统一规定，这种被称为ASCII码，一直沿用至今。</li>
+<li>ASCII码一共规定了128个字符的编码，比如空格“SPACE”是32（二进制00100000），这128个字符（包括32个不能打印出来的控制符号）只占用了一个字节的后面7位，最前面的1位统一是0。<h4 id="非ASCII编码"><a href="#非ASCII编码" class="headerlink" title="非ASCII编码"></a>非ASCII编码</h4></li>
+<li>英语用128个字符就够了，但是用来表示其他语言，128个字符就不够了，于是一些欧洲国家就决定，利用字节中闲置的最高位编入新的符号，这样一来，这些欧洲国家使用的编码体系，可以表示最多256个符号。</li>
+<li>但是，又出现新的问题，不同国家有不同的字母，因此，哪怕他们都使用256个符号的编码方式，代表的字母却不一样，比如同样的都是130，但是法语、希伯来语、俄语代表的字母是不一样的，但是不管怎么样，所有这些编码方式中，0–127表示的字符是一样的，不一样的只是128–255的这一段。</li>
+<li>至于亚洲国家的文字，使用的符号就更多了，汉字就多达10万左右，一个字节只能表示256种符号，肯定是不够的，就必须使用多个自己表达一个字符，比如，简体中文常见的编码方式是GB2312，使用两个字节表示一个汉字，所以理论上最多可以表示256*256=65536个符号。</li>
+<li>这里需要指出，虽然都是用多个字节表示一个符号，但是GB类的汉字编码与后文的Unicode和UTF-8是毫无关系的。</li>
+</ul>
+<h4 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h4><ul>
+<li>Unicode是一个很大的集合，是一种所有符号的编码，现在的规模可以容纳100多万个符号，每个符号的编码都不一样。</li>
+<li>需要注意的是，Unicode只是一个符号集，它只规定了符号的二进制代码，却没有规定这个二进制代码如何存储，比如，汉字的‘严’的unicode是十六进制数4E25，转换成二进制数足足有15位（100111000100101），也就是说这个符号表示至少需要两个字节。表示其他更大的符号，可能需要3个字节或者4个字节，甚至更多。</li>
+<li>这就有两个严重的问题，第一个问题是：如何才能区别Unicode和ASCII？计算机怎么知道三个字节表示一个符号，而不是分别表示三个符号呢？第二个问题是：如果英文字母用一个字节表示就够了，如果Unicode统一规定，每隔符号用三个或4个字节表示，那么每个英文字母前都必然有二到三个字节是0，这样对于存储是极大的浪费。</li>
+<li>然后出现的结果是：1）出现了Unicode的多种存储方式，也就是说许多种不同的二进制格式，可以用来表示Unicode。  2）Unicode在很长一段时间无法推广，直到互联网的出现。</li>
+</ul>
+<h4 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h4><ul>
+<li>互联网的普及，强烈要求出现一种统一的编码格式。UTF-8就是在互联网上使用最广的一种Unicode的实现方式，其他的实现方式还包括UTF-16（字符用两个字节或4个字节表示）和UTF-32(字符用四个字节表示)，需要注意的是这里的关系是，UTF-8是Unicode的实现方式之一。</li>
+<li><p>UTF-8最大的特点是：它是一种变长的编码方式，它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。它的编码规则很简单，有两条：</p>
+<blockquote>
+<ol>
+<li>对于单字节的符号，字节的第一位设为0，后面7位这个符号的Unicode码，因此对于英文字母，UTF-8编码和ASCII码是相同的。</li>
+<li>对于n字节的符号(n&gt;1),第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10，剩下的没有提及的二进制位，全部为这个符号的Unicode码。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>下图总结了编码规则，字母x表示可用编码的位。<br><img src="/upload/image/zlw/unicode_utf-8.PNG" alt="unicode_utf-8.PNG"></p>
+</li>
+<li><p>跟据上表，解读UTF-8编码非常简单。如果一个字节的第一位是0，则这个字节单独就是一个字符；如果第一位是1，则连续有多少个1，就表示当前字符占用多少个字节。</p>
+</li>
+<li>举个例子，”严”的unicode是4E25（100111000100101），根据上表，可以发现4E25处在第三行的范围内（0000 0800-0000 FFFF），因此”严”的UTF-8编码需要三个字节，即格式是”1110xxxx 10xxxxxx 10xxxxxx”。然后，从”严”的最后一个二进制位开始，依次从后向前填入格式中的x，多出的位补0。这样就得到了，”严”的UTF-8编码是”11100100 10111000 10100101”，转换成十六进制就是E4B8A5。可以结合着上图更好理解。</li>
+</ul>
+<h4 id="Little-endian和Big-endian"><a href="#Little-endian和Big-endian" class="headerlink" title="Little endian和Big endian"></a>Little endian和Big endian</h4><ul>
+<li>上面提到，Unicode码可以采用UCS-2格式直接存储，以汉字“严”为例，Unicode码是4E25，需要用两个字节存储，一个字节是4E，另一个字节是25，存储的时候4E在前，25在后，就是Big Endian方式，25在前，4E在后就是Little endian方式。</li>
+<li>那么计算机是怎么知道某一个文件到底采用哪一种方式编码？ Unicode规范中定义，每一个文件的最前面分别加入一个标识编码顺序的字符，这个字符的名字叫做“零坎都非换行空格”用FEFF表示，这正好是两个字节，FF比FE大1，如果一个文本文件的头两个字节是FEFF，就表示该文件采用大头方式，如果头两个字节是FFFE，就表示该文件采用小头方式。</li>
+</ul>
+<h4 id="GBK-amp-amp-GB2312"><a href="#GBK-amp-amp-GB2312" class="headerlink" title="GBK &amp;&amp; GB2312"></a>GBK &amp;&amp; GB2312</h4><ul>
+<li>GB2312是国家制定的汉字编码标准，使用双字节编码，共收入6763个汉字和682个非汉字图形字符，GBK即对国际编码的扩展，在GB2312的基础上进行扩展形成的，使用双字节编码方式，共收入21003个汉字，从而满足了汉字使用的需要。</li>
+</ul>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>字符串是python中最常见的数据类型，很多时候会用到一些不属于标准ASCLL字符集的字符，这时候代码很可能会抛出UnicodeDecodeError： ‘ascii’ codec can’t decode byte 0xc4 in position 10: ordinal not in range(128)异常，这是一个让初学者头疼的问题。</li>
+<li>字符串在python内部的标识是Unicode编码，因此，在做编码转换时，通常需要以unicode作为中间编码，也就是说先将其他编码的字符串解码(decode)成unicode，再从unicode编码（encode）成另一种编码。但是，python2.x的默认编码格式是ASCLL，因此在没有指定python源码编码格式的情况下，源码中所有字符都会被默认为ASCLL码，也因为这个根本原因，在python2.x中经常会遇到UnicodeDecodeError或者UnicodeEncodeError。</li>
+</ul>
+<h3 id="关于Unicode"><a href="#关于Unicode" class="headerlink" title="关于Unicode"></a>关于Unicode</h3><ul>
+<li>Unicode是一种字符集，它为每一种现代或古代使用的文字系统出现的每一个字符都提供了统一的序列号，规定了符号的二进制代码，但没有规定这个二进制代码如何存储，也就是说：Unicode的编码方式是固定的，但是实现方式根据不同的需要有很多种，常见的有UTF-8、UTF-16、UTF-32等。</li>
+<li>为了能够处理Unicode数据，同时兼容python某些内部模块，python 2.x中提供了Unicode这种数据类型，通过decode和encode方法可以将其他编码和Unicode编码相互转化，但同时也引入了UnicodeDecodeError和UnicodeEncodeError异常。</li>
+</ul>
+<h3 id="常见的几种编码异常"><a href="#常见的几种编码异常" class="headerlink" title="常见的几种编码异常"></a>常见的几种编码异常</h3><h4 id="SyntaxError-Non-ASCII-character"><a href="#SyntaxError-Non-ASCII-character" class="headerlink" title="SyntaxError: Non-ASCII character"></a>SyntaxError: Non-ASCII character</h4><ul>
+<li>这种异常最不容易出现，也最容易处理，主要原因是Python源码文件中有非ASCII字符，而且同时没有声明源码编码格式，例如：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = &apos;中文&apos;</div><div class="line">print s     # 抛出异常</div></pre></td></tr></table></figure>
+<h4 id="UnicodeDecodeError"><a href="#UnicodeDecodeError" class="headerlink" title="UnicodeDecodeError"></a>UnicodeDecodeError</h4><ul>
+<li>这个异常有时候会在调用decode方法时出现，原因是Python打算将其他编码的字符转化为Unicode编码，但是字符本身的编码格式和decode方法传入的编码格式不一致，例如：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/python</div><div class="line"># -*- coding: utf-8 -*-</div><div class="line">s = &apos;中文&apos;</div><div class="line">s.decode(&apos;gb2312&apos;) # UnicodeDecodeError: &apos;gb2312&apos; codec can&apos;t decode bytes in position 2-3: illegal multibyte sequence</div><div class="line">print s</div></pre></td></tr></table></figure>
+<ul>
+<li>上面这段代码中字符串s的编码格式是utf-8，但是在使用decode方法转化为Unicode编码时传入的参数是‘gb2312’，因此在转化的时候抛出UnicodeDecodeError异常。还有一种情况是在encode的时候：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/python</div><div class="line"># -*- coding: utf-8 -*-</div><div class="line">s = &apos;中文&apos;</div><div class="line">s.encode(&apos;gb2312&apos;) # UnicodeDecodeError: &apos;ascii&apos; codec can&apos;t decode byte 0xe4 in position 0: ordinal not in range(128)</div><div class="line">print s</div></pre></td></tr></table></figure>
+<h4 id="UnicodeEncodeError"><a href="#UnicodeEncodeError" class="headerlink" title="UnicodeEncodeError"></a>UnicodeEncodeError</h4><ul>
+<li>错误的使用decode和encode方法会出现这种异常，比如：使用decode方法将Unicode字符串转化的时候：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/python</div><div class="line"># -*- coding: utf-8 -*-</div><div class="line">s = u&apos;中文&apos;</div><div class="line">s.decode(&apos;utf-8&apos;) # UnicodeEncodeError: &apos;ascii&apos; codec can&apos;t encode characters in position 0-1: ordinal not in range(128)</div><div class="line">print s</div></pre></td></tr></table></figure>
+<ul>
+<li>上面这个错误可以这么理解：s是一个Unicode的字符串，然后想decode成utf-8格式的，这显然不合理。</li>
+</ul>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="遵循PEP0263原则，声明编码格式"><a href="#遵循PEP0263原则，声明编码格式" class="headerlink" title="遵循PEP0263原则，声明编码格式"></a>遵循PEP0263原则，声明编码格式</h4><ul>
+<li>在PEP 0263 – Defining Python Source Code Encodings中提出了对Python编码问题的最基本的解决方法：在Python源码文件中声明编码格式，最常见的声明方式如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/python</div><div class="line"># -*- coding: &lt;encoding name&gt; -*-</div></pre></td></tr></table></figure>
+<h4 id="使用-u’中文’-替代-‘中文’"><a href="#使用-u’中文’-替代-‘中文’" class="headerlink" title="使用 u’中文’ 替代 ‘中文’"></a>使用 u’中文’ 替代 ‘中文’</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">str1 = &apos;中文编码&apos;</div><div class="line">str2 = u&apos;中文编码&apos;</div></pre></td></tr></table></figure>
+<ul>
+<li>Python中有以上两种声明字符串变量的方式，它们的主要区别是编码格式的不同，其中，str1的编码格式和Python文件声明的编码格式一致，而str2的编码格式则是Unicode。</li>
+<li>如果你要声明的字符串变量中存在非ASCII的字符，那么最好使用str2的声明格式，这样你就可以不需要执行decode，直接对字符串进行操作，可以避免一些出现异常的情况。</li>
+</ul>
+<h4 id="Reset默认编码"><a href="#Reset默认编码" class="headerlink" title="Reset默认编码"></a>Reset默认编码</h4><ul>
+<li>Python中出现这么多编码问题的根本原因是Python 2.x的默认编码格式是ASCII，所以你也可以通过以下的方式修改默认的编码格式：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">sys.setdefaultencoding(&apos;utf-8&apos;)</div></pre></td></tr></table></figure>
+<ul>
+<li>这种方法是可以解决部分编码问题，但是同时也会引入很多其他问题，得不偿失，不建议使用这种方式。</li>
+</ul>
+<h4 id="终极原则：decode-early-unicode-everywhere-encode-late"><a href="#终极原则：decode-early-unicode-everywhere-encode-late" class="headerlink" title="终极原则：decode early, unicode everywhere, encode late"></a>终极原则：decode early, unicode everywhere, encode late</h4><ul>
+<li>最后分享一个终极原则：decode early, unicode everywhere, encode late，即：在输入或者声明字符串的时候，尽早地使用decode方法将字符串转化成unicode编码格式；</li>
+<li>然后在程序内使用字符串的时候统一使用unicode格式进行处理，比如字符串拼接、字符串替换、获取字符串的长度等操作；</li>
+<li>最后，在输出字符串的时候（控制台/网页/文件），通过encode方法将字符串转化为你所想要的编码格式，比如utf-8等。</li>
+</ul>
+<h3 id="Python-3-x中的Unicode"><a href="#Python-3-x中的Unicode" class="headerlink" title="Python 3.x中的Unicode"></a>Python 3.x中的Unicode</h3><ul>
+<li><p>在Python 3.0之后的版本中，所有的字符串都是使用Unicode编码的字符串序列，同时还有以下几个改进：</p>
+<blockquote>
+<ol>
+<li>默认编码格式改为unicode</li>
+<li>所有的Python内置模块都支持unicode</li>
+<li>不再支持u’中文’的语法格式</li>
+</ol>
+</blockquote>
+</li>
+<li><p>所以，对于Python 3.x来说，编码问题已经不再是个大的问题，基本上很少遇到上述的几个异常。</p>
+</li>
+</ul>
+<p>+++++++++</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/04/19/python中编码格式/" title="python中编码格式">https://yoursite.com/2017/04/19/python中编码格式/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python-编码/" rel="tag"># python, 编码</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/18/Android插件化学习2/" rel="next" title="Android插件化学习记录（二）">
+                <i class="fa fa-chevron-left"></i> Android插件化学习记录（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/20/Android知识点/" rel="prev" title="Android知识点">
+                Android知识点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/avatar.jpg"
+               alt="Liwei" />
+          <p class="site-author-name" itemprop="name">Liwei</p>
+           
+              <p class="site-description motion-element" itemprop="description">平时工作和生活中的感悟记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的编码格式"><span class="nav-number">1.1.</span> <span class="nav-text">常见的编码格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ASCII码"><span class="nav-number">1.1.1.</span> <span class="nav-text">ASCII码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非ASCII编码"><span class="nav-number">1.1.2.</span> <span class="nav-text">非ASCII编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unicode"><span class="nav-number">1.1.3.</span> <span class="nav-text">Unicode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-8"><span class="nav-number">1.1.4.</span> <span class="nav-text">UTF-8</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Little-endian和Big-endian"><span class="nav-number">1.1.5.</span> <span class="nav-text">Little endian和Big endian</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GBK-amp-amp-GB2312"><span class="nav-number">1.1.6.</span> <span class="nav-text">GBK && GB2312</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Unicode"><span class="nav-number">2.2.</span> <span class="nav-text">关于Unicode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的几种编码异常"><span class="nav-number">2.3.</span> <span class="nav-text">常见的几种编码异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SyntaxError-Non-ASCII-character"><span class="nav-number">2.3.1.</span> <span class="nav-text">SyntaxError: Non-ASCII character</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UnicodeDecodeError"><span class="nav-number">2.3.2.</span> <span class="nav-text">UnicodeDecodeError</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UnicodeEncodeError"><span class="nav-number">2.3.3.</span> <span class="nav-text">UnicodeEncodeError</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-number">2.4.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#遵循PEP0263原则，声明编码格式"><span class="nav-number">2.4.1.</span> <span class="nav-text">遵循PEP0263原则，声明编码格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-u’中文’-替代-‘中文’"><span class="nav-number">2.4.2.</span> <span class="nav-text">使用 u’中文’ 替代 ‘中文’</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reset默认编码"><span class="nav-number">2.4.3.</span> <span class="nav-text">Reset默认编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#终极原则：decode-early-unicode-everywhere-encode-late"><span class="nav-number">2.4.4.</span> <span class="nav-text">终极原则：decode early, unicode everywhere, encode late</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-3-x中的Unicode"><span class="nav-number">2.5.</span> <span class="nav-text">Python 3.x中的Unicode</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liwei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/04/19/python中编码格式/';
+          this.page.identifier = '2017/04/19/python中编码格式/';
+          this.page.title = 'python中编码格式';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AQoVjcVEpbGjag9EVJEKK6GG-gzGzoHsz", "AqM9mdsyov2LEN1pszewM5Gd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

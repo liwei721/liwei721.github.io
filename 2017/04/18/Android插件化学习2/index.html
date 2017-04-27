@@ -1,0 +1,1060 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android, 插件化," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言
+接第一篇学习插件化的文章，因为内容太多了，所以就另开了一篇文章来做笔记。
+
+插件加载机制
+前文中最后【启动未在AndroidManifest中声明Activity】的两个Activity是在同一个apk中的，因此用ClassLoader可以加载到对应的类，但是现实中，我们加载的Activity可能是不同插件中的，这时候如果单纯的用ClassLoader去加载，就不知道该去哪里找目标的Acti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android插件化学习记录（二）">
+<meta property="og:url" content="https://yoursite.com/2017/04/18/Android插件化学习2/index.html">
+<meta property="og:site_name" content="利伟的技术博客">
+<meta property="og:description" content="前言
+接第一篇学习插件化的文章，因为内容太多了，所以就另开了一篇文章来做笔记。
+
+插件加载机制
+前文中最后【启动未在AndroidManifest中声明Activity】的两个Activity是在同一个apk中的，因此用ClassLoader可以加载到对应的类，但是现实中，我们加载的Activity可能是不同插件中的，这时候如果单纯的用ClassLoader去加载，就不知道该去哪里找目标的Acti">
+<meta property="og:updated_time" content="2017-04-26T09:01:58.534Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android插件化学习记录（二）">
+<meta name="twitter:description" content="前言
+接第一篇学习插件化的文章，因为内容太多了，所以就另开了一篇文章来做笔记。
+
+插件加载机制
+前文中最后【启动未在AndroidManifest中声明Activity】的两个Activity是在同一个apk中的，因此用ClassLoader可以加载到对应的类，但是现实中，我们加载的Activity可能是不同插件中的，这时候如果单纯的用ClassLoader去加载，就不知道该去哪里找目标的Acti">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2017/04/18/Android插件化学习2/"/>
+
+
+
+
+
+  <title> Android插件化学习记录（二） | 利伟的技术博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">利伟的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、交流、成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/04/18/Android插件化学习2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="利伟的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android插件化学习记录（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-18T22:42:05+08:00">
+                2017-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android技术/" itemprop="url" rel="index">
+                    <span itemprop="name">Android技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/18/Android插件化学习2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/04/18/Android插件化学习2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/18/Android插件化学习2/" class="leancloud_visitors" data-flag-title="Android插件化学习记录（二）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>接第一篇学习插件化的文章，因为内容太多了，所以就另开了一篇文章来做笔记。</li>
+</ul>
+<h2 id="插件加载机制"><a href="#插件加载机制" class="headerlink" title="插件加载机制"></a>插件加载机制</h2><ul>
+<li>前文中最后【启动未在AndroidManifest中声明Activity】的两个Activity是在同一个apk中的，因此用ClassLoader可以加载到对应的类，但是现实中，我们加载的Activity可能是不同插件中的，这时候如果单纯的用ClassLoader去加载，就不知道该去哪里找目标的Activity了，需要对ClassLoader进行改造。</li>
+</ul>
+<h3 id="ClassLoader-机制"><a href="#ClassLoader-机制" class="headerlink" title="ClassLoader 机制"></a>ClassLoader 机制</h3><ul>
+<li><p>java的类加载是一个相对复杂的过程；它包括加载、验证、准备、解析和初始化五个阶段，对于开发者来说，可控性最强的是加载阶段，加载阶段主要完成三件事：</p>
+<blockquote>
+<ol>
+<li>根据一个类的全限定名来获取定义此类的二进制字节流</li>
+<li>将这个字节流所代表的静态存储结构转化为JVM方法区中的运行时数据结构</li>
+<li>在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>Android Framework 提供了DexClassLoader这个类，我们只需要告诉DexClassLoader一个dex文件或者apk文件的路径就能完成类的加载。我们再看下Activity穿件过程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">java.lang.ClassLoader cl = r.packageInfo.getClassLoader();</div><div class="line">activity = mInstrumentation.newActivity(cl, component.getClassName(), r.intent);</div><div class="line">StrictMode.incrementExpectedActivityCount(activity.getClass());</div><div class="line">r.intent.setExtrasClassLoader(cl);</div></pre></td></tr></table></figure>
+</li>
+<li><p>系统通过待启动的Activity的类名className，然后使用ClassLoader对象cl把这个类加载进虚拟机，最后使用反射创建了这个Activity类的实例对象。</p>
+</li>
+<li>r.packageInfo是一个LoadedApk类的对象，loadedApk对象是APK文件在内存中的表示，比如：APK文件的代码和资源，甚至代码里面的Activity、service等组件信息，我们可以通过此对象获取。</li>
+<li>我们接下来看看r.packageInfo是怎么获取的，跟踪代码到getPackageInfoNoCheck，它只是调用了getPackageInfo：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">private LoadedApk getPackageInfo(ApplicationInfo aInfo, CompatibilityInfo compatInfo,</div><div class="line">        ClassLoader baseLoader, boolean securityViolation, boolean includeCode,</div><div class="line">        boolean registerPackage) &#123;</div><div class="line">        // 获取userid信息, 判断了调用方和获取app信息的一方是不是同一个Userid。如果是同一个user，可以共享缓存数据。</div><div class="line">    final boolean differentUser = (UserHandle.myUserId() != UserHandle.getUserId(aInfo.uid));</div><div class="line">    synchronized (mResourcesManager) &#123;</div><div class="line">    // 尝试获取缓存信息</div><div class="line">        WeakReference&lt;LoadedApk&gt; ref;</div><div class="line">        if (differentUser) &#123;</div><div class="line">            // Caching not supported across users</div><div class="line">            ref = null;</div><div class="line">        &#125; else if (includeCode) &#123;</div><div class="line">            ref = mPackages.get(aInfo.packageName);</div><div class="line">        &#125; else &#123;</div><div class="line">            ref = mResourcePackages.get(aInfo.packageName);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // 获取缓存数据，如果没有找到缓存数据，才通过LoadedApk的构造函数创建loadedApk对象。</div><div class="line">        LoadedApk packageInfo = ref != null ? ref.get() : null;</div><div class="line">        if (packageInfo == null || (packageInfo.mResources != null</div><div class="line">                &amp;&amp; !packageInfo.mResources.getAssets().isUpToDate())) &#123;</div><div class="line">                // 缓存没有命中，直接new</div><div class="line">            packageInfo =</div><div class="line">                new LoadedApk(this, aInfo, compatInfo, baseLoader,</div><div class="line">                        securityViolation, includeCode &amp;&amp;</div><div class="line">                        (aInfo.flags&amp;ApplicationInfo.FLAG_HAS_CODE) != 0, registerPackage);</div><div class="line"></div><div class="line">        // 省略。。更新缓存</div><div class="line">        return packageInfo;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Hook掉ClassLoader-自己操刀"><a href="#Hook掉ClassLoader-自己操刀" class="headerlink" title="Hook掉ClassLoader(自己操刀)"></a>Hook掉ClassLoader(自己操刀)</h3><ul>
+<li>上面提到，获取LoadedApk的过程中使用了一份缓存数据，这个缓存数据是一个Map（mPackages），从包名到LoadedApk的一个映射，我们可以考虑手动把我们插件信息添加进去。这样系统查找缓存的过程中，会直接命中缓存，进而使用我们添加进去的LoadedApk的ClassLoader来加载这个特定的Activity。</li>
+<li>我们按照下面的步骤来进行：<blockquote>
+<ol>
+<li>我们的主要目标是：Hook获取ActivityThread中的mpackages。那么下一步我们需要去构造一个插件的loadedApk。</li>
+<li>通过getPackageInfoNoCheck来构造一个插件的LoadedApk对象。public final LoadedApk getPackageInfoNoCheck(ApplicationInfo ai,CompatibilityInfo compatInfo) {}， 第二个参数是兼容性问题，我们使用默认的值DEFAULT_COMPATIBILITY_INFO，接下来主要是hi获取ApplicationInfo。</li>
+<li>绕过权限限制，如果按照前两步完成配置运行会报错： Unable to instantiate application android.app.Application：Unable to get package info for com.weishu.upf.ams_pms_hook.app; is package not installed?  跟踪代码会发现其实是在读取packageInfo时，因为插件并没有安装，所以抛出了异常，因此我们还需要hook PMS，欺骗系统我们已经安装了插件。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h2 id="委托系统，让系统帮忙加载"><a href="#委托系统，让系统帮忙加载" class="headerlink" title="委托系统，让系统帮忙加载"></a>委托系统，让系统帮忙加载</h2><ul>
+<li>再看ActivityThread中加载Activity的代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">java.lang.ClassLoader cl = r.packageInfo.getClassLoader();</div><div class="line">activity = mInstrumentation.newActivity(</div><div class="line">        cl, component.getClassName(), r.intent);</div><div class="line">StrictMode.incrementExpectedActivityCount(activity.getClass());</div><div class="line">r.intent.setExtrasClassLoader(cl);</div></pre></td></tr></table></figure>
+<ul>
+<li>上面提到r.packageInfo中的r是通过getPackageInfoNoCheck获取的，如果在mPackages中没有loadedApk，那么系统会new 一个loadedApk。</li>
+<li>接下来会使用这个new出来的loadedApk的getClassLoader方法获取到的ClassLoader来加载类，这里的ClassLoader就是宿主的ClassLoader，因此还无法加载插件的类，我们可以通过告诉宿主程序的ClassLoader插件使用的类，让宿主ClassLoader完成对子类的加载。</li>
+<li><p>我们来看下LoadedApk.getClassLoader是个什么东西：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ClassLoader <span class="title">getClassLoader</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (mClassLoader != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> mClassLoader;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (mIncludeCode &amp;&amp; !mPackageName.equals(<span class="string">"android"</span>)) &#123;</div><div class="line">            <span class="comment">// 略...</span></div><div class="line">            mClassLoader = ApplicationLoaders.getDefault().getClassLoader(zip, lib,</div><div class="line">                    mBaseClassLoader);</div><div class="line"></div><div class="line">            StrictMode.setThreadPolicy(oldPolicy);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">if</span> (mBaseClassLoader == <span class="keyword">null</span>) &#123;</div><div class="line">                mClassLoader = ClassLoader.getSystemClassLoader();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                mClassLoader = mBaseClassLoader;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> mClassLoader;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>可以看到，非android开头的包和android开头的包分别使用了两种不同的ClassLoader，我们只关心第一种；因此继续跟踪ApplicationLoaders类：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ClassLoader <span class="title">getClassLoader</span><span class="params">(String zip, String libPath, ClassLoader parent)</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">    ClassLoader baseParent = ClassLoader.getSystemClassLoader().getParent();</div><div class="line"></div><div class="line">    <span class="keyword">synchronized</span> (mLoaders) &#123;</div><div class="line">        <span class="keyword">if</span> (parent == <span class="keyword">null</span>) &#123;</div><div class="line">            parent = baseParent;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (parent == baseParent) &#123;</div><div class="line">            ClassLoader loader = mLoaders.get(zip);</div><div class="line">            <span class="keyword">if</span> (loader != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">return</span> loader;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, zip);</div><div class="line">            PathClassLoader pathClassloader =</div><div class="line">                <span class="keyword">new</span> PathClassLoader(zip, libPath, parent);</div><div class="line">            Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</div><div class="line"></div><div class="line">            mLoaders.put(zip, pathClassloader);</div><div class="line">            <span class="keyword">return</span> pathClassloader;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, zip);</div><div class="line">        PathClassLoader pathClassloader = <span class="keyword">new</span> PathClassLoader(zip, parent);</div><div class="line">        Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</div><div class="line">        <span class="keyword">return</span> pathClassloader;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>应用程序使用的ClassLoader都是PathClassLoader类的实例</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PathClassLoader</span> <span class="keyword">extends</span> <span class="title">BaseDexClassLoader</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PathClassLoader</span><span class="params">(String dexPath, ClassLoader parent)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>((String)<span class="keyword">null</span>, (File)<span class="keyword">null</span>, (String)<span class="keyword">null</span>, (ClassLoader)<span class="keyword">null</span>);</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PathClassLoader</span><span class="params">(String dexPath, String libraryPath, ClassLoader parent)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>((String)<span class="keyword">null</span>, (File)<span class="keyword">null</span>, (String)<span class="keyword">null</span>, (ClassLoader)<span class="keyword">null</span>);</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>它的实现比较简单，我们再看BaseDexClassLoader</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line">    List&lt;Throwable&gt; suppressedExceptions = <span class="keyword">new</span> ArrayList&lt;Throwable&gt;();</div><div class="line">    <span class="comment">// 通过pathList的findClass来查找对应的class。pathList其实是一个DexPathList对象。</span></div><div class="line">    Class c = pathList.findClass(name, suppressedExceptions);</div><div class="line">    <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</div><div class="line">        ClassNotFoundException cnfe = <span class="keyword">new</span> ClassNotFoundException(<span class="string">"Didn't find class \""</span> + name + <span class="string">"\" on path: "</span> + pathList);</div><div class="line">        <span class="keyword">for</span> (Throwable t : suppressedExceptions) &#123;</div><div class="line">            cnfe.addSuppressed(t);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">throw</span> cnfe;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> c;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Class <span class="title">findClass</span><span class="params">(String name, List&lt;Throwable&gt; suppressed)</span> </span>&#123;</div><div class="line">  <span class="comment">// dexElements是一个Element的数组，ClassLoader在查找类的时候，会遍历这个数组。</span></div><div class="line">   <span class="keyword">for</span> (Element element : dexElements) &#123;</div><div class="line">       DexFile dex = element.dexFile;</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (dex != <span class="keyword">null</span>) &#123;</div><div class="line">           Class clazz = dex.loadClassBinaryName(name, definingContext, suppressed);</div><div class="line">           <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</div><div class="line">               <span class="keyword">return</span> clazz;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">if</span> (dexElementsSuppressedExceptions != <span class="keyword">null</span>) &#123;</div><div class="line">       suppressed.addAll(Arrays.asList(dexElementsSuppressedExceptions));</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>总的来说，宿主程序的ClassLoader最终继承自BaseDexClassLoader，BaseDexClassLoader通过DexPathList进行类的查找过程，而这个查找通过遍历一个dexElements的数组完成，我们通过把插件dex添加进这个数组让宿主ClassLoader获取了加载插件类的能力。</li>
+</ul>
+<h2 id="广播的管理"><a href="#广播的管理" class="headerlink" title="广播的管理"></a>广播的管理</h2><h3 id="注册广播"><a href="#注册广播" class="headerlink" title="注册广播"></a>注册广播</h3><ul>
+<li>我们先来分析动态注册广播的方法，使用时会调用Context.registerReceiver,跟踪代码，最终会调用到registerReceiverInternal中：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> Intent <span class="title">registerReceiverInternal</span><span class="params">(BroadcastReceiver receiver, <span class="keyword">int</span> userId,</span></span></div><div class="line">            IntentFilter filter, String broadcastPermission,</div><div class="line">            Handler scheduler, Context context) &#123;</div><div class="line">        IIntentReceiver rd = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (receiver != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (mPackageInfo != <span class="keyword">null</span> &amp;&amp; context != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">if</span> (scheduler == <span class="keyword">null</span>) &#123;</div><div class="line">                    scheduler = mMainThread.getHandler();</div><div class="line">                &#125;</div><div class="line">                rd = mPackageInfo.getReceiverDispatcher(</div><div class="line">                    receiver, context, scheduler,</div><div class="line">                    mMainThread.getInstrumentation(), <span class="keyword">true</span>);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span> (scheduler == <span class="keyword">null</span>) &#123;</div><div class="line">                    scheduler = mMainThread.getHandler();</div><div class="line">                &#125;</div><div class="line">                rd = <span class="keyword">new</span> LoadedApk.ReceiverDispatcher(</div><div class="line">                        receiver, context, scheduler, <span class="keyword">null</span>, <span class="keyword">true</span>).getIIntentReceiver();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> ActivityManagerNative.getDefault().registerReceiver(</div><div class="line">                    mMainThread.getApplicationThread(), mBasePackageName,</div><div class="line">                    rd, filter, broadcastPermission, userId);</div><div class="line">        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>从代码可以知道，BroadcastReceiver的注册也是通过AMS完成的。</li>
+<li>IIntentReceiver是一个Binder对象，因此是可以跨进程通信的，AMS和BroadcastReceiver的通信是靠IIntentReceiver完成的，这是因为广播的分发是在AMS中进行的，而AMS所在的进程和BroadCastReceiver所在的进程不一样，因此要把广播分发到BroadcastReceiver具体的进程需要跨进程通信。IIntentReceiver的实现类是LoadedApk.ReceiverDispatcher。</li>
+<li><p>AMS registerReceiver方法主要做了两件事情：</p>
+<blockquote>
+<ol>
+<li>对发送者的身份和权限做一定的校验。</li>
+<li>把这个BroadcastReceiver以BroadcastFilter的形式存储在AMS的mReceiverResolver变量中，供后续使用。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>静态注册广播的信息，我们从前面介绍构建applicationInfo时知道，PackageParser类会对AndroidManifest.xml文件解析，因为APK的解析过程是在PMS中进行的，因此静态注册广播的信息存储在PMS中。</p>
+</li>
+</ul>
+<h3 id="发送过程"><a href="#发送过程" class="headerlink" title="发送过程"></a>发送过程</h3><ul>
+<li>发送广播很简单，context.sendBroadcast(), 跟踪代码到ContextImpl中：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendBroadcast</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">    warnIfCallingFromSystemProcess();</div><div class="line">    String resolvedType = intent.resolveTypeIfNeeded(getContentResolver());</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        intent.prepareToLeaveProcess();</div><div class="line">        ActivityManagerNative.getDefault().broadcastIntent(</div><div class="line">                mMainThread.getApplicationThread(), intent, resolvedType, <span class="keyword">null</span>,</div><div class="line">                Activity.RESULT_OK, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, AppOpsManager.OP_NONE, <span class="keyword">null</span>, <span class="keyword">false</span>, <span class="keyword">false</span>,</div><div class="line">                getUserId());</div><div class="line">    &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Failure from system"</span>, e);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>我们跟踪进AMS的broadcastIntent()方法，它仅仅是调用了broadcastIntentLocked方法，这个方法也比较长，大概是：处理了粘性广播、顺序广播，各种flag以及动态广播静态广播的接收过程，这里就可以看出广播的发送和接收是混为一体的。某个广播被发送之后，AMS会找出所有注册过的BroadcastReceiver中与这个广播匹配的接收者，然后将这个广播分发给相应的接收者处理。</li>
+</ul>
+<h4 id="匹配过程。"><a href="#匹配过程。" class="headerlink" title="匹配过程。"></a>匹配过程。</h4><ul>
+<li>上面提到broadcastIntentLocked方法里也有接收广播的代码：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// Figure out who all will receive this broadcast.</div><div class="line">List receivers = null;</div><div class="line">List&lt;BroadcastFilter&gt; registeredReceivers = null;</div><div class="line">// Need to resolve the intent to interested receivers...</div><div class="line">if ((intent.getFlags()&amp;Intent.FLAG_RECEIVER_REGISTERED_ONLY)</div><div class="line">         == 0) &#123;</div><div class="line">    receivers = collectReceiverComponents(intent, resolvedType, callingUid, users);</div><div class="line">&#125;</div><div class="line">if (intent.getComponent() == null) &#123;</div><div class="line">    if (userId == UserHandle.USER_ALL &amp;&amp; callingUid == Process.SHELL_UID) &#123;</div><div class="line">        // Query one target user at a time, excluding shell-restricted users</div><div class="line">        // 略</div><div class="line">    &#125; else &#123;</div><div class="line">        registeredReceivers = mReceiverResolver.queryIntent(intent,</div><div class="line">                resolvedType, false, userId);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>receivers是对这个广播感兴趣的静态BroadcastReceiver列表；collectReceiverComponents 通过PackageManager获取了与这个广播匹配的静态BroadcastReceiver信息；这里也证实了我们在分析BroadcasrReceiver注册过程中的推论——静态BroadcastReceiver的注册过程的确实在PMS中进行的。</li>
+<li>mReceiverResolver存储了动态注册的BroadcastReceiver的信息；还记得这个mReceiverResolver吗？我们在分析动态广播的注册过程中发现，动态注册的BroadcastReceiver的相关信息最终存储在此对象之中；在这里，通过mReceiverResolver对象匹配出了对应的BroadcastReceiver供进一步使用。</li>
+</ul>
+<h3 id="接收过程"><a href="#接收过程" class="headerlink" title="接收过程"></a>接收过程</h3><ul>
+<li>还是上面broadcastIntentLocked方法中的接收代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">BroadcastQueue queue = broadcastQueueForIntent(intent);</div><div class="line">BroadcastRecord r = <span class="keyword">new</span> BroadcastRecord(queue, intent, callerApp,</div><div class="line">        callerPackage, callingPid, callingUid, resolvedType,</div><div class="line">        requiredPermissions, appOp, brOptions, receivers, resultTo, resultCode,</div><div class="line">        resultData, resultExtras, ordered, sticky, <span class="keyword">false</span>, userId);</div><div class="line"></div><div class="line"><span class="keyword">boolean</span> replaced = replacePending &amp;&amp; queue.replaceOrderedBroadcastLocked(r);</div><div class="line"><span class="keyword">if</span> (!replaced) &#123;</div><div class="line">    queue.enqueueOrderedBroadcastLocked(r);</div><div class="line">    queue.scheduleBroadcastsLocked();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>首先创建一个BroadcastRecord代表此次发送的广播，然后放进一个队列。最后通过scheduleBroadcastsLocked通知队列对广播进行处理。</li>
+<li>在BroadcastQueue中通过Handle调度了对于广播处理的消息，调度过程由processNextBroadcast方法完成，而这个方法通过performReceiveLocked最终调用了IIntentReceiver的performReceive方法。</li>
+<li>这个IIntentReceiver正是在广播注册过程中由App进程提供给AMS进程的Binder对象，现在AMS通过这个Binder对象进行IPC调用通知广播接受者所在进程完成余下操作。在上文我们分析广播的注册过程中提到过，这个IItentReceiver的实现是LoadedApk.ReceiverDispatcher；我们查看这个对象的performReceive方法，源码如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performReceive</span><span class="params">(Intent intent, <span class="keyword">int</span> resultCode, String data,</span></span></div><div class="line">        Bundle extras, <span class="keyword">boolean</span> ordered, <span class="keyword">boolean</span> sticky, <span class="keyword">int</span> sendingUser) &#123;</div><div class="line">    Args args = <span class="keyword">new</span> Args(intent, resultCode, data, extras, ordered,</div><div class="line">            sticky, sendingUser);</div><div class="line">    <span class="keyword">if</span> (!mActivityThread.post(args)) &#123;</div><div class="line">        <span class="keyword">if</span> (mRegistered &amp;&amp; ordered) &#123;</div><div class="line">            IActivityManager mgr = ActivityManagerNative.getDefault();</div><div class="line">            args.sendFinished(mgr);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>这个方法创建了一个Args对象，然后把它post到了mActivityThread这个Handler中；我们查看Args类的run方法:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> BroadcastReceiver receiver = mReceiver;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> ordered = mOrdered;  </div><div class="line">    <span class="keyword">final</span> IActivityManager mgr = ActivityManagerNative.getDefault();</div><div class="line">    <span class="keyword">final</span> Intent intent = mCurIntent;</div><div class="line">    mCurIntent = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (receiver == <span class="keyword">null</span> || mForgotten) &#123;</div><div class="line">        <span class="keyword">if</span> (mRegistered &amp;&amp; ordered) &#123;</div><div class="line">            sendFinished(mgr);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        ClassLoader cl =  mReceiver.getClass().getClassLoader(); <span class="comment">// Important!! load class</span></div><div class="line">        intent.setExtrasClassLoader(cl);</div><div class="line">        setExtrasClassLoader(cl);</div><div class="line">        receiver.setPendingResult(<span class="keyword">this</span>);</div><div class="line">        receiver.onReceive(mContext, intent); <span class="comment">// callback</span></div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">        <span class="keyword">if</span> (mRegistered &amp;&amp; ordered) &#123;</div><div class="line">            sendFinished(mgr);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (mInstrumentation == <span class="keyword">null</span> ||</div><div class="line">                !mInstrumentation.onException(mReceiver, e)) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</div><div class="line">                <span class="string">"Error receiving broadcast "</span> + intent</div><div class="line">                + <span class="string">" in "</span> + mReceiver, e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (receiver.getPendingResult() != <span class="keyword">null</span>) &#123;</div><div class="line">        finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>这里就是回调onReceive的地方，看到我们比较熟悉的方法了，哈哈。不过从这里也可以看出来，在onReceive中不能做耗时的操作，因为被post到了主线程。</li>
+</ul>
+<h3 id="receiver的hook"><a href="#receiver的hook" class="headerlink" title="receiver的hook"></a>receiver的hook</h3><ul>
+<li>动态注册的receiver相对比较好hook，因为不需要在AndroidManifest中配置，我们可以在ClassLoader中进行处理，将Receiver加载进来，然后想办法让receiver收到onReceive回调。</li>
+<li>主要是静态注册比较恶心，因为在AndroidManifest中配置之后，我们不能用一个假的Receiver替代，因为在receiver中还会有intentfilter，我们无法知道该给虚假的receiver添加什么intentFilter，因此我们想到一种方案是，将静态广播当做动态广播处理，唯一的影响是静态广播在程序死掉之后还能收到广播。</li>
+<li>主要的思路是通过PackageParse解析apk，获取AndroidManifest中注册的广播，然后再手动的动态注册。</li>
+<li>主要的代码如下所示：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">// 获取packageParser</div><div class="line">           Class&lt;?&gt; packageParserClass = Class.forName(&quot;android.content.pm.PackageParser&quot;);</div><div class="line">           Method parsePackageMethod = packageParserClass.getDeclaredMethod(&quot;parsePackage&quot;, File.class, int.class);</div><div class="line">           Object packageParser = packageParserClass.newInstance();</div><div class="line"></div><div class="line">           // 首先调用parsePackage获取到apk对象对应的Package对象。</div><div class="line">           Object packageObj = parsePackageMethod.invoke(packageParser, apkFile, PackageManager.GET_RECEIVERS);</div><div class="line"></div><div class="line">           // 读取Package对象里面的receivers字段，注意这里是一个List&lt;Activity&gt;</div><div class="line">           // 接下来要做的就是根据这个List&lt;Activity&gt;获取到Receiver对应的ActivityInfo。</div><div class="line">           Field receiversField = packageObj.getClass().getDeclaredField(&quot;receivers&quot;);</div><div class="line">           receiversField.setAccessible(true);</div><div class="line">           List receivers = (List) receiversField.get(packageObj);</div><div class="line"></div><div class="line">           Class&lt;?&gt; activityClass = Class.forName(&quot;android.content.pm.PackageParser$Activity&quot;);</div><div class="line">           Field infoField = activityClass.getDeclaredField(&quot;info&quot;);</div><div class="line">           infoField.setAccessible(true);</div><div class="line"></div><div class="line"></div><div class="line">           Class&lt;?&gt; componentClass = Class.forName(&quot;android.content.pm.PackageParser$Component&quot;);</div><div class="line">           Field intentsField = componentClass.getDeclaredField(&quot;intents&quot;);</div><div class="line"></div><div class="line"></div><div class="line">           // 解析出receiver以及对应的 intentFilter</div><div class="line">           for (Object receiver: receivers)&#123;</div><div class="line">//                ActivityInfo info = (ActivityInfo) generateReceiverInfo.invoke(packageParser, receiver, 0, defaultUserState, userId);</div><div class="line">               ActivityInfo info = (ActivityInfo) infoField.get(receiver);</div><div class="line">               List&lt;? extends IntentFilter&gt; filters = (List&lt;? extends IntentFilter&gt;) intentsField.get(receiver);</div><div class="line">               sCache.put(info, filters);</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           ClassLoader cl = null;</div><div class="line">        for (ActivityInfo activityInfo : sCache.keySet())&#123;</div><div class="line">            List&lt;? extends IntentFilter&gt; intentFilters = sCache.get(activityInfo);</div><div class="line"></div><div class="line">            // 获取插件的ClassLoader</div><div class="line">            if (cl == null)&#123;</div><div class="line">                cl = CustomClassLoader.getPluginClassLoader(apk, activityInfo.packageName);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            // 解析出来的每一个静态Receiver都注册为动态的。</div><div class="line">            for (IntentFilter intentFilter : intentFilters)&#123;</div><div class="line">                BroadcastReceiver receiver = (BroadcastReceiver) cl.loadClass(activityInfo.name).newInstance();</div><div class="line">                context.registerReceiver(receiver, intentFilter);</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>动态广播的插件化待研究实现。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/04/18/Android插件化学习2/" title="Android插件化学习记录（二）">https://yoursite.com/2017/04/18/Android插件化学习2/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-插件化/" rel="tag"># Android, 插件化</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/18/Android插件化学习记录/" rel="next" title="Android插件化学习记录（一）">
+                <i class="fa fa-chevron-left"></i> Android插件化学习记录（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/19/python中编码格式/" rel="prev" title="python中编码格式">
+                python中编码格式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/avatar.jpg"
+               alt="Liwei" />
+          <p class="site-author-name" itemprop="name">Liwei</p>
+           
+              <p class="site-description motion-element" itemprop="description">平时工作和生活中的感悟记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件加载机制"><span class="nav-number">2.</span> <span class="nav-text">插件加载机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ClassLoader-机制"><span class="nav-number">2.1.</span> <span class="nav-text">ClassLoader 机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hook掉ClassLoader-自己操刀"><span class="nav-number">2.2.</span> <span class="nav-text">Hook掉ClassLoader(自己操刀)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#委托系统，让系统帮忙加载"><span class="nav-number">3.</span> <span class="nav-text">委托系统，让系统帮忙加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广播的管理"><span class="nav-number">4.</span> <span class="nav-text">广播的管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注册广播"><span class="nav-number">4.1.</span> <span class="nav-text">注册广播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送过程"><span class="nav-number">4.2.</span> <span class="nav-text">发送过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#匹配过程。"><span class="nav-number">4.2.1.</span> <span class="nav-text">匹配过程。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收过程"><span class="nav-number">4.3.</span> <span class="nav-text">接收过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#receiver的hook"><span class="nav-number">4.4.</span> <span class="nav-text">receiver的hook</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liwei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/04/18/Android插件化学习2/';
+          this.page.identifier = '2017/04/18/Android插件化学习2/';
+          this.page.title = 'Android插件化学习记录（二）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AQoVjcVEpbGjag9EVJEKK6GG-gzGzoHsz", "AqM9mdsyov2LEN1pszewM5Gd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
