@@ -1,0 +1,1012 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java资源关闭, 静态代码扫描," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="背景
+最近在看静态代码扫描的一些文章，主要是参考360火线团队写的一些文章，其中他们对资源关闭做了深入研究，所以我这里也做个记录。
+资源不关闭，久而久之，类似内存会被大量占用，造成内存溢出，并且会造成某些硬件资源的浪费，因此我们必须扼杀在编码阶段，静态代码扫描是非常有必要的。
+
+为什么要手动关闭java资源对象？
+首先解释Java的资源对象，它主要包括IO对象，数据库连接对象。比如常见的Input">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java资源关闭相关">
+<meta property="og:url" content="https://yoursite.com/2017/06/13/java资源关闭相关/index.html">
+<meta property="og:site_name" content="利伟的技术博客">
+<meta property="og:description" content="背景
+最近在看静态代码扫描的一些文章，主要是参考360火线团队写的一些文章，其中他们对资源关闭做了深入研究，所以我这里也做个记录。
+资源不关闭，久而久之，类似内存会被大量占用，造成内存溢出，并且会造成某些硬件资源的浪费，因此我们必须扼杀在编码阶段，静态代码扫描是非常有必要的。
+
+为什么要手动关闭java资源对象？
+首先解释Java的资源对象，它主要包括IO对象，数据库连接对象。比如常见的Input">
+<meta property="og:updated_time" content="2017-06-13T06:25:20.080Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java资源关闭相关">
+<meta name="twitter:description" content="背景
+最近在看静态代码扫描的一些文章，主要是参考360火线团队写的一些文章，其中他们对资源关闭做了深入研究，所以我这里也做个记录。
+资源不关闭，久而久之，类似内存会被大量占用，造成内存溢出，并且会造成某些硬件资源的浪费，因此我们必须扼杀在编码阶段，静态代码扫描是非常有必要的。
+
+为什么要手动关闭java资源对象？
+首先解释Java的资源对象，它主要包括IO对象，数据库连接对象。比如常见的Input">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2017/06/13/java资源关闭相关/"/>
+
+
+
+
+
+  <title>java资源关闭相关 | 利伟的技术博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">利伟的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、交流、成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/06/13/java资源关闭相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="利伟的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java资源关闭相关</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T13:51:39+08:00">
+                2017-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java知识/" itemprop="url" rel="index">
+                    <span itemprop="name">java知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/13/java资源关闭相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/13/java资源关闭相关/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/13/java资源关闭相关/" class="leancloud_visitors" data-flag-title="java资源关闭相关">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li>最近在看静态代码扫描的一些文章，主要是参考360火线团队写的一些文章，其中他们对资源关闭做了深入研究，所以我这里也做个记录。</li>
+<li>资源不关闭，久而久之，类似内存会被大量占用，造成内存溢出，并且会造成某些硬件资源的浪费，因此我们必须扼杀在编码阶段，静态代码扫描是非常有必要的。</li>
+</ul>
+<h2 id="为什么要手动关闭java资源对象？"><a href="#为什么要手动关闭java资源对象？" class="headerlink" title="为什么要手动关闭java资源对象？"></a>为什么要手动关闭java资源对象？</h2><ul>
+<li><p>首先解释Java的资源对象，它主要包括IO对象，数据库连接对象。比如常见的InputStream、OutputStream、Reader、Writer、Connection、Statement、ResultSet、Socket等等，先代码列举一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">FileInputStream f = new FileInputStream(&quot;sample.txt&quot;);</div><div class="line">f.close();//f对象即需要手动关闭的资源对象</div></pre></td></tr></table></figure>
+</li>
+<li><p>大家肯定会有疑问，java中有个利器GC，那么为啥还要手动关闭资源呢？ 从常理上讲，java既然提供了close的api，意为关闭资源，那么假如我们不调用，意味着资源没被关闭，也就是还在使用，所以系统是不会回收这部分资源的。</p>
+</li>
+<li>从原理上来说，各种stream之类，他们下边一般还开启了各种其他的系统资源，比如文件，比如输入输出设备（键盘/屏幕等），等等。而这些设备第一是不能自动关闭（因为谁知道你程序要用它到什么时候啊），另一个系统内数量有限（比如键盘/屏幕同一时间只有一个）。最后，文件和数据库连接之类的东西还存在读写锁定的问题。这些都导致用户必须手动处理这些资源的开启和关闭。</li>
+<li>其次为了“避免”程序员忘了自己释放那些资源，Java提供了finalizer、PhantomReference之类的机制来让程序员向GC注册“自动回调释放资源”的功能。但GC回调它们的时机不确定，所以只应该作为最后手段来使用，主要手段还是自己关闭最好。</li>
+</ul>
+<h2 id="如何正确的关闭资源"><a href="#如何正确的关闭资源" class="headerlink" title="如何正确的关闭资源"></a>如何正确的关闭资源</h2><ul>
+<li>这里只提三种关闭方法：try-catch-finally 、 try-with-resources、第三方库IOUtils</li>
+</ul>
+<h3 id="try-catch-finally"><a href="#try-catch-finally" class="headerlink" title="try-catch-finally"></a>try-catch-finally</h3><ul>
+<li>这是我们最常见的写法，如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">FileInputStream f;</div><div class="line">try&#123;</div><div class="line">    f= new FileInputStream(&quot;sample.txt&quot;);</div><div class="line">    //something that uses f and sometimes throws an exception</div><div class="line">&#125;</div><div class="line">catch(IOException ex)&#123;</div><div class="line">    /* Handle it somehow */</div><div class="line">&#125;</div><div class="line">finally&#123;</div><div class="line">    f.close();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="try-with-resources"><a href="#try-with-resources" class="headerlink" title="try-with-resources"></a>try-with-resources</h3><ul>
+<li>这是从java1.7开始，官方建议的写法：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">try (</div><div class="line">        FileOutputStream fileOutputStream = new FileOutputStream(&quot;E:\\A.txt&quot;);</div><div class="line">        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);</div><div class="line">        DataOutputStream out = new DataOutputStream(bufferedOutputStream)</div><div class="line">        )</div><div class="line">&#123;       </div><div class="line">    out.write(data1);</div><div class="line">&#125; catch (Exception e) &#123;</div><div class="line">    // TODO: handle exception</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>这种写法我之前没见过，这种将流放到try括号内，系统会自动close资源。</li>
+</ul>
+<h3 id="第三方库IOUtils"><a href="#第三方库IOUtils" class="headerlink" title="第三方库IOUtils"></a>第三方库IOUtils</h3><ul>
+<li>IOUtils.closeQuietly(e)，其本质上也是调用了close方法。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">closeQuietly</span><span class="params">(<span class="keyword">final</span> Closeable closeable)</span> </span>&#123;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">if</span> (closeable != <span class="keyword">null</span>) &#123;</div><div class="line">                closeable.close();</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> IOException ioe) &#123;</div><div class="line">            <span class="comment">// ignore</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="资源关闭的特殊场景"><a href="#资源关闭的特殊场景" class="headerlink" title="资源关闭的特殊场景"></a>资源关闭的特殊场景</h2><h3 id="ByteArrayInputStream等不需要检查关闭的资源对象"><a href="#ByteArrayInputStream等不需要检查关闭的资源对象" class="headerlink" title="ByteArrayInputStream等不需要检查关闭的资源对象"></a>ByteArrayInputStream等不需要检查关闭的资源对象</h3><ul>
+<li>有一些资源对象时不用关闭的。这些对象包括：ByteArrayInputStream、ByteArrayOutputStream、StringBufferInputStream、CharArrayWriter、和StringWriter。</li>
+<li>看官方文档里面对象类对应的close()方法的解释：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Closing a ByteArrayInputStream has no effect. The methods in this class can be called after the stream has been closed without generating an IOException.</div></pre></td></tr></table></figure>
+<ul>
+<li>即调用close没啥影响，即使调用了close方法，再使用流也不会抛出IOException。</li>
+</ul>
+<h3 id="资源对象在套接使用时，只需要手动关闭最后套接的对象"><a href="#资源对象在套接使用时，只需要手动关闭最后套接的对象" class="headerlink" title="资源对象在套接使用时，只需要手动关闭最后套接的对象"></a>资源对象在套接使用时，只需要手动关闭最后套接的对象</h3><ul>
+<li>啥叫套结使用呢，我们知道，java Instream 采用了包装模式。看一段代码：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FileOutputStream fileOutputStream = new FileOutputStream(&quot;A.txt&quot;);</div><div class="line">BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);</div><div class="line">DataOutputStream out = new DataOutputStream(bufferedOutputStream);</div></pre></td></tr></table></figure>
+<ul>
+<li>如上所示，我们只需要调用out.close，就能将所有资源关闭。 被套结的另外两个资源为啥会被关闭呢？重点在于close()方法的实现，out在关闭时实际是先调用了java.io.FilterOutputStream.close()方法，该方法的具体实现如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Closes this output stream and releases any system resources</div><div class="line"> * associated with the stream.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * The &lt;code&gt;close&lt;/code&gt; method of &lt;code&gt;FilterOutputStream&lt;/code&gt;</div><div class="line"> * calls its &lt;code&gt;flush&lt;/code&gt; method, and then calls the</div><div class="line"> * &lt;code&gt;close&lt;/code&gt; method of its underlying output stream.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@exception</span>  IOException  if an I/O error occurs.</div><div class="line"> * <span class="doctag">@see</span>        java.io.FilterOutputStream#flush()</div><div class="line"> * <span class="doctag">@see</span>        java.io.FilterOutputStream#out</div><div class="line"> */</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">     <span class="keyword">try</span> &#123;</div><div class="line">       flush();</div><div class="line">     &#125; <span class="keyword">catch</span> (IOException ignored) &#123;</div><div class="line">     &#125;</div><div class="line">     out.close();</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>这段代码意思是先调用了flush()方法，保证之前写入到内存的数据刷到硬盘。接着调用java.io.OutputStream.close()方法，继续看java.io.OutputStream.close()的实现：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Closes this output stream and releases any system resources</div><div class="line"> * associated with this stream. The general contract of &lt;code&gt;close&lt;/code&gt;</div><div class="line"> * is that it closes the output stream. A closed stream cannot perform</div><div class="line"> * output operations and cannot be reopened.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * The &lt;code&gt;close&lt;/code&gt; method of &lt;code&gt;OutputStream&lt;/code&gt; does nothing.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@exception</span>  IOException  if an I/O error occurs.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>注释中Closes this output stream and releases any system resources associated with this stream这句非常重要，意思是关闭这个输出流并释放任何与之相关的系统资源。</li>
+<li>大家还可以看到方法里面什么都没有做，但是java.io.OutputStream 实现了 Closeable接口，接着Closeable接口集成了AutoCloseable接口，最后定位到AutoCloseable接口中，注释里有这样一句Closes this resource, relinquishing any underlying resources.，大意为关闭这个资源，放弃任何底层的资源</li>
+</ul>
+<h3 id="数据库连接对象中当Statement被关闭后，由该Statement初始化的ResultSet对象也会自动关闭"><a href="#数据库连接对象中当Statement被关闭后，由该Statement初始化的ResultSet对象也会自动关闭" class="headerlink" title="数据库连接对象中当Statement被关闭后，由该Statement初始化的ResultSet对象也会自动关闭"></a>数据库连接对象中当Statement被关闭后，由该Statement初始化的ResultSet对象也会自动关闭</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Statement stmt = con.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);</div><div class="line">ResultSet rs = stmt.executeQuery(&quot;SELECT a, b FROM TABLE2&quot;);</div></pre></td></tr></table></figure>
+<ul>
+<li>从代码可以看出Statement和ResultSet的关系，其中当Statement对象关闭之后，由Statement对象初始化的ResultSet对象rs也会被自动关闭。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">When a Statement object is closed, its current ResultSet object, if one exists, is also closed.</div></pre></td></tr></table></figure>
+<h3 id="使用socket获取的InputStream和OutputStream对象不需要关闭"><a href="#使用socket获取的InputStream和OutputStream对象不需要关闭" class="headerlink" title="使用socket获取的InputStream和OutputStream对象不需要关闭"></a>使用socket获取的InputStream和OutputStream对象不需要关闭</h3><ul>
+<li>使用socket创建出的InputStream和OutputStream，当socket关闭时，这两个流也会自动关闭。同时，如果关闭InputStream，将会同时关闭与之相关的Socket。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Socket socket = new Socket(&quot;127.0.0.1&quot;, 8001);</div><div class="line">InputStream input = socket.getInputStream();</div><div class="line">OutputStream output = socket.getOutputStream();</div></pre></td></tr></table></figure>
+<ul>
+<li>我们查看下官方文档：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Closing this socket will also close the socket&apos;s InputStream and OutputStream.</div><div class="line">If this socket has an associated channel then the channel is closed as well.</div><div class="line">Closing the returned InputStream will close the associated socket.</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>资源关闭在做静态代码扫描时是非常常见的问题，因此对某些常见问题的了解还是很有必要的。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/06/13/java资源关闭相关/" title="java资源关闭相关">https://yoursite.com/2017/06/13/java资源关闭相关/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java资源关闭-静态代码扫描/" rel="tag"># java资源关闭, 静态代码扫描</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/13/静态代码扫描工具findBugs/" rel="next" title="静态代码扫描工具findBugs">
+                <i class="fa fa-chevron-left"></i> 静态代码扫描工具findBugs
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/13/静态代码扫描工具fireline/" rel="prev" title="静态代码扫描工具fireline">
+                静态代码扫描工具fireline <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/avatar.jpg"
+               alt="Liwei" />
+          <p class="site-author-name" itemprop="name">Liwei</p>
+           
+              <p class="site-description motion-element" itemprop="description">平时工作和生活中的感悟记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要手动关闭java资源对象？"><span class="nav-number">2.</span> <span class="nav-text">为什么要手动关闭java资源对象？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何正确的关闭资源"><span class="nav-number">3.</span> <span class="nav-text">如何正确的关闭资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-finally"><span class="nav-number">3.1.</span> <span class="nav-text">try-catch-finally</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-with-resources"><span class="nav-number">3.2.</span> <span class="nav-text">try-with-resources</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三方库IOUtils"><span class="nav-number">3.3.</span> <span class="nav-text">第三方库IOUtils</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源关闭的特殊场景"><span class="nav-number">4.</span> <span class="nav-text">资源关闭的特殊场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ByteArrayInputStream等不需要检查关闭的资源对象"><span class="nav-number">4.1.</span> <span class="nav-text">ByteArrayInputStream等不需要检查关闭的资源对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源对象在套接使用时，只需要手动关闭最后套接的对象"><span class="nav-number">4.2.</span> <span class="nav-text">资源对象在套接使用时，只需要手动关闭最后套接的对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库连接对象中当Statement被关闭后，由该Statement初始化的ResultSet对象也会自动关闭"><span class="nav-number">4.3.</span> <span class="nav-text">数据库连接对象中当Statement被关闭后，由该Statement初始化的ResultSet对象也会自动关闭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用socket获取的InputStream和OutputStream对象不需要关闭"><span class="nav-number">4.4.</span> <span class="nav-text">使用socket获取的InputStream和OutputStream对象不需要关闭</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liwei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/06/13/java资源关闭相关/';
+          this.page.identifier = '2017/06/13/java资源关闭相关/';
+          this.page.title = 'java资源关闭相关';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AQoVjcVEpbGjag9EVJEKK6GG-gzGzoHsz", "AqM9mdsyov2LEN1pszewM5Gd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

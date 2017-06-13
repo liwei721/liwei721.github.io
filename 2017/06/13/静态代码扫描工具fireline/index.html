@@ -1,0 +1,985 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="静态扫描,火线,fireline," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="背景
+firline(火线)是360 搞的一款移动端的静态代码扫描工具，现在火线在360公司app的发布流程中是必不可少的环节，目前火线在360发布流程中已累计运行超过500天，扫描文件数2千万+，扫描代码量超过45亿行。火线最近推出的Android Studio插件360 Fireline Plugin下载量已达到4000+。
+火线拥有四大规则：
+安全类：和360信息安全部分合作，根据最权威的S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态代码扫描工具fireline">
+<meta property="og:url" content="https://yoursite.com/2017/06/13/静态代码扫描工具fireline/index.html">
+<meta property="og:site_name" content="利伟的技术博客">
+<meta property="og:description" content="背景
+firline(火线)是360 搞的一款移动端的静态代码扫描工具，现在火线在360公司app的发布流程中是必不可少的环节，目前火线在360发布流程中已累计运行超过500天，扫描文件数2千万+，扫描代码量超过45亿行。火线最近推出的Android Studio插件360 Fireline Plugin下载量已达到4000+。
+火线拥有四大规则：
+安全类：和360信息安全部分合作，根据最权威的S">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/pmd_folder.png">
+<meta property="og:image" content="https://yoursite.com/upload/image/zlw/pmd_path.png">
+<meta property="og:updated_time" content="2017-06-13T08:56:24.500Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="静态代码扫描工具fireline">
+<meta name="twitter:description" content="背景
+firline(火线)是360 搞的一款移动端的静态代码扫描工具，现在火线在360公司app的发布流程中是必不可少的环节，目前火线在360发布流程中已累计运行超过500天，扫描文件数2千万+，扫描代码量超过45亿行。火线最近推出的Android Studio插件360 Fireline Plugin下载量已达到4000+。
+火线拥有四大规则：
+安全类：和360信息安全部分合作，根据最权威的S">
+<meta name="twitter:image" content="https://yoursite.com/upload/image/zlw/pmd_folder.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yoursite.com/2017/06/13/静态代码扫描工具fireline/"/>
+
+
+
+
+
+  <title>静态代码扫描工具fireline | 利伟的技术博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">利伟的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享、交流、成长</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2017/06/13/静态代码扫描工具fireline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liwei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="利伟的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">静态代码扫描工具fireline</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T16:12:39+08:00">
+                2017-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/测试技术/" itemprop="url" rel="index">
+                    <span itemprop="name">测试技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/13/静态代码扫描工具fireline/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/13/静态代码扫描工具fireline/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/13/静态代码扫描工具fireline/" class="leancloud_visitors" data-flag-title="静态代码扫描工具fireline">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li>firline(火线)是360 搞的一款移动端的静态代码扫描工具，现在火线在360公司app的发布流程中是必不可少的环节，目前火线在360发布流程中已累计运行超过500天，扫描文件数2千万+，扫描代码量超过45亿行。火线最近推出的Android Studio插件360 Fireline Plugin下载量已达到4000+。</li>
+<li>火线拥有四大规则：<ul>
+<li>安全类：和360信息安全部分合作，根据最权威的SDL专门定制，每一条SDL都有真实的攻击案例。</li>
+<li>内存类：各种资源关闭类问题检测。</li>
+<li>日志类：检测日志输出敏感信息内容的规则。</li>
+<li>基础类：规范类、代码风格类、复杂度检查规则。</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ul>
+<li>详细可以参考官网的介绍<a href="http://magic.360.cn/user.html" target="_blank" rel="external">使用手册</a>。</li>
+<li>我们这里重点来介绍下如何自定义规则。</li>
+</ul>
+<h2 id="自定义规则"><a href="#自定义规则" class="headerlink" title="自定义规则"></a>自定义规则</h2><ul>
+<li>以pmd规则为例，之前的文章中介绍过如何自定义pmd规则。<a href="https://liwei721.github.io/2017/06/01/静态分析工具PMD学习/" target="_blank" rel="external">静态代码扫描工具PMD</a></li>
+</ul>
+<h3 id="下载fireline-jar"><a href="#下载fireline-jar" class="headerlink" title="下载fireline.jar"></a>下载fireline.jar</h3><ul>
+<li>先去官网下载<a href="http://magic.360.cn/fireline.jar" target="_blank" rel="external">fireline.jar</a>。</li>
+<li>然后将fireline.jar解压到当前目录，方便修改其文件。</li>
+<li>看下解压后的目录结构：<br><img src="/upload/image/zlw/pmd_folder.png" alt="pmd_folder"></li>
+</ul>
+<h3 id="以xpath-方式自定义pmd规则"><a href="#以xpath-方式自定义pmd规则" class="headerlink" title="以xpath 方式自定义pmd规则"></a>以xpath 方式自定义pmd规则</h3><ul>
+<li><p>以xpath方式定义的规则，只需要修改xml目录下的文件，如下图所示目录：<br><img src="/upload/image/zlw/pmd_path.png" alt="pmd_path"></p>
+</li>
+<li><p>在PMD_RedLineRule_All.xml中添加一个rule，如下所示</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--用于测试--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">rule</span> <span class="attr">xmlns</span>=<span class="string">""</span> <span class="attr">class</span>=<span class="string">"net.sourceforge.pmd.lang.rule.XPathRule"</span></span></div><div class="line">         <span class="attr">externalInfoUrl</span>=<span class="string">"$&#123;pmd.website.baseurl&#125;/rules/java/empty.html#EmptyFinallyBlock"</span></div><div class="line">         <span class="attr">language</span>=<span class="string">"java"</span></div><div class="line">         <span class="attr">message</span>=<span class="string">"While With brance"</span></div><div class="line">         <span class="attr">name</span>=<span class="string">"WhileLoopsMustUseBracesRule"</span></div><div class="line">         <span class="attr">since</span>=<span class="string">"0.4"</span>&gt;</div><div class="line">		    <span class="tag">&lt;<span class="name">description</span>&gt;</span></div><div class="line">WhileLoops Must use braces Rule.</div><div class="line">      <span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">		    <span class="tag">&lt;<span class="name">priority</span>&gt;</span>1<span class="tag">&lt;/<span class="name">priority</span>&gt;</span></div><div class="line">		    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">			      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"xpath"</span>&gt;</span></div><div class="line">				        <span class="tag">&lt;<span class="name">value</span>&gt;</span></div><div class="line">//WhileStatement[not(Statement/Block)]</div><div class="line">              <span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">			      <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">		    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line">		    <span class="tag">&lt;<span class="name">example</span>&gt;</span></div><div class="line"></div><div class="line">public class PmdWhileTest &#123;</div><div class="line">    public void testWhile()&#123;</div><div class="line">        int i = 0;</div><div class="line">        while (i != 0)</div><div class="line">            i++;</div><div class="line"></div><div class="line">        System.out.println("this is a test");</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">      <span class="tag">&lt;/<span class="name">example</span>&gt;</span></div><div class="line">	  <span class="tag">&lt;/<span class="name">rule</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>然后将自己定义的规则复制到pmd_rules/java/目录下，我这里的规则是mycustom.xml。这些规则可以用pmd自带的规则改改就成了。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0"?&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">ruleset</span> <span class="attr">name</span>=<span class="string">"My Custom rules"</span></span></div><div class="line">         <span class="attr">xmlns</span>=<span class="string">"http://pmd.sourceforge.net/ruleset/2.0.0"</span></div><div class="line">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span></div><div class="line">        mine rules</div><div class="line">    <span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">rule</span> <span class="attr">name</span>=<span class="string">"WhileLoopsMustUseBrancesRule"</span></span></div><div class="line">          <span class="attr">since</span>=<span class="string">"5.7"</span></div><div class="line">          <span class="attr">language</span>=<span class="string">"java"</span></div><div class="line">          <span class="attr">message</span>=<span class="string">"Avoid using 'while' statements without using curly braces"</span></div><div class="line">          <span class="attr">class</span>=<span class="string">"net.sourceforge.pmd.lang.rule.XPathRule"</span></div><div class="line">          <span class="attr">externalInfoUrl</span>=<span class="string">"$&#123;pmd.website.baseurl&#125;/rules/java/WhileLoopsMustUseBracesRule.html"</span>&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">description</span>&gt;</span></div><div class="line">            Avoid using 'while' statements without using curly braces</div><div class="line">        <span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"xpath"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span></div><div class="line">                    &lt;![CDATA[</div><div class="line">//WhileStatement[not(Statement/Block)]</div><div class="line">]]&gt;</div><div class="line">                <span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">priority</span>&gt;</span>1<span class="tag">&lt;/<span class="name">priority</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">example</span>&gt;</span></div><div class="line">            &lt;![CDATA[</div><div class="line">    public void doSomething() &#123;</div><div class="line">      while (true)</div><div class="line">          x++;</div><div class="line">    &#125;</div><div class="line">]]&gt;</div><div class="line">        <span class="tag">&lt;/<span class="name">example</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">rule</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ruleset</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="写java文件定义的规则"><a href="#写java文件定义的规则" class="headerlink" title="写java文件定义的规则"></a>写java文件定义的规则</h3><ul>
+<li>这种方式需要在pmd源码中编译pmd-core（如果有改动）和pmd-java。进入它们对应的目录，执行：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn clean package</div></pre></td></tr></table></figure>
+<ul>
+<li>将编译得到的jar文件复制到fireline目录下，替换里面的对应的jar。</li>
+</ul>
+<h3 id="重新打包jar"><a href="#重新打包jar" class="headerlink" title="重新打包jar"></a>重新打包jar</h3><ul>
+<li>在fireline的上层目录下面，执行命令：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">## 这里的MANIFEST.MF是jar的配置清单，必须有，否则会报【没有清单文件】的错误</span></div><div class="line">jar cvfm fireline.jar fireline/META-INF/MANIFEST.MF -C fireline/ .</div></pre></td></tr></table></figure>
+<h3 id="进行扫描"><a href="#进行扫描" class="headerlink" title="进行扫描"></a>进行扫描</h3><ul>
+<li>接下来就可以用编译的jar进行扫描了。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -jar D:\worktools\fireline.jar <span class="_">-s</span>=E:\javaworkspace\MineDemo\src\com\liwei\pmd\PmdWhileTest.java -r=F:\360FireReport</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>火线已经对规则过滤的非常好了，所以一般情况下不需要自定义规则，除非有和自己业务相关的代码需要规则来约束。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Liwei
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yoursite.com/2017/06/13/静态代码扫描工具fireline/" title="静态代码扫描工具fireline">https://yoursite.com/2017/06/13/静态代码扫描工具fireline/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/静态扫描-火线-fireline/" rel="tag"># 静态扫描,火线,fireline</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/13/java资源关闭相关/" rel="next" title="java资源关闭相关">
+                <i class="fa fa-chevron-left"></i> java资源关闭相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/avatar.jpg"
+               alt="Liwei" />
+          <p class="site-author-name" itemprop="name">Liwei</p>
+           
+              <p class="site-description motion-element" itemprop="description">平时工作和生活中的感悟记录</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义规则"><span class="nav-number">3.</span> <span class="nav-text">自定义规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载fireline-jar"><span class="nav-number">3.1.</span> <span class="nav-text">下载fireline.jar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以xpath-方式自定义pmd规则"><span class="nav-number">3.2.</span> <span class="nav-text">以xpath 方式自定义pmd规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写java文件定义的规则"><span class="nav-number">3.3.</span> <span class="nav-text">写java文件定义的规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新打包jar"><span class="nav-number">3.4.</span> <span class="nav-text">重新打包jar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进行扫描"><span class="nav-number">3.5.</span> <span class="nav-text">进行扫描</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liwei</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Android.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yoursite.com/2017/06/13/静态代码扫描工具fireline/';
+          this.page.identifier = '2017/06/13/静态代码扫描工具fireline/';
+          this.page.title = '静态代码扫描工具fireline';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Android.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AQoVjcVEpbGjag9EVJEKK6GG-gzGzoHsz", "AqM9mdsyov2LEN1pszewM5Gd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
